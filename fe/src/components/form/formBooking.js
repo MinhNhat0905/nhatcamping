@@ -17,7 +17,7 @@ const paymentType = [
 	// 	name: 'Tiền mặt'
 	// },
 	{
-		_id: 2,
+		_id: 2,	
 		name: 'Online'
 	}
 ];
@@ -36,8 +36,8 @@ export const FormBooking = () =>
 		user_id: null,
 		discount_id: null,
 		discount: 0,
-		status: 'PENDING',
-		status_payment: 'UNPAID',
+		status: 'Đang xử lý',
+		status_payment: 'Chưa thanh toán',
 		price: 0,
 		total_money: 0,
 		customer_name: null,
@@ -163,8 +163,8 @@ export const FormBooking = () =>
 			user_id: null,
 			discount_id: null,
 			discount: 0,
-			status: 'PENDING',
-			status_payment: 'UNPAID',
+			status: 'Đang xử lý',
+			status_payment: 'Chưa thanh toán',
 			price: 0,
 			total_money: 0,
 			customer_name: null,
@@ -210,7 +210,7 @@ export const FormBooking = () =>
 				<Container>
 					<Row className="row justify-content-center mb-5 pb-3">
 						<Col md={ 7 } className="heading-section text-center">
-							<h2 className="mb-4">Mẫu đặt phòng</h2>
+							<h2 className="mb-4">Thông tin đặt phòng</h2>
 						</Col>
 					</Row>
 

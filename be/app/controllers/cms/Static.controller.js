@@ -1,6 +1,6 @@
 const Booking = require("./../../models/Booking.model") // new
 const moment = require("moment");
-
+// Hàm để lấy số ngày trong tháng
 const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
 exports.monthlyStatistics = async (req, res) => {
     // destructure page and limit and set default values
@@ -18,7 +18,7 @@ exports.monthlyStatistics = async (req, res) => {
                     }
             }
         ]);
-
+  // Tạo biểu đồ trạng thái đặt phòng
         let chartStatus = {};
         if (responseGroupStatus) {
             let arrLabel = [];
@@ -41,18 +41,19 @@ exports.monthlyStatistics = async (req, res) => {
                 }
             },
         ]);
-
+  // Lấy thông tin tháng và năm hiện tại
         const date = moment();
         let year = date.year();
         let month = date.format('MM');
-        const totalDay = daysInMonth(month, year);
+        const totalDay = daysInMonth(month, year); // Tổng số ngày trong tháng
+        // Tạo danh sách các ngày trong tháng
         let arrListDay = [];
         for( let i = 1 ; i <= totalDay; i ++) {
-            if (i < 10) i = '0' + `${i}`;
+            if (i < 10) i = '0' + `${i}`; // Thêm số 0 vào trước số ngày nhỏ hơn 10
             arrListDay.push(`${year}-${month}-${i}`);
         }
         console.log('---------- arrListDay: ', arrListDay);
-
+  // Tạo mảng ánh xạ cho ngày và số liệu tương ứng
         let arrListDayMapping = [];
         for(let i = 0 ; i < arrListDay.length ; i ++) {
             arrListDayMapping[i] = {
@@ -60,7 +61,7 @@ exports.monthlyStatistics = async (req, res) => {
                 totalMoney: 0,
                 count: 0
             }
-
+ // Kiểm tra xem ngày có trong kết quả nhóm không
             for(j = 0 ; j < responseGroupDay.length ; j ++) {
                 if (responseGroupDay[j]._id === arrListDay[i]) {
                     arrListDayMapping[i] = {
@@ -82,6 +83,7 @@ exports.monthlyStatistics = async (req, res) => {
             list_money_by_day: resultTotalPrice,
             list_day: arrListDay
         }
+         // Trả về dữ liệu thống kê
         res.json({
             data,
             status

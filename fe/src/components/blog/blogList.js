@@ -79,7 +79,7 @@ export const BlogList = ( props ) =>
 										to="/blog"
 										className="btn btn-primary btn-hover fs-18"
 									>
-										View All <ArrowRight />
+										Xem thêm <ArrowRight />
 									</Link>
 								</div>
 							</Col>

@@ -8,8 +8,8 @@ exports.index = async ( req, res ) =>
 	try
 	{
 		const condition = {};
-		const paging = buildParamPaging( req.query );
-		// execute query with page and limit values
+		const paging = buildParamPaging( req.query );// Gọi hàm buildParamPaging để lấy thông tin phân trang từ query.
+		// Truy vấn các danh mục với phân trang.
 		const categories = await Category.find()
 			.where( condition )
 			.limit( paging.page_size )
@@ -20,7 +20,7 @@ exports.index = async ( req, res ) =>
 		const count = await Category.count().where(condition);
 
 		// return response with posts, total pages, and current page
-		const meta = buildResponsePaging( paging.page, paging.page_size, count )
+		const meta = buildResponsePaging( paging.page, paging.page_size, count )// Gọi hàm buildResponsePaging để tạo metadata cho phản hồi.
 		const status = 200;
 		const data = {
 			categories: categories
@@ -40,7 +40,7 @@ exports.show = async ( req, res ) =>
 {
 	try
 	{
-		const category = await Category.findOne( { _id: req.params.id } )
+		const category = await Category.findOne( { _id: req.params.id } )// Tìm danh mục theo ID.
 		return res.status( 200 ).json( { data: category, status: 200 } );
 	} catch {
 		res.status( 404 )
@@ -60,11 +60,11 @@ exports.update = async ( req, res ) =>
 {
 	try
 	{
-		const category = await Category.findOne( { _id: req.params.id } )
+		const category = await Category.findOne( { _id: req.params.id } )// Tìm danh mục theo ID.
 
 		if ( req.body.name )
 		{
-			category.name = req.body.name;
+			category.name = req.body.name;// Cập nhật tên của danh mục nếu có trong request.
 		}
 
 		await category.save();
@@ -79,7 +79,7 @@ exports.delete = async ( req, res ) =>
 {
 	try
 	{
-		await Category.deleteOne( { _id: req.params.id } )
+		await Category.deleteOne( { _id: req.params.id } )// Xóa danh mục theo ID
 		return res.status( 200 ).json( { data: [], status: 200 } );
 	} catch {
 		res.status( 404 )

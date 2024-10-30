@@ -147,10 +147,10 @@ const RoomDetailPage = () =>
 													<p className="text-dark fs-20">Giá: <strong>{ customNumber( detailData.price, '.', 'đ' ) }</strong> </p>
 													<div className="d-md-flex my-3">
 														<ul className="list">
-															<li><span>Size:</span> { detailData.size } m2</li>
+															<li><span>Diện tích:</span> { detailData.size } m2</li>
 														</ul>
 														<ul className="list ml-md-5">
-															<li><span>Bed:</span> { detailData.bed }</li>
+															<li><span>Số phòng ngủ:</span> { detailData.bed }</li>
 														</ul>
 													</div>
 												</div>
@@ -159,7 +159,7 @@ const RoomDetailPage = () =>
 													{
 														navigate( '/booking/create/' + detailData._id )
 													} }>
-														Book
+														Đặt phòng
 													</button>
 												</div>
 
@@ -169,17 +169,17 @@ const RoomDetailPage = () =>
 
 									</Col>
 									<Col md={ 12 } className="room-single mt-4 mb-5 ">
-										<h3>Mô tả ngắn</h3>
+										
 										<p>
 											{ detailData.description }
 
 										</p>
-										<h3>Nội dung</h3>
+										<h3>Thông tin</h3>
 										<p className="mb-0" dangerouslySetInnerHTML={ { __html: detailData.room_content } }>
 										</p>
 									</Col>
 									<Col md={ 12 } className="room-single  mb-5 mt-5">
-										<h4 className="mb-4">Available Room</h4>
+										<h4 className="mb-4">Các phòng khác</h4>
 										<RoomList data={ rooms } notShowTitle={ true } lg={ 6 } />
 									</Col>
 								</Row>

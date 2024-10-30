@@ -80,9 +80,9 @@ export default function UpdateBooking() {
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                         <Form.Label>Trạng thái</Form.Label>
                                         <Form.Select aria-label="Default select example" onChange={handleChangeStatus}>
-                                            <option value="PENDING">Đang xử lý</option>
-                                            <option value="APPROVED">Chấp nhận</option>
-                                            <option value="REJECT">Từ chối</option>
+                                            <option value="Đang xử lý">Đang xử lý</option>
+                                            <option value="Chấp nhận">Chấp nhận</option>
+                                            <option value="Từ chối">Từ chối</option>
                                         </Form.Select>
                                         <Form.Control.Feedback type="invalid">
                                             Số phòng ngủ không được để trống

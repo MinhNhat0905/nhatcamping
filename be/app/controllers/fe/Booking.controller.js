@@ -78,7 +78,7 @@ exports.show = async (req, res) => {
 exports.cancel = async (req, res) => {
     try {
         const booking = await Booking.findOne({ _id: req.params.id });
-        booking.status = 'CANCEL';
+        booking.status = 'Hủy';
 
         let room = await Room.findById({ _id: booking.room_id });
         room.status = "EMPTY";

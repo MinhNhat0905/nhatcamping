@@ -5,6 +5,7 @@ exports.index = async (req, res) => {
     try {
         // execute query with page and limit values
         const condition = {};
+        // Thêm điều kiện lọc nếu có user_id hoặc room_id trong query
         if (req.query.user_id) condition.user_id = req.query.user_id;
         if (req.query.room_id) condition.room_id = req.query.room_id;
 
@@ -42,7 +43,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-        const service = await Booking.findOne({ _id: req.params.id })
+        const service = await Booking.findOne({ _id: req.params.id })// Tìm đặt phòng theo ID.
         return res.status(200).json({ data: service, status: 200 });
     } catch {
         res.status(404)
@@ -52,7 +53,7 @@ exports.show = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        await Booking.deleteOne({ _id: req.params.id })
+        await Booking.deleteOne({ _id: req.params.id })// Xóa đặt phòng theo ID.
         return res.status(200).json({ data: [], status: 200 });
     } catch {
         res.status(404)
@@ -63,7 +64,7 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const booking = await Booking.findOne({ _id: req.params.id })
+        const booking = await Booking.findOne({ _id: req.params.id })// Tìm đặt phòng theo ID.
 
         if (req.body.status) {
             booking.status = req.body.status;

@@ -19,14 +19,14 @@ exports.index = async ( req, res ) =>
 			.skip( ( paging.page - 1 ) * paging.page_size )
 			.exec();
 
-		// get total documents in the Posts collection
+		  // Đếm tổng số tài liệu trong bộ sưu tập giảm gia
 		const count = await Discount.count().where(condition);
 
-		// return response with posts, total pages, and current page
+		 // Trả về phản hồi với danh sách giảm giá, tổng số trang và trang hiện tại
 		const meta = buildResponsePaging(paging.page, paging.page_size, count);
 		const status = 200;
 		const data = {
-			discounts: discounts
+			discounts: discounts// Danh sách giảm giá
 		}
 		res.json( {
 			data,
@@ -43,7 +43,7 @@ exports.show = async ( req, res ) =>
 {
 	try
 	{
-		const discounts = await Discount.findOne( { _id: req.params.id } )
+		const discounts = await Discount.findOne( { _id: req.params.id } ) // Tìm một giảm giá theo ID
 		return res.status( 200 ).json( { data: discounts, status: 200 } );
 	} catch {
 		res.status( 404 )

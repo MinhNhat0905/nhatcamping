@@ -100,9 +100,9 @@ export const BookingList = ( props ) =>
 														</Button>
 													}
 													{
-														 item?.status?.toUpperCase() != "CANCEL" &&
+														 item?.status?.toUpperCase() != "Hủy" &&
 														<Button variant="danger" size="sm" style={ { borderRadius: '10px', marginLeft: "5px" } } onClick={() => handleCancel(item._id)}>
-															Cancel
+															Hủy
 														</Button>
 													}
 												</td>

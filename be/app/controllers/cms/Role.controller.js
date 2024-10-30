@@ -4,7 +4,8 @@ const Room = require("../../models/Room.model"); // new
 
 exports.index = async (req, res) => {
     // destructure page and limit and set default values
-    const page = req.query.page || 1; const page_size = req.query.page_size  || 10;
+    const page = req.query.page || 1; 
+    const page_size = req.query.page_size  || 10;
 
     try {
         // execute query with page and limit values
@@ -48,14 +49,14 @@ exports.show = async (req, res) => {
     }
 };
 
-exports.store = async (req, res) => {
+exports.store = async (req, res) => {// Định nghĩa hàm store để tạo mới một vai trò
 
-    const role = await Role.create({
+    const role = await Role.create({// Tạo vai trò mới từ dữ liệu trong body yêu cầu
         name: req.body.name,
         description: req.body.description,
         permissions: req.body.permissions,
     })
-
+ // Cập nhật tất cả các quyền để thêm vai trò này vào danh sách vai trò của từng quyền
     await Permission.updateMany({ '_id': role.permissions }, { $push: { roles: role._id } });
     return res.status(200).json({ data: role, status : 200 });
 };
@@ -66,10 +67,10 @@ exports.update = async (req, res) => {
         const _id = req.params.id;
         const role = req.body;
 
-        const newPermissions = role.permissions || [];
+        const newPermissions = role.permissions || [];// Lấy các quyền mới, mặc định là mảng rỗng
 
-        const oldRole = await Role.findOne({ _id });
-        const oldPermissions = oldRole.permissions;
+        const oldRole = await Role.findOne({ _id });// Tìm vai trò cũ theo ID
+        const oldPermissions = oldRole.permissions;// Lấy các quyền cũ của vai trò
 
         // const role = await Role.findOne({ _id: req.params.id })
 

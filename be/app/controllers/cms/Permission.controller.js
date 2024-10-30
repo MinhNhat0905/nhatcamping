@@ -1,11 +1,11 @@
 const Permission = require("./../../models/Permission.model")
 
-exports.index = async (req, res) => {
+exports.index = async (req, res) => {// Định nghĩa hàm index để lấy danh sách quyền
     const page = req.query.page || 1; const page_size = req.query.page_size  || 10;
 
     try {
         // execute query with page and limit values
-        const permissions = await Permission.find()
+        const permissions = await Permission.find()// Tìm tất cả quyền
             .limit(page_size)
             .skip((page - 1) * page_size)
             .exec();
@@ -34,9 +34,9 @@ exports.index = async (req, res) => {
     }
 };
 
-exports.show = async (req, res) => {
+exports.show = async (req, res) => { // Định nghĩa hàm show để lấy thông tin một quyền
     try {
-        const permission = await Permission.findOne({ _id: req.params.id })
+        const permission = await Permission.findOne({ _id: req.params.id })// Tìm quyền theo ID
         return res.status(200).json({ data: permission, status: 200 });
     } catch {
         res.status(404)
@@ -44,8 +44,8 @@ exports.show = async (req, res) => {
     }
 };
 
-exports.store = async (req, res) => {
-    const permission = new Permission({
+exports.store = async (req, res) => {// Định nghĩa hàm store để tạo mới một quyền
+    const permission = new Permission({// Khởi tạo đối tượng Permission mới
         name: req.body.name,
         description: req.body.description || null,
         path: req.body.path || null
@@ -54,7 +54,7 @@ exports.store = async (req, res) => {
     return res.status(200).json({ data: permission, status : 200 });
 };
 
-exports.update = async (req, res) => {
+exports.update = async (req, res) => {// Định nghĩa hàm update để cập nhật thông tin quyền
     try {
         const permission = await Permission.findOne({ _id: req.params.id })
 

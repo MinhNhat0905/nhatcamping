@@ -49,7 +49,7 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
     let data = req.body;
-    const menu = new Menu(data);
+    const menu = new Menu(data);// Tạo một đối tượng Menu mới với dữ liệu nhận được.
     await menu.save();
     return res.status(200).json({ data: menu, status : 200 });
 };
@@ -96,8 +96,8 @@ function difference(A, B) {
 
     const result = [];
     for (const p of arrA) {
-        if (arrB.indexOf(p) === -1) {
-            result.push(p);
+        if (arrB.indexOf(p) === -1) {// Kiểm tra nếu phần tử không tồn tại trong arrB.
+            result.push(p);// Thêm vào mảng kết quả.
         }
     }
 

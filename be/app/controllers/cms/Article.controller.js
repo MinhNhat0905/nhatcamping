@@ -8,9 +8,9 @@ exports.index = async (req, res) => {
     try {
         // execute query with page and limit values
         const articles = await Article.find()
-            .limit(page_size)
-            .skip((page - 1) * page_size)
-            .populate(['menu'])
+            .limit(page_size)// Giới hạn số lượng bài viết theo kích thước trang.
+            .skip((page - 1) * page_size)// Bỏ qua bài viết dựa trên trang hiện tại.
+            .populate(['menu'])// Kết hợp dữ liệu của trường 'menu' từ bảng Menu.
             .exec();
 
         // get total documents in the Posts collection
@@ -39,7 +39,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-        const article = await Article.findOne({ _id: req.params.id })
+        const article = await Article.findOne({ _id: req.params.id })// Tìm bài viết theo ID.
         return res.status(200).json({ data: article, status : 200 });
     } catch {
         res.status(404)
@@ -48,7 +48,7 @@ exports.show = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
-    const article = new Article({
+    const article = new Article({// Tạo đối tượng bài viết mới với thông tin từ request.
         name: req.body.name,
         avatar: req.body.avatar || null,
         description: req.body.description,
@@ -61,21 +61,21 @@ exports.store = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const article = await Article.findOne({ _id: req.params.id })
+        const article = await Article.findOne({ _id: req.params.id })// Tìm bài viết theo ID.
 
-        if (req.body.name) {
+        if (req.body.name) {// Cập nhật tên bài viết nếu có.
             article.name = req.body.name;
         }
-        if (req.body.avatar) {
+        if (req.body.avatar) {// Cập nhật ảnh đại diện nếu có.
             article.avatar = req.body.avatar;
         }
-        if (req.body.description) {
+        if (req.body.description) {// Cập nhật mô tả nếu có.
             article.description = req.body.description;
         }
-        if (req.body.menu_id) {
+        if (req.body.menu_id) {// Cập nhật menu_id nếu có.
             article.menu_id = req.body.menu_id;
         }
-        if (req.body.article_content) {
+        if (req.body.article_content) {// Cập nhật nội dung bài viết nếu có.
             article.article_content = req.body.article_content;
         }
 

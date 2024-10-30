@@ -1,23 +1,23 @@
 const User = require("./../../models/User.model") // new
 
 exports.index = async (req, res) => {
-    // destructure page and limit and set default values
+    
     const page = req.query.page || 1; const page_size = req.query.page_size  || 10;
 
     try {
         const condition = {};
         condition.type = 'USER';
-        // execute query with page and limit values
+       
         const users = await User.find()
             .where(condition)
             .limit(page_size)
             .skip((page - 1) * page_size)
             .exec();
 
-        // get total documents in the Posts collection
+       
         const count = await User.count();
 
-        // return response with posts, total pages, and current page
+         // Trả về phản hồi với danh sách người dùng, tổng số trang, và trang hiện tại
         const meta = {
             total_page: Math.ceil(count / page_size),
             total: count,
@@ -40,6 +40,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
+         // Tìm người dùng theo ID
         const user = await User.findOne({ _id: req.params.id })
         return res.status(200).json({ data: user, status : 200 });
     } catch {
@@ -49,6 +50,7 @@ exports.show = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
+     // Tạo một người dùng mới
     const user = new User({
         name: req.body.name,
         avatar: req.body.avatar || null,
@@ -65,7 +67,7 @@ exports.store = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id })
-
+ // Cập nhật thông tin người dùng nếu có
         if (req.body.name) {
             user.name = req.body.name;
         }

@@ -10,24 +10,24 @@ exports.index = async (req, res) => {
 
     try {
         const condition = {};
-        condition.type = 'ADMIN';
+        condition.type = 'ADMIN'; // Chỉ lấy người dùng có type là 'ADMIN'.
         // execute query with page and limit values
-        const users = await User.find()
-            .where(condition)
-            .limit(page_size)
-            .skip((page - 1) * page_size)
-            .populate(['roles'])
-            .exec();
+        const users = await User.find()// Thực hiện truy vấn tìm kiếm người dùng.
+            .where(condition)//điều kiện lọc.
+            .limit(page_size)// Giới hạn số bản ghi lấy ra theo kích thước trang
+            .skip((page - 1) * page_size)// Bỏ qua số bản ghi dựa trên trang hiện tại.
+            .populate(['roles'])// Kết hợp dữ liệu của các trường roles từ bảng Role.
+            .exec();// Thực thi truy vấn.
 
         // get total documents in the Posts collection
-        const count = await User.count();
+        const count = await User.count(); // Đếm tổng số admin trong bảng User.
 
         // return response with posts, total pages, and current page
         const meta = {
-            total_page: Math.ceil(count / page_size),
-            total: count,
-            current_page: parseInt(page),
-            page_size: parseInt(page_size)
+            total_page: Math.ceil(count / page_size),// Tính tổng số trang.
+            total: count,// Tổng số bản ghi.
+            current_page: parseInt(page),// Trang hiện tại.
+            page_size: parseInt(page_size)// Kích thước trang.
         }
         const status =  200;
         const data = {
@@ -45,7 +45,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.params.id })
+        const user = await User.findOne({ _id: req.params.id })// Tìm admin theo ID.
         return res.status(200).json({ data: user, status : 200 });
     } catch {
         res.status(404)
@@ -55,7 +55,7 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
     const hashPassword = bcrypt.hashSync(req.body.password, 12);
-    const user = new User({
+    const user = new User({// Tạo đối tượng user mới với thông tin từ request.
         name: req.body.name,
         avatar: req.body.avatar || null,
         password: hashPassword,
@@ -67,33 +67,33 @@ exports.store = async (req, res) => {
         roles: req.body.roles || []
     })
     await user.save();
-    await Role.updateMany({ '_id': user.roles }, { $push: { admins: user._id } });
+    await Role.updateMany({ '_id': user.roles }, { $push: { admins: user._id } });// Cập nhật Role để thêm admin vào roles tương ứng.
     return res.status(200).json({ data: user, status : 200 });
 };
 
 exports.update = async (req, res) => {
     try {
-        const _id = req.params.id;
-        const user = req.body;
+        const _id = req.params.id; // Lấy ID admin từ request.
+        const user = req.body; // Lấy thông tin cập nhật từ request.
 
         if (user.password) {
             user.password = bcrypt.hashSync(user.password, 12);
         }
 
         // permission <-> role
-        const newRoles = user.roles || [];
+        const newRoles = user.roles || [];// Lấy danh sách roles mới từ request.
         console.log('------------- new ROLE: ', newRoles);
-        const oldUser = await User.findOne({ _id });
-        const oldRoles = oldUser.roles;
+        const oldUser = await User.findOne({ _id });// Tìm admin hiện tại.
+        const oldRoles = oldUser.roles;// Lấy danh sách roles hiện tại của admin.
 
-        Object.assign(oldUser, user);
-        const newUser = await oldUser.save();
+        Object.assign(oldUser, user);// Cập nhật thông tin admin.
+        const newUser = await oldUser.save();// Lưu thông tin đã cập nhật.
 
-        const added = difference(newRoles, oldRoles);
-        const removed = difference(oldRoles, newRoles);
+        const added = difference(newRoles, oldRoles);// Tính các roles cần thêm vào.
+        const removed = difference(oldRoles, newRoles);// Tính các roles cần loại bỏ.
 
-        await Role.updateMany({ '_id': added }, { $addToSet: { admins: _id } });
-        await Role.updateMany({ '_id': removed }, { $pull: { admins: _id } });
+        await Role.updateMany({ '_id': added }, { $addToSet: { admins: _id } });// Cập nhật Role thêm admin vào roles cần thêm.
+        await Role.updateMany({ '_id': removed }, { $pull: { admins: _id } });// Cập nhật Role để xóa admin khỏi roles cần loại bỏ.
 
         return res.status(200).json({ data: newUser, status: 200 });
     } catch {
@@ -104,7 +104,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        await User.deleteOne({ _id: req.params.id })
+        await User.deleteOne({ _id: req.params.id })// Xóa admin theo ID.
         return res.status(200).json({ data: [], status: 200 });
     } catch {
         res.status(404)

@@ -18,7 +18,7 @@ export const RoomList = ( props ) =>
 					{
 						!props.notShowTitle && <Row className="row justify-content-center mb-5 pb-3">
 							<Col md={ 7 } className="heading-section text-center">
-								<h2 className="mb-4">Our Rooms</h2>
+								<h2 className="mb-4">Phòng</h2>
 							</Col>
 						</Row>
 					}
@@ -60,12 +60,12 @@ export const RoomList = ( props ) =>
 														</h3>
 														<p>
 															<span className="price mr-2">{ customNumber( item.price, '.', 'đ' ) }</span>
-															<span className="per">per night</span>
+															<span className="per">mỗi đêm</span>
 														</p>
 														<hr />
 														<p className="pt-1">
 															<Link to={ '/room/' + item._id } className="btn-custom">
-																View Room Details
+																Xem chi tiết phòng
 																<span className="icon-long-arrow-right"></span>
 															</Link>
 														</p>
@@ -105,7 +105,7 @@ export const RoomList = ( props ) =>
 												to="/room"
 												className="btn btn-primary btn-hover fs-18"
 											>
-												View All <ArrowRight />
+												Xem thêm <ArrowRight />
 											</Link>
 										</div>
 									</Col>

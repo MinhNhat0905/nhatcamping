@@ -4,13 +4,13 @@ exports.index = async (req, res) => {
     const page = req.query.page || 1; const page_size = req.query.page_size  || 10;
 
     try {
-        // execute query with page and limit values
+         // Truy vấn các giảm giá với phân trang.
         const discounts = await Discount.find()
             .limit(page_size)
             .skip((page - 1) * page_size)
             .exec();
 
-        // get total documents in the Posts collection
+        // Đếm tổng số bản ghi trong bảng giảm giá.
         const count = await Discount.count();
 
         // return response with posts, total pages, and current page
@@ -36,7 +36,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-        const discounts = await Discount.findOne({ _id: req.params.id })
+        const discounts = await Discount.findOne({ _id: req.params.id })// Tìm mã giảm giá theo ID.
         return res.status(200).json({ data: discounts, status: 200 });
     } catch {
         res.status(404)

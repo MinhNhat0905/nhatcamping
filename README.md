@@ -4,9 +4,23 @@
 - https://viblo.asia/p/authentication-trong-nodejs-su-dung-jwt-YWOZraQvKQ0
 - https://codesandbox.io/examples/package/react-chartjs-2
 - https://dev.to/nehalahmadkhan/many-to-many-relationship-in-mongodb-nodejs-express-mongoose-4djm
-# RUN
-- BE => npx nodemon app.js
 
 
-# Email
-- letx.1502@gmail.com
+
+npm install 
+
+reactjs thì run npm start
+
+
+'http://localhost:3053/api/v1/admin/permission/seed'
+
+
+run 
+cd be
+npx nodemon app.js
+
+cd cms
+npm start
+
+cd fe
+npm start

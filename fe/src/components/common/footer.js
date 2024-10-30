@@ -11,7 +11,7 @@ export const Footer = () =>
 					<div className="row mb-5">
 						<div className="col-md">
 							<div className="ftco-footer-widget mb-4">
-								<h2 className="ftco-heading-2">Deluxe Hotel</h2>
+								<h2 className="ftco-heading-2">Sun camping</h2>
 								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 
 							</div>

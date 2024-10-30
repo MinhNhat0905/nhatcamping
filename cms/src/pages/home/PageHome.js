@@ -103,8 +103,8 @@ export default function PageHome ()
 			<Row>
 				<Col>
 					<Alert variant="success">
-						<Alert.Heading>Xin chào</Alert.Heading>
-						<p>Chào mừng bạn đến với hệ thống quản lý khách sạn của chúng tôi</p>
+						<Alert.Heading>ADMIN</Alert.Heading>
+						<p></p>
 					</Alert>
 				</Col>
 			</Row>

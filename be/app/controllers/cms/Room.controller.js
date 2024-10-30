@@ -41,7 +41,7 @@ exports.index = async (req, res) => {
         console.error(err.message);
     }
 };
-
+// Lấy thông tin chi tiết của một phòng
 exports.show = async (req, res) => {
     try {
         const room = await Room.findOne({ _id: req.params.id })
@@ -51,7 +51,7 @@ exports.show = async (req, res) => {
         res.send({ error: "Room doesn't exist!" })
     }
 };
-
+// Tạo mới một phòng
 exports.store = async (req, res) => {
     const category = await Category.findById(req.body.category_id);
     const room = new Room({
@@ -71,7 +71,7 @@ exports.store = async (req, res) => {
     await room.save()
     return res.status(200).json({ data: room, status : 200 });
 };
-
+// Cập nhật thông tin một phòng
 exports.update = async (req, res) => {
     try {
         const room = await Room.findOne({ _id: req.params.id })
@@ -124,7 +124,7 @@ exports.update = async (req, res) => {
         res.send({ error: "Room doesn't exist!" })
     }
 };
-
+// Xóa một phòng
 exports.delete = async (req, res) => {
     try {
         await Room.deleteOne({ _id: req.params.id })

@@ -1,4 +1,4 @@
-cd /Users/trungphuna/Documents/work/web/khodoan/2023/2023-mern-manage-hotel/cms
+cd /Users/admin/Dropbox/PC/Downloads/nhatcamping/cms
 npm start
-cd /Users/trungphuna/Documents/work/web/khodoan/2023/2023-mern-manage-hotel/be
+cd /Users/admin/Dropbox/PC/Downloads/nhatcamping/be
 npx nodemon app.js

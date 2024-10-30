@@ -28,7 +28,7 @@ exports.index = async (req, res) => {
         status
     });
 };
-
+// Lấy thông tin chi tiết của một dịch vụ
 exports.show = async (req, res) => {
     try {
         const service = await Service.findOne({ _id: req.params.id })
@@ -38,7 +38,7 @@ exports.show = async (req, res) => {
         res.send({ error: "Service doesn't exist!" })
     }
 };
-
+// Tạo mới một dịch vụ
 exports.store = async (req, res) => {
     const service = new Service({
         name: req.body.name,
@@ -49,7 +49,7 @@ exports.store = async (req, res) => {
     await service.save()
     return res.status(200).json({ data: service, status : 200 });
 };
-
+// Cập nhật thông tin một dịch vụ
 exports.update = async (req, res) => {
     try {
         const service = await Service.findOne({ _id: req.params.id })
@@ -74,7 +74,7 @@ exports.update = async (req, res) => {
         res.send({ error: "Service doesn't exist!" })
     }
 };
-
+// Xóa một dịch vụ
 exports.delete = async (req, res) => {
     try {
         await Service.deleteOne({ _id: req.params.id })
