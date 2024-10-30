@@ -1,0 +1,778 @@
+[{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8921"
+  },
+  "name": "List booking",
+  "description": "Danh sách booking",
+  "path": "/booking/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.027Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8924"
+  },
+  "name": "show booking",
+  "description": "show booking",
+  "path": "/booking/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.031Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8927"
+  },
+  "name": "Update booking",
+  "description": "Update booking",
+  "path": "/booking/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.034Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b892a"
+  },
+  "name": "List room",
+  "description": "Danh sách phòng",
+  "path": "/room/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.037Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b892d"
+  },
+  "name": "show room",
+  "description": "show room",
+  "path": "/room/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.040Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8930"
+  },
+  "name": "add room",
+  "description": "Thêm mới room",
+  "path": "/room/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.042Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8933"
+  },
+  "name": "Update room",
+  "description": "Update room",
+  "path": "/room/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.045Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8936"
+  },
+  "name": "List category",
+  "description": "Danh sách category",
+  "path": "/category/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.048Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8939"
+  },
+  "name": "show category",
+  "description": "show category",
+  "path": "/category/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.051Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b893c"
+  },
+  "name": "add category",
+  "description": "Thêm mới category",
+  "path": "/category/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.054Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b893f"
+  },
+  "name": "Update category",
+  "description": "Update category",
+  "path": "/category/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.057Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8942"
+  },
+  "name": "List discount",
+  "description": "Danh sách mã giảm giá",
+  "path": "/discount/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.059Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8945"
+  },
+  "name": "show discount",
+  "description": "show discount",
+  "path": "/discount/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.061Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8948"
+  },
+  "name": "add discount",
+  "description": "Thêm mới discount",
+  "path": "/discount/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.064Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b894b"
+  },
+  "name": "Update discount",
+  "description": "Update discount",
+  "path": "/discount/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.067Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b894e"
+  },
+  "name": "List service",
+  "description": "Danh sách service",
+  "path": "/service/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.069Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8951"
+  },
+  "name": "show service",
+  "description": "show service",
+  "path": "/service/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.071Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8954"
+  },
+  "name": "add service",
+  "description": "Thêm mới service",
+  "path": "/service/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.074Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8957"
+  },
+  "name": "Update service",
+  "description": "Update service",
+  "path": "/service/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.076Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b895a"
+  },
+  "name": "List menu",
+  "description": "Danh sách menu",
+  "path": "/menu/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.078Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b895d"
+  },
+  "name": "show menu",
+  "description": "show menu",
+  "path": "/menu/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.080Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8960"
+  },
+  "name": "add menu",
+  "description": "Thêm mới menu",
+  "path": "/menu/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.082Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8963"
+  },
+  "name": "Update menu",
+  "description": "Update menu",
+  "path": "/menu/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.084Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8966"
+  },
+  "name": "List article",
+  "description": "Danh sách article",
+  "path": "/article/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.086Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8969"
+  },
+  "name": "show article",
+  "description": "show article",
+  "path": "/article/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.088Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b896c"
+  },
+  "name": "add article",
+  "description": "Thêm mới article",
+  "path": "/article/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.090Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b896f"
+  },
+  "name": "Update article",
+  "description": "Update article",
+  "path": "/article/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.093Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8972"
+  },
+  "name": "List user",
+  "description": "Danh sách user",
+  "path": "/user/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.095Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8975"
+  },
+  "name": "show user",
+  "description": "show user",
+  "path": "/user/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.097Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8978"
+  },
+  "name": "add user",
+  "description": "Thêm mới user",
+  "path": "/user/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.099Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b897b"
+  },
+  "name": "Update user",
+  "description": "Update user",
+  "path": "/user/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.101Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b897e"
+  },
+  "name": "List permission",
+  "description": "Danh sách permission",
+  "path": "/permission/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.103Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8981"
+  },
+  "name": "show permission",
+  "description": "show permission",
+  "path": "/permission/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.105Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8984"
+  },
+  "name": "add permission",
+  "description": "Thêm mới permission",
+  "path": "/permission/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.108Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8987"
+  },
+  "name": "Update permission",
+  "description": "Update permission",
+  "path": "/permission/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.110Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b898a"
+  },
+  "name": "List role",
+  "description": "Danh sách role",
+  "path": "/role/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.112Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b898d"
+  },
+  "name": "show role",
+  "description": "show role",
+  "path": "/role/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.114Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8990"
+  },
+  "name": "add role",
+  "description": "Thêm mới role",
+  "path": "/role/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.116Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8993"
+  },
+  "name": "Update role",
+  "description": "Update role",
+  "path": "/role/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.118Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8996"
+  },
+  "name": "List admin",
+  "description": "Danh sách admin",
+  "path": "/admin/",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.120Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b8999"
+  },
+  "name": "show admin",
+  "description": "show admin",
+  "path": "/admin/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.122Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b899c"
+  },
+  "name": "add admin",
+  "description": "Thêm mới admin",
+  "path": "/admin/store",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    },
+    {
+      "$oid": "65f1db095b96317484496874"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.124Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b899f"
+  },
+  "name": "Update admin",
+  "description": "Update admin",
+  "path": "/admin/update/:id",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.126Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f1d8844d94b713b51b89a2"
+  },
+  "name": "Update profile",
+  "description": "Update profile",
+  "path": "/profile",
+  "roles": [
+    {
+      "$oid": "65f1daf65b9631748449686d"
+    }
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:47:00.128Z"
+  },
+  "__v": 0
+}]

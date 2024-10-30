@@ -1,0 +1,168 @@
+.zingLoading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	background: rgba(86, 86, 86, 0.4);
+	/*background-color: rgb(34, 160, 234);*/
+}
+
+.zingLoading .ant-spin-dot-item {
+	opacity: 1 !important;
+}
+
+
+.ck-editor__editable {
+	min-height: 400px;
+}
+
+/*Auth*/
+
+.bg-auth {
+	align-items: center;
+
+	background-image: url('../images/bg_2.jpg');
+	height: 100vh;
+
+	.auth-box {
+		border: none;
+		border-radius: 10px;
+		background-color: rgba(118, 109, 244, 0.2);
+		// opacity: 0.8;
+		box-shadow: 0 3px 10px 0 rgba(40, 48, 57, .8);
+	}
+}
+
+
+/*******font-size*******/
+.fs-11 {
+	font-size: 11px;
+}
+
+.fs-12 {
+	font-size: 12px;
+}
+
+.fs-13 {
+	font-size: 13px;
+}
+
+.fs-14 {
+	font-size: 14px !important;
+}
+
+.fs-15 {
+	font-size: 15px !important;
+}
+
+.fs-16 {
+	font-size: 16px !important;
+}
+
+.fs-17 {
+	font-size: 17px !important;
+}
+
+.fs-18 {
+	font-size: 18px !important;
+}
+
+.fs-19 {
+	font-size: 19px !important;
+}
+
+.fs-20 {
+	font-size: 20px !important;
+}
+
+.fs-21 {
+	font-size: 21px !important;
+}
+
+.fs-22 {
+	font-size: 22px !important;
+}
+
+.user-nav {
+
+
+	@media (min-width:768px) {
+		.dropdown-menu.show {
+			right: 0 !important;
+			left: auto;
+		}
+	}
+}
+
+.nav-profile {
+	.nav-item {
+		.nav-link:focus {
+			border: none !important;
+		}
+
+		.nav-link.active {
+			border: none !important;
+			color: #007bff
+		}
+	}
+}
+
+.user-form {
+	.avatar {
+		border: 5px solid;
+		height: 250px;
+		margin-bottom: 15px;
+		width: 250px;
+		border-radius: 50%;
+		// height: 30px;
+		// margin-right: 5px;
+		overflow: hidden;
+		// width: 30px;
+	}
+}
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.review {
+	.star {
+		font-size: 18px;
+		color: #007bff;
+	}
+	.star.active {
+		color: #ffc107;
+	}
+}
+
+.br {
+	&-6 {
+		border-radius: 6px;
+	}
+	&-top {
+		&-left-6 {
+			border-top-left-radius: 6px !important;
+		}
+		&-right-6 {
+			border-top-right-radius: 6px !important;
+		}
+	}
+	&-bottom {
+		&-left-6 {
+			border-bottom-left-radius: 6px !important;
+		}
+		&-right-6 {
+			border-bottom-right-radius: 6px !important;
+		}
+	}
+}
+
+@media (min-width:768px) {
+	.w-md-50 {
+		width: 50% !important;
+	}
+}

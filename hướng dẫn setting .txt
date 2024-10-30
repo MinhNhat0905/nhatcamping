@@ -1,0 +1,21 @@
+node v16.7
+
+Lấy code về 
+- xoá node-modules
+- Xoá package-lock.json
+
+xong npm install 
+
+reactjs thì run npm start
+
+be run
+=> npx nodemon app.js
+
+curl --location 'http://localhost:3053/api/v1/admin/permission/seed'
+
+
+run 
+Be 
+npx nodemon app.js
+Fe, cms
+npm start

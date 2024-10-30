@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "65f1da245b9631748449681c"
+  },
+  "name": "Dịch vụ dọn phòng ",
+  "avatar": "image-4fdb2e43-7e0e-4695-a8a9-abbf8a966b86.jpg",
+  "description": "Dịch vụ dọn phòng ",
+  "service_content": "Dịch vụ dọn phòng ",
+  "created_at": {
+    "$date": "2024-03-13T16:53:56.311Z"
+  },
+  "__v": 0
+}]

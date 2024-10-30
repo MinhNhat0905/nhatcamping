@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "65f1d9cd5b963174844967ec"
+  },
+  "name": "Phòng 01",
+  "avatar": "image-37abf332-5f4c-4cc9-a2d9-e7bb7ac5fd10.jpg",
+  "room_code": "101",
+  "status": "USER",
+  "floors": 1,
+  "price": 2500000,
+  "size": 50,
+  "bed": 1,
+  "room_content": "<p>Mô tả phòng&nbsp;</p>",
+  "category_id": "65f1d94a5b963174844967c9",
+  "category": {
+    "$oid": "65f1d94a5b963174844967c9"
+  },
+  "albums": [
+    "image-ebcf3dbd-41b2-45f0-89f7-6e4dfcc0fdee.jpg",
+    "image-26331c4f-1d04-4a4b-a565-35a6216dbccf.png"
+  ],
+  "created_at": {
+    "$date": "2024-03-13T16:52:29.925Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6720f564cf17dde27e247ac8"
+  },
+  "name": "Phòng 20",
+  "avatar": "image-27f919a9-d5d5-4274-ae37-5a7bb103e1e5.jpg",
+  "room_code": "2220",
+  "status": "EMPTY",
+  "floors": 20,
+  "price": 1000000,
+  "size": 50,
+  "bed": 2,
+  "room_content": "<p>sdasdasdasdas</p>",
+  "category_id": "6720f519cf17dde27e247aba",
+  "category": {
+    "$oid": "6720f519cf17dde27e247aba"
+  },
+  "albums": [
+    "image-12b5aee1-8eba-4984-b9fa-d9827a69d39c.jpg",
+    "image-a4c2f467-919d-4374-909b-4d28257b6795.jpg",
+    "image-89927269-7c5c-490f-b2a7-3a67402de9ee.jpg"
+  ],
+  "created_at": {
+    "$date": "2024-10-29T14:47:00.192Z"
+  },
+  "__v": 0
+}]
