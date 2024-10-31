@@ -174,16 +174,17 @@ const SignUpPage = () =>
 
 
 									<Form.Group className="mb-3 d-flex justify-content-center">
-										<Button type="submit" className='btn btn-primary'>Đăng nhập</Button>
+										<Button type="submit" className='btn btn-primary'>Đăng ký</Button>
 									</Form.Group>
 								</Form>
 								<div className="mt-4 text-center">
 									<p className="mb-0 text-white">
-										Nếu đã có tài khoản ?{ " " }
-										<Link
+									<Link
 											to="/sign-in"
 											className="text-decoration-underline text-white"
 										>
+										Nếu đã có tài khoản ?{ " " }
+										
 											{ " " }
 											Đăng nhập{ " " }
 										</Link>

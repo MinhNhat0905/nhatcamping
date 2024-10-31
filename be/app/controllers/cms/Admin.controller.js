@@ -54,8 +54,9 @@ exports.show = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
+    // Tạo một admin mới
     const hashPassword = bcrypt.hashSync(req.body.password, 12);
-    const user = new User({// Tạo đối tượng user mới với thông tin từ request.
+    const user = new User({
         name: req.body.name,
         avatar: req.body.avatar || null,
         password: hashPassword,

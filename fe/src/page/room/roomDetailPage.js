@@ -45,7 +45,7 @@ const RoomDetailPage = () =>
 
 	const getRooms = async () =>
 	{
-		const rs = await RoomService.getDataList( { page: 1, page_size: 2, status: 1 } );
+		const rs = await RoomService.getDataList( { page: 1, page_size: 4, status: 1 } );//page_size: 2 là số lượng phòng khác hiển thị
 		if ( rs?.status === 200 )
 		{
 			setRooms( rs?.data?.rooms || [] )

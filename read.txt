@@ -8,7 +8,7 @@ npm install
 
 
 
-curl --location 'http://localhost:3053/api/v1/admin/permission/seed'
+curl --location 'http://localhost:3053/api/v1/admin/permission/seed' 53=>60
 
 
 

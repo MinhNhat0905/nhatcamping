@@ -12,7 +12,7 @@ npm install
 reactjs thì run npm start
 
 
-'http://localhost:3053/api/v1/admin/permission/seed'
+'http://localhost:3053/api/v1/admin/permission/seed'53=>60
 
 
 run 

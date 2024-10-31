@@ -1,7 +1,7 @@
 
 import defaultUser from '../assets/images/default-avatar.png';
 import defaultImg from '../assets/images/image_faildoad.png';
-import defaultBg from '../assets/images/bg_2.jpg';
+import defaultBg from '../assets/images/campingbanner4.jpg';
 export const URL_IMG = process.env.REACT_APP_URL_IMAGE;
 export default function currencyFormat ( price )
 {

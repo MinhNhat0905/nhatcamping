@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, Link } from "react-router-dom";
 import { NavBarPage } from "./navBar";
-import img2 from "../../assets/images/bg_2.jpg";
-import img1 from "../../assets/images/bg_1.jpg";
+import img2 from "../../assets/images/campingbanner4.jpg";
+import img1 from "../../assets/images/campingbanner2.jpg";
 import { Carousel } from "react-bootstrap";
 import { default1 } from "../../common/constant";
 

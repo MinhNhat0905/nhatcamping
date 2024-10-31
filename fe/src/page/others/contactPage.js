@@ -161,10 +161,7 @@ const ContactPage = () =>
 									<div className="gm-err-container">
 										<div className="gm-err-content">
 											<div className="gm-err-icon">
-												<iframe
-													src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.9423106499294!2d106.86776617588775!3d10.815726889335458!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317521a92fd118d3%3A0xa6a9c754f5357551!2zODcvMTQgxJDGsOG7nW5nIEPhuqd1IMSQw6xuaCwgS2h1IHBo4buRIGzDom4gbmdvw6BpLCBRdeG6rW4gOSwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1693108142157!5m2!1svi!2s"
-													width="600" height="450" style={{ border: 0}}  allowFullScreen=""
-													loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+											<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3765.3041950828683!2d106.69351862539844!3d10.859792352599158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529c17978287d%3A0xec48f5a17b7d5741!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOZ3V54buFbiBU4bqldCBUaMOgbmggLSBDxqEgc-G7nyBxdeG6rW4gMTI!5e1!3m2!1svi!2s!4v1730297238870!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 											</div>
 										</div>
 									</div>

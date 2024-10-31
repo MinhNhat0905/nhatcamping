@@ -4,7 +4,7 @@ const {verify} = require("jsonwebtoken");
 
 exports.isAuth = async (req, res, next) => {
     // Lấy access token từ header
-     return next();
+     //return next();
     let pathUrlRoute = req.route.path;
     console.log('=========> ROUTE PATH : ', pathUrlRoute);
 
