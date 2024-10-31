@@ -12,6 +12,7 @@ export default function UpdateUser() {
     const [validated, setValidated] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(null);
     const [sex, setSex] = useState('Nam');
     const [birthday, setBirthday] = useState('');
     const [avatar, setAvatar] = useState(null);
@@ -40,6 +41,7 @@ export default function UpdateUser() {
                 avatar: avatar,
                 type: type,
                 email: email,
+                password: password,
                 birthday: birthday,
                 sex: sex,
             }
@@ -66,6 +68,7 @@ export default function UpdateUser() {
         if (response.status === 'success' || response.status === 200) {
             setName(response.data.name);
             setEmail(response.data.email);
+            setPassword(response.data.password);
             setSex(response.data.sex);
             setType(response.data.type);
             setAvatar(response.data.avatar);
@@ -80,8 +83,8 @@ export default function UpdateUser() {
         } else {
             toast(response?.message || response?.error || 'error');
         }
-    }
-
+    };//
+//
     useEffect( () =>
     {
         // getDetailData();
@@ -124,6 +127,15 @@ export default function UpdateUser() {
                                 <Form.Control.Feedback type="invalid">
                                     Email không được để trống
                                 </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control  required type="password" name={'password'} placeholder="******"
+                                               onChange={event => setPassword(event.target.value)}
+                                               />
+                                {/* <Form.Control.Feedback type="invalid">
+                                    Password không được để trống
+                                </Form.Control.Feedback> */}
                             </Form.Group>
                             <Row>
                                 <Col className={'col-3'}>

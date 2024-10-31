@@ -11,11 +11,11 @@ import { SelectBase } from "../base-form/selectForm";
 import { RoomService } from "../../services/feService/roomService";
 import { BookingService } from "../../services/feService/bookingService";
 
-const paymentType = [
-	// {
-	// 	_id: 1,
-	// 	name: 'Tiền mặt'
-	// },
+const paymentType = [//
+	{
+		_id: 1,
+		name: 'Tiền mặt'//chỗ này
+	},
 	{
 		_id: 2,	
 		name: 'Online'
@@ -164,7 +164,7 @@ export const FormBooking = () =>
 			discount_id: null,
 			discount: 0,
 			status: 'Đang xử lý',
-			status_payment: 'Chưa thanh toán',
+			status_payment: 'Đã thanh toán',// Chưa thanh toán => Đã thanh toán
 			price: 0,
 			total_money: 0,
 			customer_name: null,
@@ -286,7 +286,7 @@ export const FormBooking = () =>
 									<SelectBase form={ form } setForm={ setForm } name={ 'payment_type' }
 										data={ paymentType }
 										label={ 'Phương thức thanh toán: ' }
-										key_name={ 'payment_type' } required={ true } placeholder={ 'Chọn phương thức thanh toán' }
+										key_name={ 'payment_type' } required={ true } placeholder={ 'Thanh toán trực tiếp' }
 										type={ 'text' } error={ 'Vui lòng chọn phương thức thanh toán.' }
 									/>
 								</Form.Group>

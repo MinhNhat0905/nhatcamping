@@ -18,7 +18,7 @@ export const NavBarPage = () =>
 	{
 		const response = await menuService.getDataList( {
 			page: 1,
-			page_size: 2
+			page_size: 4 /// 2=>4
 		} );
 
 		if ( response.status === 200 )

@@ -10,14 +10,13 @@ const axiosClient = axios.create({
 })
 
 if (localStorage.getItem('access_token')) {
-	console.log('================= TOKEN LOGIN : => ', localStorage.getItem('access_token'));
+	console.log('=== TOKEN LOGIN : => ', localStorage.getItem('access_token'));
 	axiosClient.defaults.headers.common['x_authorization'] = localStorage.getItem('access_token');
 }
 
 axiosClient.interceptors.response.use(
      async (response) => {
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
+       
 		let data = response.data;
         // if ((data && data.code === 'LG0401')) {
         //     localStorage.clear();
@@ -49,8 +48,7 @@ axiosClient.interceptors.response.use(
         // } else if(dataError.code === 'LG0403') {
 		// 	window.location.href = `/admin/error/403`;
 		// }
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
+        
        return  Promise.reject(error.response?.data)
     }
 )

@@ -13,7 +13,7 @@ export const Pagination = (
 ) =>
 {
 
-	console.log('total=======> ', total);
+	console.log('total===> ', total);
 	const [ paginationMemo, setPaginationMemo ] = useState( [] );
 
 	useEffect( () =>

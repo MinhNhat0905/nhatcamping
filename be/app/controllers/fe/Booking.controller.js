@@ -9,16 +9,16 @@ const axios = require("axios");
 exports.webhook = async (req, res) => {
     let _id = req.query.vnp_TxnRef;
     if (req.query.vnp_ResponseCode === "00") { // Kiểm tra nếu thanh toán thành công
-        const booking = await Booking.findById({_id: _id}); // Tìm booking theo ID
+        const booking = await Booking.findById({_id: _id});
         if (booking) {
-            booking.status_payment = "PAID";
+            booking.status_payment = "Đã thanh toán";
             booking.save();
         }
 
-        return res.redirect('http://localhost:3015/payment/success');
+        return res.redirect('http://localhost:3030/payment/success');
     }
 
-    return res.redirect('http://localhost:3015/payment/error');
+    return res.redirect('http://localhost:3030/payment/error');
     // return res.status(200).json({ data: req.query, status: 200 });
 }
 

@@ -1,4 +1,7 @@
 const User = require("./../../models/User.model") // new
+const bcrypt = require("bcryptjs");
+const Role = require("../../models/Role.model");
+const Permission = require("../../models/Permission.model"); // new
 
 exports.index = async (req, res) => {
     
@@ -13,6 +16,7 @@ exports.index = async (req, res) => {
             .where(condition)
             .limit(page_size)
             .skip((page - 1) * page_size)
+            .populate(['roles'])
             .exec();
 
        
@@ -71,6 +75,11 @@ exports.update = async (req, res) => {
     try {
         const _id = req.params.id; // Lấy ID  từ request.
         const user = await User.findOne({ _id: req.params.id })
+        //if (user.password) {
+            const hashPassword = bcrypt.hashSync(req.body.password, 12);//mã hóa để lưu mật khẩu mới
+           // user.password = bcrypt.hashSync(user.password, 12); // Nếu có mật khẩu trong yêu cầu, mã hóa mật khẩu trước khi cập nhật.
+       // }
+
  // Cập nhật thông tin người dùng nếu có
         if (req.body.name) {
             user.name = req.body.name;
@@ -80,6 +89,9 @@ exports.update = async (req, res) => {
         }
         if (req.body.email) {
             user.email = req.body.email;
+        }
+        if (req.body.password) {
+            user.password = hashPassword;// cập nhật mật khẩu
         }
         if (req.body.sex) {
             user.sex = req.body.sex;
@@ -94,8 +106,8 @@ exports.update = async (req, res) => {
         res.status(404)
         res.send({ error: "User doesn't exist!" })
     }
-};
-
+};//
+//
 exports.delete = async (req, res) => {
     try {
         await User.deleteOne({ _id: req.params.id })

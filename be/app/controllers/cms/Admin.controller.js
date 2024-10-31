@@ -78,7 +78,7 @@ exports.update = async (req, res) => {
         const user = req.body; // Lấy thông tin cập nhật từ request.
 
         if (user.password) {
-            user.password = bcrypt.hashSync(user.password, 12);
+            user.password = bcrypt.hashSync(user.password, 12); // Nếu có mật khẩu trong yêu cầu, mã hóa mật khẩu trước khi cập nhật.
         }
 
         // permission <-> role

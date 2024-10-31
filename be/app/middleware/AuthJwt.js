@@ -6,7 +6,7 @@ exports.isAuth = async (req, res, next) => {
     // Lấy access token từ header
      //return next();
     let pathUrlRoute = req.route.path;
-    console.log('=========> ROUTE PATH : ', pathUrlRoute);
+    console.log('====> ROUTE PATH : ', pathUrlRoute);
 
     const accessTokenFromHeader = req.headers.x_authorization;
 
@@ -32,30 +32,30 @@ exports.isAuth = async (req, res, next) => {
 
     let user = await User.findOne({ email: verified.payload.email}).populate(['roles']);
     req.user = user;
-    // console.log('------------- ADMIN LOGIN  => ', user);
-    console.log('------------- req.path => ', req.path);
+    console.log('---- ADMIN LOGIN  => ', user);
+    console.log('---- req.path => ', req.path);
 	if(user?.type === 'USER') {
 		return next();
 	}
     let roles = user.roles;
-    // console.log('=========> CHECK ROLES <=============', roles);
+     console.log('====> CHECK ROLES <====', roles);
     if (roles.length !== 0) {
         for (let i = 0 ; i < roles.length; i ++) {
             let permissions = roles[i].permissions;
-            console.log('=========> ROLE  <=============', roles[i].name);
+            console.log('====> ROLE  <====', roles[i].name);
             for (let j = 0; j < permissions.length ; j ++) {
                 let permissionDB = await Permission.findOne({_id: permissions[j]})
                 if (permissionDB) {
                     let checkPath = permissionDB.path;
                     if (checkPath.includes(pathUrlRoute)) {
-                        console.log('============= PERMISSION PATH: ', checkPath);
-                        console.log('============= PERMISSION pathUrlRoute: ', pathUrlRoute);
+                        console.log('==== PERMISSION PATH: ', checkPath);
+                        console.log('==== PERMISSION pathUrlRoute: ', pathUrlRoute);
                         return next();
                     }
                 }
             }
         }
-        console.log('=========> KHÔNG CÓ QUYỀN TRUY CẬP <=============');
+        console.log('====> KHÔNG CÓ QUYỀN TRUY CẬP <===');
     }
     return res
         .status(403)

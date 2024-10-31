@@ -66,7 +66,7 @@ app.post('/api/v1/upload-avatar',function(req,res){
 	console.log('req----------> ',req);
     upload(req,res,function(err) {
         if(err) {
-			console.log('error=========> ', err);
+			console.log('error===> ', err);
             return res.end("Error uploading file.");
         }
         const image = req.file;
