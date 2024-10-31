@@ -19,36 +19,36 @@ export const LoginPage = () =>
 
 
 
-	const handleSubmit = async ( e ) =>
-	{
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if ( e?.currentTarget?.checkValidity() === false )
-		{
+		if (e?.currentTarget?.checkValidity() === false) {
 			e.stopPropagation();
-		} else
-		{
-			const response = await AuthService.login( form );
-			if ( response?.status === 200 && response?.data )
-			{
-				localStorage.setItem( 'access_token', response.data.accessToken );
+		} else {
+			const response = await AuthService.login(form);
+			if (response?.status === 200 && response?.data) {
+				// Kiểm tra loại người dùng
+				if (response.data.user?.type !== 'ADMIN') {
+					toast('Bạn không có quyền truy cập vào hệ thống này.');
+					return; // Ngăn không cho tiếp tục
+				}
+	
+				localStorage.setItem('access_token', response.data.accessToken);
 				let user = {
 					name: response.data.user?.name,
 					email: response.data.user?.email,
 					avatar: response.data.user?.avatar,
 				};
-				localStorage.setItem( 'user', JSON.stringify( user ) );
-				toast( 'Đăng nhập thành công!' );
-				await timeDelay( 1000 )
+				localStorage.setItem('user', JSON.stringify(user));
+				toast('Đăng nhập thành công!');
+				await timeDelay(1000);
 				window.location.href = `/`;
-			} else
-			{
-				toast( response?.message || 'Đăng nhập thất bại' )
+			} else {
+				toast(response?.message || 'Đăng nhập thất bại');
 			}
 		}
-
+	
 		setValidated(true);
-
-	}
+	};
 	return (
 		<div className='bg-auth d-flex'>
 			<Container>

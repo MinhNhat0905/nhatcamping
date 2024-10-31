@@ -11,6 +11,7 @@ export default function CreateUser() {
     const [validated, setValidated] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(null);
     const [sex, setSex] = useState('Nam');
     const [birthday, setBirthday] = useState('');
     const [avatar, setAvatar] = useState(null);
@@ -39,6 +40,7 @@ export default function CreateUser() {
                 avatar: avatar,
                 type: type,
                 email: email,
+                password: password,
                 birthday: birthday,
                 sex: sex,
             };
@@ -91,6 +93,15 @@ export default function CreateUser() {
                                                value={email}/>
                                 <Form.Control.Feedback type="invalid">
                                     Email không được để trống
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control  required type="password" name={'password'} placeholder="******"
+                                               onChange={event => setPassword(event.target.value)}
+                                               />
+                                <Form.Control.Feedback type="invalid">
+                                    Password không được để trống
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Row>

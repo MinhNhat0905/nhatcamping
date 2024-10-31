@@ -47,7 +47,7 @@ export default function CreateCategory ()
 					<Col>
 						<Breadcrumb>
 							<Breadcrumb.Item href="/category" >
-								Danh mục
+								Loại phòng
 							</Breadcrumb.Item>
 							<Breadcrumb.Item active>Thêm mới</Breadcrumb.Item>
 						</Breadcrumb>
@@ -56,12 +56,12 @@ export default function CreateCategory ()
 						</div>
 						<Form noValidate validated={ validated } onSubmit={ handleSubmit }>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-								<Form.Label>Tên danh mục</Form.Label>
+								<Form.Label>Loại phòng</Form.Label>
 								<Form.Control required type="text" name={ 'name' } placeholder="Kinh"
 									onChange={ event => setName( event.target.value ) }
 									value={ name } />
 								<Form.Control.Feedback type="invalid">
-									Tên danh mục không được để trống
+									Loại phòng không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

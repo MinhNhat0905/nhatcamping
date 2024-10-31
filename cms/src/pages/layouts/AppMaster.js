@@ -40,15 +40,15 @@ function AppMaster ()
 								<Navbar.Collapse id="basic-navbar-nav">
 									<Nav className="me-auto">
 										<Link to="/booking" className={ 'nav-link' }>Quản lý đặt phòng</Link>
-										<Link to="/category" className={ 'nav-link' }>Danh mục</Link>
-										<Link to="/room" className={ 'nav-link' }>Phòng</Link>
+										<Link to="/category" className={ 'nav-link' }>Loại phòng</Link>
+										<Link to="/room" className={ 'nav-link' }>Danh sách phòng</Link>
 										<Link to="/discount" className={ 'nav-link' }>Mã giảm giá</Link>
 										<Link to="/service" className={ 'nav-link' }>Dịch Vụ</Link>
 										<Link to="/menu" className={ 'nav-link' }>Menu</Link>
 										<Link to="/article" className={ 'nav-link' }>Tin tức</Link>
-										<Link to="/user" className={ 'nav-link' }>Thành viên</Link>
+										<Link to="/user" className={ 'nav-link' }>Người dùng</Link>
 										<NavDropdown title="Phân quyền" id="basic-nav-dropdown">
-											<Link to="/permission" className={ 'dropdown-item' }>Permission</Link>
+											{/* <Link to="/permission" className={ 'dropdown-item' }>Danh sách quyền</Link> */}
 											<Link to="/role" className={ 'dropdown-item' }>Role</Link>
 											<Link to="/admin" className={ 'dropdown-item' }>Admin</Link>
 										</NavDropdown>

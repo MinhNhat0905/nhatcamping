@@ -66,7 +66,7 @@ export default function UpdateCategory ()
 					<Col>
 						<Breadcrumb>
 							<Breadcrumb.Item href="/category" >
-								Danh mục
+								Loại phòng
 							</Breadcrumb.Item>
 							<Breadcrumb.Item active>Cập nhật</Breadcrumb.Item>
 						</Breadcrumb>
@@ -80,7 +80,7 @@ export default function UpdateCategory ()
 											  onChange={ event => setName( event.target.value ) }
 											  value={ name } />
 								<Form.Control.Feedback type="invalid">
-									Tên danh mục không được để trống
+									Loại phòng không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

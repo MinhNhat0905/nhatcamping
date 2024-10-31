@@ -115,9 +115,10 @@ export default function PageRoom ()
 													<ul style={ { paddingLeft: 0 } }>
 														{ item.max && <li>Max: { item.max }</li> }
 
-														<li>Size: { item.size }</li>
-														<li>Floors: { item.floors }</li>
-														<li>RoomCode: { item.room_code }</li>
+														<li>Diện tích: { item.size }</li>
+														<li>Số tầng: { item.floors }</li>
+														<li>Phòng ngủ: { item.bed}</li>
+														<li>Số phòng: { item.room_code }</li>
 													</ul>
 												</td>
 												<td>

@@ -90,7 +90,7 @@ export const BookingList = ( props ) =>
 
 												<td>
 													{
-														item?.status_payment?.toUpperCase() === 'PAID' &&
+														item?.status_payment?.toUpperCase() === 'Đã thanh toán' && //hiển thị đúng chữ đã thanh toán mới cho review
 														<Button variant="success" size="sm" style={ { borderRadius: '10px' } } onClick={ e =>
 														{
 															props.setShowModal( true );

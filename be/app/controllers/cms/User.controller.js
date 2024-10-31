@@ -2,7 +2,8 @@ const User = require("./../../models/User.model") // new
 
 exports.index = async (req, res) => {
     
-    const page = req.query.page || 1; const page_size = req.query.page_size  || 10;
+    const page = req.query.page || 1; 
+    const page_size = req.query.page_size  || 10;
 
     try {
         const condition = {};
@@ -40,8 +41,7 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
     try {
-         // Tìm người dùng theo ID
-        const user = await User.findOne({ _id: req.params.id })
+        const user = await User.findOne({ _id: req.params.id })// Tìm người dùng theo ID
         return res.status(200).json({ data: user, status : 200 });
     } catch {
         res.status(404)
@@ -51,14 +51,17 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
      // Tạo một người dùng mới
+    const hashPassword = bcrypt.hashSync(req.body.password, 12);
     const user = new User({
         name: req.body.name,
         avatar: req.body.avatar || null,
+        password: hashPassword,
         email: req.body.email,
         birthday: req.body.birthday,
         sex: req.body.sex,
         status: req.body.status || 1,
-
+        type: "USER",
+        roles: req.body.roles || []
     })
     await user.save();
     return res.status(200).json({ data: user, status : 200 });
@@ -66,6 +69,7 @@ exports.store = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
+        const _id = req.params.id; // Lấy ID  từ request.
         const user = await User.findOne({ _id: req.params.id })
  // Cập nhật thông tin người dùng nếu có
         if (req.body.name) {

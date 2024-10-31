@@ -5,11 +5,11 @@ const Discount = require("./../../models/Discount.model");
 const nodemailer =  require('nodemailer');
 const moment = require("moment");
 const axios = require("axios");
-
+// Xử lý webhook cho thanh toán
 exports.webhook = async (req, res) => {
     let _id = req.query.vnp_TxnRef;
-    if (req.query.vnp_ResponseCode === "00") {
-        const booking = await Booking.findById({_id: _id});
+    if (req.query.vnp_ResponseCode === "00") { // Kiểm tra nếu thanh toán thành công
+        const booking = await Booking.findById({_id: _id}); // Tìm booking theo ID
         if (booking) {
             booking.status_payment = "PAID";
             booking.save();
@@ -22,7 +22,7 @@ exports.webhook = async (req, res) => {
     // return res.status(200).json({ data: req.query, status: 200 });
 }
 
-// const axios = require("axios").create({baseUrl: "https://123code.net/"});
+
 exports.index = async (req, res) => {
     const page = req.query.page || 1; 
 	const page_size = req.query.page_size  || 10;
@@ -133,8 +133,8 @@ exports.add = async (req, res) => {
             port: 465,
             secure: true,
             auth: {
-                user: 'lvtotnghiep123@gmail.com', //Tài khoản gmail vừa tạo
-                pass: 'rhgtundlonwrkhpa' //Mật khẩu tài khoản gmail vừa tạo
+                user: 'nhatgh999@gmail.com', //Tài khoản gmail vừa tạo
+                pass: 'minhnhatgh999az' //Mật khẩu tài khoản gmail vừa tạo
             },
             tls: {
                 // do not fail on invalid certs
@@ -156,7 +156,7 @@ exports.add = async (req, res) => {
                     <span style="color: black">Tổng tiền: <b>${data.total_money} VNĐ</b></span><br>
                     <span style="color: black">Phương thức thanh toán: <b>Chuyển khoản</b></span><br>
                     <p>Vui lòng kiểm tra thông tin trên và đảm bảo rằng chúng là chính xác. Nếu có bất kỳ sai sót nào hoặc bạn có bất kỳ yêu cầu nào khác, xin hãy liên hệ với chúng tôi ngay để chúng tôi có thể hỗ trợ bạn tốt nhất.</p>
-                    <p>Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu bổ sung nào, xin hãy liên hệ với chúng tôi bằng cách gọi số điện thoại <b>0909.555.888</b> hoặc gửi email về địa chỉ suncamping@gmail.com. Chúng tôi sẽ sẵn lòng giúp đỡ bạn.</p>
+                    <p>Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu bổ sung nào, xin hãy liên hệ với chúng tôi bằng cách gọi số điện thoại <b>0367 021 593</b> hoặc gửi email về địa chỉ suncamping@gmail.com. Chúng tôi sẽ sẵn lòng giúp đỡ bạn.</p>
                     <p>
                         <img src="https://www.techopedia.com/wp-content/uploads/2023/03/aee977ce-f946-4451-8b9e-bba278ba5f13.png" style="width: 150px;height: auto" alt="">
                     </p>

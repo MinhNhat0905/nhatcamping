@@ -125,7 +125,7 @@ export default function CreateAdmin() {
                                                onChange={event => setPassword(event.target.value)}
                                                />
                                 <Form.Control.Feedback type="invalid">
-                                    Email không được để trống
+                                    Password không được để trống
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Row>
