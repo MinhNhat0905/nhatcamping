@@ -109,27 +109,27 @@ export default function PageHome ()
 				</Col>
 			</Row>
 			<div className="row">
-				<div className="col-sm-3">
+				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-primary text-white">
-						<h6>Thành viên <b id="totalUser">6</b></h6>
+						<h6>Người dùng <b id="totalUser">6</b></h6>
 					</div>
 				</div>
-				<div className="col-sm-3">
+				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-danger text-white">
 						<h6>Số phòng <b id="totalProduct">6</b></h6>
 					</div>
 				</div>
-				<div className="col-sm-3">
+				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-info text-white">
 						<h6>Đã booking <b id="totalOrder">9</b>
 						</h6>
 					</div>
 				</div>
-				<div className="col-sm-3">
+				{/* <div className="col-sm-3">
 					<div className="box p-3 mb-2 bg-secondary text-white">
 						<h6>User mới <b id="totalUserNew">0</b></h6>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<Row>
 				<Col className={ 'col-8' }>

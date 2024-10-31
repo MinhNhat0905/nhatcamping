@@ -5,6 +5,7 @@ import adminApi from "../../services/adminService";
 import {Link} from "react-router-dom";
 import moment from "moment/moment";
 import { Pagination } from '../../common/form/pagination';
+import { toast } from 'react-toastify';
 
 export default function PageAdmin() {
 
@@ -31,7 +32,19 @@ export default function PageAdmin() {
             setUsers(response.data.users);
 			setPaging(response.meta)
         }
-    }
+    };
+    const handleDelete = async ( id ) =>
+        {
+            const response = await adminApi.delete( id );
+            if ( response?.status === 'success' || response?.status === 200 )
+            {
+                toast( "Xóa thành công!" );
+                getUsers( { ...params } ).then( r => { } );
+            } else
+            {
+                toast( response?.error || 'error' );
+            }
+        };
 
 
     return (
@@ -83,9 +96,9 @@ export default function PageAdmin() {
                                                 </td>
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY")}</td>
                                                 <td>
-                                                    <Button variant="danger" size="sm">
-                                                        Delete
-                                                    </Button>{' '}
+                                                <Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
+														Delete
+													</Button>{ ' ' }
                                                 </td>
                                             </tr>
                                         )

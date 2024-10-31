@@ -5,6 +5,7 @@ import userApi from "../../services/userService";
 import {Link} from "react-router-dom";
 import moment from "moment/moment";
 import { Pagination } from '../../common/form/pagination';
+import { toast } from 'react-toastify';
 
 export default function PageUser() {
 
@@ -32,7 +33,19 @@ export default function PageUser() {
             setUsers(response.data.users);
 			setPaging(response.meta)
         }
-    }
+    };
+    const handleDelete = async ( id ) =>
+        {
+            const response = await userApi.delete( id );
+            if ( response?.status === 'success' || response?.status === 200 )
+            {
+                toast( "Xóa thành công!" );
+                getUsers( { ...params } ).then( r => { } );
+            } else
+            {
+                toast( response?.error || 'error' );
+            }
+        };
 
 
     return (
@@ -76,9 +89,9 @@ export default function PageUser() {
                                                 <td>{item.type}</td>
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY")}</td>
                                                 <td>
-                                                    <Button variant="danger" size="sm">
-                                                        Delete
-                                                    </Button>{' '}
+                                                <Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
+														Delete
+													</Button>{ ' ' }
                                                 </td>
                                             </tr>
                                         )

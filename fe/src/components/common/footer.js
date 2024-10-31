@@ -40,15 +40,15 @@ export const Footer = () =>
 									<ul>
 										<li>
 											<MapFill className="mr-2" />
-											<span className="text">Hà Nội - Việt Nam</span>
+											<span className="text">Hồ Chí Minh - Việt Nam</span>
 										</li>
 										<li>
 											<TelephoneFill className="mr-2" />
-											<span className="text">0987654321</span>
+											<span className="text">0367021593</span>
 										</li>
 										<li>
 											<EnvelopeAt className="mr-2" />
-											<span className="text">info@yourdomain.com</span>
+											<span className="text">nhatgh1az@gmail.com</span>
 										</li>
 									</ul>
 								</div>
@@ -56,10 +56,10 @@ export const Footer = () =>
 						</div>
 					</div>
 					<div className="row">
-						<div className="col-md-12 text-center">
+						{/* <div className="col-md-12 text-center">
 							<p>
 								Copyright &copy;{ new Date().getFullYear() } </p>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</footer>
