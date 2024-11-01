@@ -13,3 +13,6 @@ exports.buildResponsePaging = (page, page_size, total) => {
 		page_size: parseInt(page_size)
 	}
 }
+//page: Số trang hiện tại.
+// page_size: Số lượng mục trên mỗi trang.
+// total: Tổng số mục trong danh sách.

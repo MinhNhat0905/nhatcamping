@@ -1,6 +1,6 @@
 node v16.7
 
-Lấy code về 
+
 - xoá node-modules
 - Xoá package-lock.json
 
@@ -8,7 +8,7 @@ npm install
 
 
 
-curl --location 'http://localhost:3053/api/v1/admin/permission/seed' 53=>60
+curl --location 'http://localhost:3053/api/v1/admin/permission/seed' //53=>60
 
 
 

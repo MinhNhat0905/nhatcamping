@@ -275,12 +275,12 @@ export const FormBooking = () =>
 										type={ 'text' } error={ 'Vui lòng chọn phòng.' } />
 								</Form.Group>
 
-								<Form.Group className="mb-3 col-xl-6">
+								{/* <Form.Group className="mb-3 col-xl-6">
 									<SelectBase form={ form } setForm={ setForm } name={ 'discount_id' }
 										label={ 'Mã giảm giá: ' } data={ discounts }
 										key_name={ 'discount_id' } required={ false } placeholder={ 'Chọn mã giảm giá' }
 										type={ 'text' } />
-								</Form.Group>
+								</Form.Group> */}
 
 								<Form.Group className="mb-3 col-xl-6">
 									<SelectBase form={ form } setForm={ setForm } name={ 'payment_type' }
@@ -304,10 +304,10 @@ export const FormBooking = () =>
 										<p className="text-dark fs-19">{ customNumber( form.price, '.', 'đ' ) }</p>
 									</Form.Group>
 
-									<Form.Group className="mb-3 col-xl-4">
+									{/* <Form.Group className="mb-3 col-xl-4">
 										<Form.Label className="fs-19">Discount: </Form.Label>
 										<p className="text-dark fs-19">{ customNumber( form.discount, '.', 'đ' ) }</p>
-									</Form.Group>
+									</Form.Group> */}
 
 									<Form.Group className="mb-3 col-xl-4">
 										<Form.Label className="fs-19">Tổng tiền: </Form.Label>

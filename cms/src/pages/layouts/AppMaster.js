@@ -42,7 +42,7 @@ function AppMaster ()
 										<Link to="/booking" className={ 'nav-link' }>Quản lý đặt phòng</Link>
 										<Link to="/category" className={ 'nav-link' }>Loại phòng</Link>
 										<Link to="/room" className={ 'nav-link' }>Danh sách phòng</Link>
-										<Link to="/discount" className={ 'nav-link' }>Mã giảm giá</Link>
+										{/* <Link to="/discount" className={ 'nav-link' }>Mã giảm giá</Link> */}
 										<Link to="/service" className={ 'nav-link' }>Dịch Vụ</Link>
 										<Link to="/menu" className={ 'nav-link' }>Menu</Link>
 										<Link to="/article" className={ 'nav-link' }>Tin tức</Link>

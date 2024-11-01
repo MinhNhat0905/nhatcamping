@@ -13,14 +13,14 @@ import { CloudSleet, Star, StarFill } from "react-bootstrap-icons";
 export const FormVoteModal = ( props ) =>
 {
 
-	const [ form, setForm ] = useState( {
-		user_id: getUser()?._id || 0,
-		room_id: null,
-		vote_content: null,
-		vote_number: 0
+	const [ form, setForm ] = useState( {// Khởi tạo state `form` để lưu trữ thông tin đánh giá với các trường
+		user_id: getUser()?._id || 0,// `user_id`: ID của người dùng, lấy từ `getUser()` nếu có, nếu không thì mặc định là 0
+		room_id: null,// `room_id`: ID của phòng (mặc định là null).
+		vote_content: null,// `vote_content`: Nội dung của đánh giá (mặc định là null)
+		vote_number: 0// `vote_number`: Số điểm đánh giá (mặc định là 0)
 	} );
 
-	const [ review, setReview ] = useState( null );
+	const [ review, setReview ] = useState( null );// State `review` dùng để lưu trữ thông tin của đánh giá hiện tại nếu đã tồn tại
 
 	useEffect( () =>
 	{
@@ -32,30 +32,31 @@ export const FormVoteModal = ( props ) =>
 
 
 
-	const [ error, setError ] = useState( '' );
+	const [ error, setError ] = useState( '' );// State `error` lưu trữ thông báo lỗi (nếu có)
 
-	const [ validated, setValidated ] = useState( false );
+	const [ validated, setValidated ] = useState( false );// State `validated` để kiểm tra xem form có được validate hay chưa
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch();// Sử dụng `useDispatch` từ Redux để lấy hàm `dispatch` dùng khi gọi action
 
 	const handleSubmit = async ( e ) =>
 	{
-		e.preventDefault();
+		e.preventDefault(); // Ngăn chặn hành vi submit mặc định của form
+		  // Kiểm tra nếu form không hợp lệ hoặc có lỗi, ngăn không cho submit tiếp
 		if ( e?.currentTarget?.checkValidity() === false || error )
 		{
-			e.stopPropagation();
+			e.stopPropagation(); // Ngăn chặn sự kiện tiếp tục
 		} else
 		{
-			dispatch( toggleShowLoading( true ) );
+			dispatch( toggleShowLoading( true ) );// Hiển thị loading khi bắt đầu submit
 
-			const response = await ReviewService.createData( form );
+			const response = await ReviewService.createData( form ); // Gọi API tạo đánh giá mới với dữ liệu trong `form`
 			if ( response?.status === 200 && response?.data )
 			{
-
+ 				// Nếu API trả về thành công, hiển thị thông báo và tắt modal
 				toast( 'Review thành công!', { type: 'success', autoClose: 900 } );
 				await timeDelay( 1000 );
 				dispatch( toggleShowLoading( false ) );
-				resetForm()
+				resetForm()// Reset form sau khi submit thành công
 			} else
 			{
 				toast( response?.message || 'Review thất bại!', { type: 'error', autoClose: 900 } )
@@ -67,27 +68,28 @@ export const FormVoteModal = ( props ) =>
 
 	const resetForm = () =>
 	{
-		props.setShowModal( false );
-		setForm( {
+		props.setShowModal( false ); // Đóng modal
+		setForm( {// Reset lại state `form` về giá trị mặc định
 			user_id: null,
 			room_id: null,
 			vote_content: null,
 			vote_number: 0
 		} );
-		props.setId( null )
-		setError( '' );
-		setValidated( false );
-		setReview( null );
+		props.setId( null )// Xóa ID của phòng trong `props`
+		setError( '' );// Xóa thông báo lỗi nếu có
+		setValidated( false );// Reset trạng thái validate
+		setReview( null ); // Xóa thông tin review
 	}
 
 	const getDetail = async ( id ) =>
 	{
 		dispatch( toggleShowLoading( true ) );
+		// Gọi API lấy chi tiết đánh giá của người dùng cho phòng với `id` đã chọn
 		const response = await ReviewService.getDataList( { page: 1, page_size: 1, room_id: id, user_id: getUser()?._id } )
 		if ( response?.status === 200 )
 		{
 			let reviewRs = response?.data?.votes || [];
-			if ( reviewRs[ 0 ] )
+			if ( reviewRs[ 0 ] ) // Nếu có đánh giá, set `review` và cập nhật `form` với dữ liệu này
 			{
 				setReview( reviewRs[ 0 ] );
 				setForm( {
@@ -96,7 +98,7 @@ export const FormVoteModal = ( props ) =>
 					vote_content: reviewRs[ 0 ].vote_content,
 					vote_number: reviewRs[ 0 ].vote_number,
 				} )
-			} else
+			} else// Nếu không có đánh giá nào, chỉ cập nhật `room_id` trong `form`
 			{
 				setForm( { ...form, room_id: props.id } );
 			}
@@ -104,10 +106,10 @@ export const FormVoteModal = ( props ) =>
 		{
 			setForm( { ...form, room_id: props.id } );
 		}
-		dispatch( toggleShowLoading( false ) );
+		dispatch( toggleShowLoading( false ) );// Tắt loading sau khi gọi API xong
 	}
 
-
+	// Modal cho phép người dùng thực hiện đánh giá phòng
 	return (
 		<Modal show={ props.showModal }
 			// onHide={ resetForm }

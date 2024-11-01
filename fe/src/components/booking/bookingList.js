@@ -33,7 +33,7 @@ export const BookingList = ( props ) =>
 									<th>Customer</th>
 									<th>Room</th>
 									<th>Price</th>
-									<th>Discount</th>
+									{/* <th>Discount</th> */}
 									<th>Total</th>
 									<th className="text-nowrap">Check In</th>
 									<th className="text-nowrap">Check Out</th>
@@ -64,11 +64,11 @@ export const BookingList = ( props ) =>
 												<td className="text-nowrap">
 													<span className={ 'text-success' }>{ customNumber( item.price, '.', ' đ' ) } </span>
 												</td>
-												<td className="text-nowrap">
+												{/* <td className="text-nowrap">
 													{ item.discount > 0 && (
 														<span className={ 'text-danger' }>- { customNumber( item.discount, '.', ' đ' ) }</span>
 													) }
-												</td>
+												</td> */}
 												<td className="text-nowrap">
 													<span className={ 'text-success' }>{ customNumber( item.total_money, '.', ' đ' ) }</span>
 												</td>
