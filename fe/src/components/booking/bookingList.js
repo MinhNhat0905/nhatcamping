@@ -18,7 +18,7 @@ export const BookingList = ( props ) =>
 		} else {
 
 		}
-	}
+	};
 
 	return (
 		<React.Fragment>
@@ -90,7 +90,8 @@ export const BookingList = ( props ) =>
 
 												<td>
 													{
-														item?.status_payment?.toUpperCase() === 'Đã thanh toán' && //hiển thị đúng chữ đã thanh toán mới cho review
+														item?.status_payment === 'Đã thanh toán' && //hiển thị đúng chữ đã thanh toán mới cho review
+														
 														<Button variant="success" size="sm" style={ { borderRadius: '10px' } } onClick={ e =>
 														{
 															props.setShowModal( true );
@@ -100,7 +101,7 @@ export const BookingList = ( props ) =>
 														</Button>
 													}
 													{
-														 item?.status?.toUpperCase() != "Hủy" &&
+														 item?.status !== "Hủy" &&
 														<Button variant="danger" size="sm" style={ { borderRadius: '10px', marginLeft: "5px" } } onClick={() => handleCancel(item._id)}>
 															Hủy
 														</Button>

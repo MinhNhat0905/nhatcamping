@@ -11,7 +11,7 @@ import { DEFAULT_IMG, onErrorImg, readFile } from '../../common/common';
 import { CloseOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons'
 import ImageForm from '../../common/form/imageForm';
 import categoryApi from "../../services/categoryService";
-
+// import MapSelector from '../../common/MapSelector'; // Import MapSelector
 export default function CreateRoom ()
 {
 	const [ validated, setValidated ] = useState( false );
@@ -24,7 +24,9 @@ export default function CreateRoom ()
 	const [ file, setFile ] = useState();
 	const [floors, setFloors] = useState('');
     const [room_code, setRoomCode] = useState('');
-
+	// const [latitude, setLatitude] = useState(null); // Thêm trạng thái latitude
+    // const [longitude, setLongitude] = useState(null); // Thêm trạng thái longitude
+	// const [location, setLocation] = useState(null); // Lưu tọa độ đã chọn
 	const [ category_id, setCategoryId ] = useState( null );
 	const [ categories, setCategories ] = useState( [] );
 
@@ -38,7 +40,16 @@ export default function CreateRoom ()
 	const [ changes, setChanges ] = useState( false );
 	const params = useParams();
 	const navigate = useNavigate();
-
+	// Hàm để tự động xóa dấu âm
+	const handlePositiveInput = (setter) => (event) => {
+		const value = event.target.value;
+		setter(value >= 0 ? value : Math.abs(value)); // Loại bỏ dấu âm nếu có
+	};
+	//  // Xử lý khi chọn vị trí trên bản đồ
+	//  const handleLocationSelect = (latlng) => {
+    //     setLocation(latlng); // Cập nhật tọa độ
+    //     console.log('Selected location:', latlng); // Xem tọa độ trong console
+    // }
 	const handleSubmit = async ( event ) =>
 	{
 		event.preventDefault();
@@ -58,6 +69,8 @@ export default function CreateRoom ()
 				floors: floors,
                 room_code: room_code,
 				category_id: category_id,
+				//  latitude: latitude, // Gửi tọa độ đã chọn
+                // longitude: longitude // Gửi tọa độ đã chọn
 			}
 
 			const avatarUpload = await uploadApi.uploadFile( file );
@@ -134,56 +147,56 @@ export default function CreateRoom ()
 								</Form.Control.Feedback>
 							</Form.Group>
 							<Row>
-								<Col className={ 'col-2' }>
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Giá phòng</Form.Label>
-										<Form.Control required type="text" name={ 'price' } placeholder="20000"
-											onChange={ event => setPrice( event.target.value ) }
-											value={ price } />
+										<Form.Control required type="number" min="0" name={'price'} placeholder="20000"
+											onChange={handlePositiveInput(setPrice)}
+											value={price} />
 										<Form.Control.Feedback type="invalid">
 											Giá phòng không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
-								<Col className={ 'col-2' }>
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Diện tích</Form.Label>
-										<Form.Control required type="text" name={ 'size' } placeholder="40"
-											onChange={ event => setSize( event.target.value ) }
-											value={ size } />
+										<Form.Control required type="number" min="0" name={'size'} placeholder="40"
+											onChange={handlePositiveInput(setSize)}
+											value={size} />
 										<Form.Control.Feedback type="invalid">
 											Diện tích không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
-								<Col className={ 'col-2' }>
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Số phòng ngủ</Form.Label>
-										<Form.Control required type="text" name={ 'bed' } placeholder="4"
-											onChange={ event => setBed( event.target.value ) }
-											value={ bed } />
+										<Form.Control required type="number" min="0" name={'bed'} placeholder="4"
+											onChange={handlePositiveInput(setBed)}
+											value={bed} />
 										<Form.Control.Feedback type="invalid">
 											Số phòng ngủ không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
-								<Col className={ 'col-2' }>
+								{/* <Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Tầng</Form.Label>
-										<Form.Control required type="text" name={ 'floors' } placeholder="8"
-											onChange={ event => setFloors( event.target.value ) }
-											value={ floors } />
+										<Form.Control required type="number" min="0" name={'floors'} placeholder="8"
+											onChange={handlePositiveInput(setFloors)}
+											value={floors} />
 										<Form.Control.Feedback type="invalid">
 											Tầng không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
-								</Col>
-								<Col className={ 'col-2' }>
+								</Col> */}
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Số Phòng</Form.Label>
-										<Form.Control required type="text" name={ 'room_code' } placeholder="801"
-											onChange={ event => setRoomCode( event.target.value ) }
-											value={ room_code } />
+										<Form.Control required type="number" min="0" name={'room_code'} placeholder="801"
+											onChange={handlePositiveInput(setRoomCode)}
+											value={room_code} />
 										<Form.Control.Feedback type="invalid">
 											Số phòng không được để trống
 										</Form.Control.Feedback>
@@ -233,6 +246,16 @@ export default function CreateRoom ()
 									} }
 								/>
 							</Form.Group>
+							{/* <Form.Group className="mb-3" controlId="formLocation">
+                            <Form.Label>Chọn vị trí trên bản đồ</Form.Label>
+                            <MapSelector onSelectLocation={handleLocationSelect} />
+                            {location && (
+                                <div>
+                                    <p>Tọa độ đã chọn:</p>
+                                    <p>Lat: {location.lat}, Lng: {location.lng}</p>
+                                </div>
+                            )}
+                        </Form.Group> */}
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 								<Button type="submit">Lưu dữ liệu</Button>
 							</Form.Group>

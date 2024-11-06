@@ -1,0 +1,8 @@
+/* MapSelector.css */
+.map-container {
+    position: fixed; /* Đặt vị trí cố định */
+    top: 20px; /* Khoảng cách từ đỉnh */
+    right: 20px; /* Khoảng cách từ bên phải */
+    width: 300px; /* Đặt chiều rộng */
+    z-index: 1000; /* Đảm bảo nó nằm trên các thành phần khác */
+}

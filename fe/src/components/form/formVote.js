@@ -127,7 +127,7 @@ export const FormVoteModal = ( props ) =>
 							<div className="d-flex justify-content-center review">
 
 								{
-									[ ...Array( 5 ) ].map( ( item, index ) =>
+									[ ...Array( 5 ) ].map( ( item, index ) => // Hiển thị các ngôi sao đánh giá
 									{
 										if ( index < props.vote_number )
 										{
@@ -164,7 +164,7 @@ export const FormVoteModal = ( props ) =>
 							<InputBase form={ form } setForm={ setForm } name={ 'vote_content' }
 								label={ 'Nội dung: ' }
 								rows={ 5 }
-								readOnly={ review ? true : false }
+								readOnly={ review ? true : false }// Chỉ đọc nếu có đánh giá
 								required={ false }
 								key_name={ 'vote_content' } maxLength={ 320 } as={ 'textarea' } placeholder={ 'Nhập Nội dung' }
 								type={ 'text' }
@@ -174,11 +174,11 @@ export const FormVoteModal = ( props ) =>
 					</Row>
 
 					<Form.Group className="mb-3 d-flex justify-content-center">
-						{
+						{// Hiển thị nút cập nhật nếu không có đánh giá
 							!review && <button type="submit" className='btn btn-primary px-4 fs-18 py-2'>Cập nhật</button>
 						}
 						<button type="button"
-							onClick={ ( e ) => { resetForm() } }
+							onClick={ ( e ) => { resetForm() } }// Gọi hàm resetForm khi nhấn nút hủy
 							className='ml-2 px-4 fs-18 py-2 btn btn-secondary'>Hủy bỏ</button>
 					</Form.Group>
 				</Form>

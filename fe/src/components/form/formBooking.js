@@ -25,10 +25,10 @@ export const FormBooking = () =>
 {
 	document.title = 'Đặt phòng';
 
-	const [ rooms, setRooms ] = useState( [] );
-	const [ discounts, setDiscounts ] = useState( [] );
+	const [ rooms, setRooms ] = useState( [] );// State để lưu danh sách phòng
+	const [ discounts, setDiscounts ] = useState( [] );// State để lưu danh sách giảm giá
 
-	const [ form, setForm ] = useState( {
+	const [ form, setForm ] = useState( {// State để lưu thông tin form đặt phòng
 		check_in: null,
 		check_out: null,
 		amount_of_people: null,
@@ -43,67 +43,66 @@ export const FormBooking = () =>
 		customer_name: null,
 		customer_email: null,
 		customer_phone: null,
-		payment_type: 1,
+		payment_type: 1,// Mặc định là thanh toán bằng tiền mặt
 	} );
 
 	const [ validated, setValidated ] = useState( false );
 
 
 
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+	const dispatch = useDispatch(); // Khởi tạo hook dispatch
+	const navigate = useNavigate(); // Khởi tạo hook navigate để điều hướng
+	const user = getUser(); // Lấy thông tin người dùng
+	const params = useParams(); // Lấy các tham số từ URL
 
-	const user = getUser();
-	const params = useParams();
 
-
-	useEffect( () =>
+	useEffect( () =>// Khi component mount
 	{
-		getDataList();
-		getListDiscount();
-		let data = { ...form };
-		if ( user )
+		getDataList();// Lấy danh sách phòng
+		getListDiscount();// Lấy danh sách giảm giá
+		let data = { ...form }; // Khởi tạo dữ liệu cho form
+		if ( user )// Nếu có thông tin người dùng
 		{
-			data.user_id = user._id;
-			data.customer_email = user.email;
-			data.customer_name = user.name
+			data.user_id = user._id; // Gán ID người dùng
+			data.customer_email = user.email; // Gán email người dùng
+			data.customer_name = user.name; // Gán tên người dùng
 		}
-		if ( params.id )
+		if ( params.id ) // Nếu có ID phòng từ URL
 		{
-			data.room_id = params.id;
+			data.room_id = params.id;// Gán ID phòng vào form
 		}
-		setForm( data );
-	}, [ params.id ] );
+		setForm( data );// Cập nhật state form
+	}, [ params.id ] );// Chạy lại khi ID phòng thay đổi
 
-	useEffect( () =>
+	useEffect( () => // Khi room_id, check_in, hoặc check_out thay đổi
 	{
 		if ( form.room_id && rooms?.length > 0 )
 		{
-			let data = rooms.find( item => item._id === form.room_id );
+			let data = rooms.find( item => item._id === form.room_id );// Tìm phòng tương ứng
 			let price = data?.price || 0;
-			if ( form.check_in && form.check_out )
+			if ( form.check_in && form.check_out ) // Nếu có thời gian check-in và check-out
 			{
-				let numberDate = caculateDateTime( form.check_in, form.check_out );
-				setForm( { ...form, price: price * numberDate } );
+				let numberDate = caculateDateTime( form.check_in, form.check_out );// Tính số ngày giữa check-in và check-out
+				setForm( { ...form, price: price * numberDate } );// Cập nhật giá dựa trên số ngày
 			}
 
 		}
-	}, [ form.room_id, form.check_in, form.check_out ] );
+	}, [ form.room_id, form.check_in, form.check_out ] );// Chạy lại khi room_id, check_in, hoặc check_out thay đổi
 
-	useEffect( () =>
+	useEffect( () => // Khi discount_id thay đổi
 	{
 		if ( form.discount_id && discounts?.length > 0 )
 		{
-			let data = discounts.find( item => item._id === form.discount_id );
-			let discount = data?.price || 0;
-			setForm( { ...form, discount: discount } );
+			let data = discounts.find( item => item._id === form.discount_id );// Tìm giảm giá tương ứng
+			let discount = data?.price || 0; // Lấy giá trị giảm giá
+			setForm({ ...form, discount: discount }); // Cập nhật giảm giá vào form
 
 		}
-	}, [ form.discount_id ] )
+	}, [ form.discount_id ] ) // Chạy lại khi discount_id thay đổi
 
 
 
-	const handleSubmit = async ( e ) =>
+	const handleSubmit = async ( e ) =>// Hàm xử lý khi gửi form
 	{
 		e.preventDefault();
 		if ( e?.currentTarget?.checkValidity() === false )
@@ -111,13 +110,13 @@ export const FormBooking = () =>
 			e.stopPropagation();
 		} else
 		{
-			form.total_money = form.price - form.discount;
-			form.payment_type = Number( form.payment_type );
-			form.discount_id = Number( form.discount_id );
-			dispatch( toggleShowLoading( true ) );
+			form.total_money = form.price - form.discount; // Tính tổng tiền
+			form.payment_type = Number(form.payment_type); // Chuyển payment_type sang kiểu số
+			form.discount_id = Number(form.discount_id); // Chuyển discount_id sang kiểu số
+			dispatch(toggleShowLoading(true)); // Hiển thị trạng thái loading
 
-			const response = await BookingService.createData( form );
-			console.log('----------------- response booking: ', response)
+			const response = await BookingService.createData(form); // Gửi yêu cầu đặt phòng
+			console.log('----------------- response booking: ', response); // Ghi log phản hồi
 			if ( response?.status === 200 && response?.data )
 			{
 				toast( 'đặt phòng thành công!', { type: 'success', autoClose: 900 } );
@@ -126,19 +125,19 @@ export const FormBooking = () =>
 
 
 
-				if ( response?.data?.link )
+				if ( response?.data?.link )// Nếu có link thanh toán
 				{
-					window.open( response?.data?.link, '_blank ' );
+					window.open( response?.data?.link, '_blank ' );// Mở link trong tab mới
 				} else
 				{
 					resetForm();
 				}
-				if ( getUser() )
+				if ( getUser() )// Nếu có thông tin người dùng
 				{
-					navigate( '/booking' );
+					navigate( '/booking' );// Điều hướng đến trang lịch sử đặt phòng
 				} else
 				{
-					// view mới
+					// Nếu không có thông tin người dùng, điều hướng đến trang thanh toán
 					window.location.href = '/payment/booking-success';
 				}
 
@@ -164,7 +163,7 @@ export const FormBooking = () =>
 			discount_id: null,
 			discount: 0,
 			status: 'Đang xử lý',
-			status_payment: 'Đã thanh toán',// Chưa thanh toán => Đã thanh toán
+			status_payment: 'Chưa thanh toán',// Chưa thanh toán => Đã thanh toán
 			price: 0,
 			total_money: 0,
 			customer_name: null,
@@ -303,8 +302,8 @@ export const FormBooking = () =>
 										<Form.Label className="fs-19">Số tiền: </Form.Label>
 										<p className="text-dark fs-19">{ customNumber( form.price, '.', 'đ' ) }</p>
 									</Form.Group>
-
-									{/* <Form.Group className="mb-3 col-xl-4">
+{/* 
+									<Form.Group className="mb-3 col-xl-4">
 										<Form.Label className="fs-19">Discount: </Form.Label>
 										<p className="text-dark fs-19">{ customNumber( form.discount, '.', 'đ' ) }</p>
 									</Form.Group> */}

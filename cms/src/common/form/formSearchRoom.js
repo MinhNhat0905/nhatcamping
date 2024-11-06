@@ -117,13 +117,13 @@ export const FormRoomSearch = ( props ) =>
 					/>
 				</Form.Group> */}
 
-				<Form.Group className="mb-3 col-md-4">
+				{/* <Form.Group className="mb-3 col-md-4">
 					<InputBase form={ form } setForm={ setForm } name={ 'floors' }
 						label={ 'Tầng: ' }
 						key_name={ 'floors' } required={ false } placeholder={ 'Nhập số tầng' }
 						type={ 'number' }
 					/>
-				</Form.Group>
+				</Form.Group> */}
 
 
 

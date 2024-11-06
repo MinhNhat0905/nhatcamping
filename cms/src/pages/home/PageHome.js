@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Breadcrumb, Col, Container, Row } from "react-bootstrap";
+// import { Alert, Breadcrumb, Col, Container, Row } from "react-bootstrap";
+import { Alert, Col, Container, Row, Form } from "react-bootstrap";
 import dashboardApi from '../../services/dashboardService';
-import
-	{
-		Chart as ChartJS,
-		CategoryScale,
-		LinearScale,
-		BarElement,
-		Title,
-		Tooltip,
-		Legend,
-		ArcElement
-	} from 'chart.js';
+import { 
+	Chart as ChartJS, 
+	CategoryScale, 
+	LinearScale, 
+	BarElement, 
+	Title, 
+	Tooltip, 
+	Legend, 
+	ArcElement 
+} from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -37,22 +37,20 @@ export const options = {
 	},
 };
 
+export default function PageHome () {
 
-export default function PageHome ()
-{
+	const [params, setParams] = useState({
+		month: new Date().getMonth() + 1,
+		year: new Date().getFullYear(),
+	});
+	const [dataCharStatus, setDataChartStatus] = useState({});
+	const [dataChartListDayInMonth, setDataChartListDayInMonth] = useState({});
+	const [loadingChartStatus, setLoadingChartStatus] = useState(true);
 
-	const [ params, setParams ] = useState( {} );
-	const [ dataCharStatus, setDataChartStatus ] = useState( {} );
-	const [ dataChartListDayInMonth, setDataChartListDayInMonth ] = useState( {} );
-	const [ loadingChartStatus, setLoadingChartStatus ] = useState( true );
-
-
-	const getDashboard = async ( filters ) =>
-	{
-		const response = await dashboardApi.getStatistics( filters )
-		if ( response?.status === 'success' || response?.status === 200 )
-		{
-			setDataChartStatus( {
+	const getDashboard = async (filters) => {
+		const response = await dashboardApi.getStatistics(filters);
+		if (response?.status === 'success' || response?.status === 200) {
+			setDataChartStatus({
 				labels: response.data.group_status.label,
 				datasets: [
 					{
@@ -77,35 +75,65 @@ export default function PageHome ()
 						borderWidth: 1,
 					},
 				],
-			} )
-			setDataChartListDayInMonth( {
+			});
+			setDataChartListDayInMonth({
 				labels: response.data.list_day,
 				datasets: [
 					{
-						label: 'Thống kế',
+						label: 'Thống kê',
 						data: response.data.list_money_by_day,
 						backgroundColor: 'rgba(255, 99, 132, 0.5)',
 					}
 				],
-			} )
-			setLoadingChartStatus( false );
+			});
+			setLoadingChartStatus(false);
 		}
-	}
+	};
 
+	// Lấy dữ liệu khi params (month, year) thay đổi
+	useEffect(() => {
+		getDashboard(params);
+	}, [params]);
 
-	useEffect( () =>
-	{
-		getDashboard( { ...params } ).then( r => { } );
-	}, [] );
+	// Cập nhật tháng khi thay đổi
+	const handleMonthChange = (e) => {
+		setParams({ ...params, month: e.target.value });
+	};
+
+	// Cập nhật năm khi thay đổi
+	const handleYearChange = (e) => {
+		setParams({ ...params, year: e.target.value });
+	};
 
 	return (
 		<Container>
 			<Row>
 				<Col>
 					<Alert variant="success">
-						<Alert.Heading>ADMIN</Alert.Heading>
-						<p></p>
+						<Alert.Heading>ADMIN Dashboard</Alert.Heading>
 					</Alert>
+				</Col>
+			</Row>
+			<Row>
+				<Col md={6}>
+					<Form.Group controlId="selectMonth">
+						<Form.Label>Chọn Tháng</Form.Label>
+						<Form.Control as="select" value={params.month} onChange={handleMonthChange}>
+							{Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+								<option key={month} value={month}>{`Tháng ${month}`}</option>
+							))}
+						</Form.Control>
+					</Form.Group>
+				</Col>
+				<Col md={6}>
+					<Form.Group controlId="selectYear">
+						<Form.Label>Chọn Năm</Form.Label>
+						<Form.Control as="select" value={params.year} onChange={handleYearChange}>
+							{Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+								<option key={year} value={year}>{year}</option>
+							))}
+						</Form.Control>
+					</Form.Group>
 				</Col>
 			</Row>
 			<div className="row">
@@ -121,8 +149,7 @@ export default function PageHome ()
 				</div>
 				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-info text-white">
-						<h6>Đã booking <b id="totalOrder">9</b>
-						</h6>
+						<h6>Đã booking <b id="totalOrder">9</b></h6>
 					</div>
 				</div>
 				{/* <div className="col-sm-3">
@@ -132,15 +159,15 @@ export default function PageHome ()
 				</div> */}
 			</div>
 			<Row>
-				<Col className={ 'col-8' }>
-					{ loadingChartStatus === false && (
-						<Bar options={ options } data={ dataChartListDayInMonth } />
-					) }
+				<Col className="col-8">
+					{!loadingChartStatus && (
+						<Bar options={options} data={dataChartListDayInMonth} />
+					)}
 				</Col>
-				<Col className={ 'col-4' }>
-					{ loadingChartStatus === false && (
-						<Doughnut data={ dataCharStatus } />
-					) }
+				<Col className="col-4">
+					{!loadingChartStatus && (
+						<Doughnut data={dataCharStatus} />
+					)}
 				</Col>
 			</Row>
 		</Container>

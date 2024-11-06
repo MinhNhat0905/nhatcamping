@@ -66,7 +66,11 @@ exports.store = async (req, res) => {
         room_code: req.body.room_code,
         floors: req.body.floors,
         category: category,
-        category_id: req.body.category_id
+        category_id: req.body.category_id,
+        // location: {
+        //     lat: req.body.latitude,   // vĩ độ
+        //     lng: req.body.longitude   // kinh độ
+        // }
     })
     await room.save()
     return res.status(200).json({ data: room, status : 200 });

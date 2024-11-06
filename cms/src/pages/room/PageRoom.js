@@ -116,7 +116,7 @@ export default function PageRoom ()
 														{ item.max && <li>Max: { item.max }</li> }
 
 														<li>Diện tích: { item.size }</li>
-														<li>Số tầng: { item.floors }</li>
+														{/* <li>Số tầng: { item.floors }</li> */}
 														<li>Phòng ngủ: { item.bed}</li>
 														<li>Số phòng: { item.room_code }</li>
 													</ul>

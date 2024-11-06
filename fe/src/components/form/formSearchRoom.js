@@ -86,13 +86,13 @@ export const FormRoomSearch = ( props ) =>
 					/>
 				</Form.Group>
 
-				<Form.Group className="mb-3 col-md-12">
+				{/* <Form.Group className="mb-3 col-md-12">
 					<InputBase form={ form } setForm={ setForm } name={ 'price' }
 						label={ 'Giá phòng: ' }
 						key_name={ 'price' } required={ false } placeholder={ 'Nhập giá phòng' }
 						type={ 'text' }
 					/>
-				</Form.Group>
+				</Form.Group> */}
 
 				<Form.Group className="mb-3 col-md-12">
 					<InputBase form={ form } setForm={ setForm } name={ 'size' }
@@ -110,13 +110,13 @@ export const FormRoomSearch = ( props ) =>
 					/>
 				</Form.Group>
 
-				<Form.Group className="mb-3 col-md-12">
+				{/* <Form.Group className="mb-3 col-md-12">
 					<InputBase form={ form } setForm={ setForm } name={ 'floors' }
 						label={ 'Tầng: ' }
 						key_name={ 'floors' } required={ false } placeholder={ 'Nhập số tầng' }
 						type={ 'number' }
 					/>
-				</Form.Group>
+				</Form.Group> */}
 
 
 

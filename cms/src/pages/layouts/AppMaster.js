@@ -49,7 +49,7 @@ function AppMaster ()
 										<Link to="/user" className={ 'nav-link' }>Người dùng</Link>
 										<NavDropdown title="Phân quyền" id="basic-nav-dropdown">
 											{/* <Link to="/permission" className={ 'dropdown-item' }>Danh sách quyền</Link> */}
-											<Link to="/role" className={ 'dropdown-item' }>Role</Link>
+											<Link to="/role" className={ 'dropdown-item' }>Vai trò</Link>
 											<Link to="/admin" className={ 'dropdown-item' }>Admin</Link>
 										</NavDropdown>
 									</Nav>

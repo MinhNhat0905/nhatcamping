@@ -27,6 +27,11 @@ export default function UpdateRoom ()
 
 	const navigate = useNavigate();
 	const params = useParams();
+	// Hàm để tự động xóa dấu âm
+	const handlePositiveInput = (setter) => (event) => {
+		const value = event.target.value;
+		setter(value >= 0 ? value : Math.abs(value)); // Loại bỏ dấu âm nếu có
+	};
 	const [ fileAlbums, setFileAlbums ] = useState( [
 		{
 			imgBase64: null,
@@ -180,56 +185,56 @@ export default function UpdateRoom ()
 								</Form.Control.Feedback>
 							</Form.Group>
 							<Row>
-								<Col className={ 'col-3' }>
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Giá phòng</Form.Label>
-										<Form.Control required type="text" name={ 'price' } placeholder="20000"
-											onChange={ event => setPrice( event.target.value ) }
-											value={ price } />
+										<Form.Control required type="number" min="0" name={'price'} placeholder="20000"
+											onChange={handlePositiveInput(setPrice)}
+											value={price} />
 										<Form.Control.Feedback type="invalid">
 											Giá phòng không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
-								<Col className={ 'col-3' }>
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Diện tích</Form.Label>
-										<Form.Control required type="text" name={ 'size' } placeholder="40"
-											onChange={ event => setSize( event.target.value ) }
-											value={ size } />
+										<Form.Control required type="number" min="0" name={'size'} placeholder="40"
+											onChange={handlePositiveInput(setSize)}
+											value={size} />
 										<Form.Control.Feedback type="invalid">
 											Diện tích không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
-								<Col className={ 'col-2' }>
+								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Số phòng ngủ</Form.Label>
-										<Form.Control required type="text" name={ 'bed' } placeholder="4"
-											onChange={ event => setBed( event.target.value ) }
-											value={ bed } />
+										<Form.Control required type="number" min="0" name={'bed'} placeholder="4"
+											onChange={handlePositiveInput(setBed)}
+											value={bed} />
 										<Form.Control.Feedback type="invalid">
 											Số phòng ngủ không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col>
-								<Col className={'col-2'}>
+								{/* <Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Tầng</Form.Label>
-										<Form.Control  required type="text" name={'floors'} placeholder="8"
-													   onChange={event => setFloors(event.target.value)}
-													   value={floors}/>
+										<Form.Control required type="number" min="0" name={'floors'} placeholder="8"
+											onChange={handlePositiveInput(setFloors)}
+											value={floors} />
 										<Form.Control.Feedback type="invalid">
 											Tầng không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
-								</Col>
+								</Col> */}
 								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Số Phòng</Form.Label>
-										<Form.Control  required type="text" name={'room_code'} placeholder="801"
-													   onChange={event => setRoomCode(event.target.value)}
-													   value={room_code}/>
+										<Form.Control required type="number" min="0" name={'room_code'} placeholder="801"
+											onChange={handlePositiveInput(setRoomCode)}
+											value={room_code} />
 										<Form.Control.Feedback type="invalid">
 											Số phòng không được để trống
 										</Form.Control.Feedback>

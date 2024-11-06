@@ -15,45 +15,44 @@ export const BookingPage = () =>
 {
 	document.title = 'Lịch sử đặt phòng';
 
-	const [ data, setData ] = useState( [] );
-	const [title, setTitle] = useState('Lịch sử đặt phòng');
-	const [ paging, setPaging ] = useState( INIT_PAGING );
-	const [ params, setParams ] = useState( {
+	const [data, setData] = useState([]); // State để lưu danh sách đặt phòng
+	const [title, setTitle] = useState('Lịch sử đặt phòng'); // State để lưu tiêu đề
+	const [paging, setPaging] = useState(INIT_PAGING); // State để lưu thông tin phân trang
+	const [params, setParams] = useState({ // State để lưu các tham số tìm kiếm
 		status: null,
 		room_id: null,
 		check_in: null,
 		check_out: null
 	} );
 
-	const paramQuery = useParams();
-	let [ searchParams, setSearchParams ] = useSearchParams( {} );
+	const paramQuery = useParams(); // Lấy các tham số từ URL
+	let [searchParams, setSearchParams] = useSearchParams({}); // Khởi tạo các tham số tìm kiếm
 
-	const [showModal, setShowModal] = useState(false);
-	const [id, setId] = useState(null);
+	const [showModal, setShowModal] = useState(false); // State để kiểm soát hiển thị modal
+	const [id, setId] = useState(null); // State để lưu ID của đặt phòng khi cần thiết
 
-	const dispatch = useDispatch();
-	useEffect( () =>
+	const dispatch = useDispatch(); // Khởi tạo hook dispatch
+	useEffect(() => { // Sử dụng hook effect để lấy danh sách đặt phòng khi component mount
+		getDataList({ page: 1, page_size: INIT_PAGING.page_size }); // Lấy dữ liệu danh sách với trang đầu tiên
+	}, []); // Chạy effect chỉ một lần khi component được mount
+
+	const getDataList = async ( params ) =>// Hàm lấy danh sách đặt phòng
 	{
-		getDataList( { page: 1, page_size: INIT_PAGING.page_size } );
-	}, [] );
 
-	const getDataList = async ( params ) =>
-	{
-
-		dispatch( toggleShowLoading( true ) );
-		let user = getUser();
+		dispatch( toggleShowLoading( true ) );// Bắt đầu hiển thị trạng thái loading
+		let user = getUser();// Lấy thông tin người dùng
 		const rs = await BookingService.getDataList( {...params, user_id: user._id}, true, setSearchParams );
 		if ( rs?.status === 200 )
 		{
 
-			setData( rs?.data?.bookings || [] );
-			setPaging( rs?.meta || INIT_PAGING );
+			setData( rs?.data?.bookings || [] );// Cập nhật dữ liệu danh sách đặt phòng
+			setPaging( rs?.meta || INIT_PAGING );// Cập nhật thông tin phân trang
 		} else
 		{
-			setData( [] );
-			setPaging( INIT_PAGING );
+			setData([]); // Đặt lại danh sách về mảng rỗng nếu có lỗi
+			setPaging(INIT_PAGING); // Đặt lại thông tin phân trang
 		}
-		dispatch( toggleShowLoading( false ) );
+		dispatch( toggleShowLoading( false ) );// Dừng hiển thị trạng thái loading
 	};
 	return (
 		<React.Fragment>

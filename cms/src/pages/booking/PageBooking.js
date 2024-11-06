@@ -33,11 +33,10 @@ export default function PageBooking() {
     const getBookings = async (filters) => {
 		filters = buildFilter(filters);
 		setParamSearch(filters);
-        const response = await bookingApi.index(filters)
-        console.log('--------- response: ', response)
+        const response = await bookingApi.index(filters);
         if (response?.status === 'success' || response?.status === 200) {
-            setBookings(response.data.bookings);
-			setPaging(response.meta)
+            setBookings(response.data.bookings); // Cập nhật danh sách đặt phòng
+            setPaging(response.meta); // Cập nhật thông tin phân trang
         }
     }
 
@@ -126,7 +125,7 @@ export default function PageBooking() {
                                                         <Badge bg="info">TT Online</Badge>
                                                     )}
                                                 </td>
-                                                <td><Badge bg="secondary">{ item.status_payment}</Badge></td>
+                                                <td><Badge bg="secondary">{item.status_payment}</Badge></td>
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY H:mm:ss")}</td>
                                                 <td>
                                                     <Button variant="danger" size="sm" onClick={() => handleDelete(item._id)}>

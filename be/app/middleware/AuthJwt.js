@@ -48,14 +48,14 @@ exports.isAuth = async (req, res, next) => {
                 if (permissionDB) {
                     let checkPath = permissionDB.path;
                     if (checkPath.includes(pathUrlRoute)) {
-                        console.log('==== PERMISSION PATH: ', checkPath);
-                        console.log('==== PERMISSION pathUrlRoute: ', pathUrlRoute);
+                        console.log('=== PERMISSION PATH: ', checkPath);
+                        console.log('=== PERMISSION pathUrlRoute: ', pathUrlRoute);
                         return next();
                     }
                 }
             }
         }
-        console.log('====> KHÔNG CÓ QUYỀN TRUY CẬP <===');
+        console.log('===> KHÔNG CÓ QUYỀN TRUY CẬP <===');
     }
     return res
         .status(403)

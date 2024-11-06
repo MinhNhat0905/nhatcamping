@@ -7,22 +7,23 @@ import uploadApi from "../../services/uploadService";
 import bookingApi from "../../services/bookingService";
 
 export default function UpdateBooking() {
-    const [validated, setValidated] = useState(false);
-    const [name, setName] = useState('');
-    const [status, setStatus] = useState('');
-
-    const navigate = useNavigate();
-    const params = useParams();
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.stopPropagation();
+    const [validated, setValidated] = useState(false);// State để theo dõi trạng thái hợp lệ của form
+    const [name, setName] = useState(''); // State để lưu tên khách hàng
+    const [status, setStatus] = useState('');// State để lưu trạng thái đặt phòng
+    
+    const navigate = useNavigate();// Khởi tạo hook điều hướng
+    const params = useParams();// Lấy các tham số từ URL
+    const handleSubmit = async (event) => { // Hàm xử lý khi form được gửi
+        event.preventDefault();// Ngăn chặn hành động gửi form mặc định
+        const form = event.currentTarget;// Lấy form hiện tại
+        if (form.checkValidity() === false) {// Kiểm tra tính hợp lệ của form
+            event.stopPropagation();// Ngăn chặn sự kiện nổi
         } else {
-            let data = {
-                status: status,
+            let data = {// Tạo đối tượng dữ liệu để gửi đi
+                status: status,// Trạng thái từ state
+                
             }
-
+            // Gửi yêu cầu cập nhật đến API
             const response = await bookingApi.update(params.id,data);
             if (response.status === 'success' || response.status === 200) {
                 toast("Cập nhật thành công");
@@ -32,33 +33,35 @@ export default function UpdateBooking() {
             }
         }
 
-        setValidated(true);
+        setValidated(true);// Đặt trạng thái đã kiểm tra form
     };
 
 
-    const findById = async (id) => {
+    const findById = async (id) => {// Hàm tìm kiếm đặt phòng theo ID
         const response = await bookingApi.findById(id);
         console.log('----------- response: ', response);
         if (response.status === 'success' || response.status === 200) {
             console.log('---------- OK');
             setName(response.data?.name);
+            
         } else {
             toast(response?.message || response?.error || 'error');
         }
     }
 
-    const handleChangeStatus = (event) => {
-        setStatus(event.target.value);
+    const handleChangeStatus = (event) => {// Hàm xử lý thay đổi trạng thái
+        setStatus(event.target.value);// Cập nhật trạng thái từ lựa chọn
     }
 
-    useEffect( () =>
+
+    useEffect( () => // Sử dụng hook effect để lấy dữ liệu khi component mount
     {
-        // getDetailData();
-        if ( params.id )
+         // getDetailData(); // (Dòng này bị chú thích có thể được sử dụng để lấy dữ liệu chi tiết khác nếu cần)
+        if ( params.id )// Kiểm tra nếu có ID trong tham số URL
         {
-            findById(params.id).then(r => {});
+            findById(params.id).then(r => {});// Gọi hàm tìm kiếm đặt phòng theo ID
         }
-    }, [ params.id ] );
+    }, [ params.id ] );// Chạy lại effect khi ID thay đổi
 
     return (
         <div>

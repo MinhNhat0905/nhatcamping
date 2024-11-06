@@ -5,20 +5,21 @@ mongoose.Promise = global.Promise;
 
 const roomSchema = new Schema(
     {
-        name: {
+        name: {// Tên phòng
             type: String,
-            required: 'name cannot be blank'
+            required: 'name cannot be blank'// Bắt buộc phải có tên
         },
-        avatar: {
-            type: String,
-        },
-        room_code: {
+        avatar: { // Hình đại diện của phòng
             type: String,
         },
-        status: {
+        room_code: {// Mã phòng
+            type: String,
+        },
+        status: {// Trạng thái phòng
             type: String,
             default: "EMPTY"
         },
+        
         floors: {
             type: Number,
         },
@@ -31,10 +32,10 @@ const roomSchema = new Schema(
         bed: {
             type: Number,
         },
-        total_vote: {
+        total_vote: { // Tổng số đánh giá
             type: Number,
         },
-        total_star: {
+        total_star: {// Tổng số sao
             type: Number,
         },
         description: {
@@ -43,8 +44,17 @@ const roomSchema = new Schema(
         room_content: {
             type: String,
         },
-        category_id: {type: String, required: 'category_id cannot be blank'},
-        category: {
+        location: {
+            type: {
+                lat: Number, // vĩ độ
+                lng: Number  // kinh độ
+            },
+            required: false,
+        },
+        category_id: {// ID danh mục phòng
+            type: String, 
+            required: 'category_id cannot be blank'},// Bắt buộc phải có ID danh mục
+        category: {// Tham chiếu tới danh mục
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category"
         },
