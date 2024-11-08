@@ -1,30 +1,33 @@
 const { buildResponsePaging, buildParamPaging } = require( "../../helpers/buildData.helper" );
 const Room = require("./../../models/Room.model")
 const Category = require("./../../models/Category.model")
+const Facility = require("./../../models/Facility.model");
 
 exports.index = async (req, res) => {
 
     try {
         // execute query with page and limit values
 		let condition = {}
-		if(req.query.size) condition.size = req.query.size;
+		if(req.query.size) condition.size = req.query.size; 
 		if(req.query.bed) condition.bed = req.query.bed;
 		if(req.query.name) condition.name = {$regex : '.*'+ req.query.name + '.*'};
 		if(req.query.price) condition.price = req.query.price;
 		if(req.query.floors) condition.floors = req.query.floors;
 		if(req.query.category_id) condition.category_id = req.query.category_id;
+        if (req.query.category_id) condition.category_id = req.query.category_id;
 
 		const paging = buildParamPaging( req.query );
-		const rooms = await Room.find()
+		const rooms = await Room.find()// Truy vấn phòng với các điều kiện và phân trang
 		.where( condition )
 		.limit( paging.page_size )
 		.skip( ( paging.page - 1 ) * paging.page_size )
-        .populate(['category'])
+        .populate({ path: 'category', select: 'name' }) // Lấy tên của category
+        .populate({ path: 'facilities', select: 'name' }) // Lấy tên của facility
 		.exec();
 
 
-	// get total documents in the Posts collection
-	const count = await Room.count().where(condition);
+	    // Lấy tổng số phòng theo điều kiện
+	    const count = await Room.count().where(condition);
 
         // return response with posts, total pages, and current page
         const meta = buildResponsePaging( paging.page, paging.page_size, count )
@@ -54,6 +57,7 @@ exports.show = async (req, res) => {
 // Tạo mới một phòng
 exports.store = async (req, res) => {
     const category = await Category.findById(req.body.category_id);
+    const facilities = await Facility.find({ '_id': { $in: req.body.facilities} }); // Lấy tiện nghi liên quan đến phòng từ mảng ID.
     const room = new Room({
         name: req.body.name,
         avatar: req.body.avatar || null,
@@ -67,10 +71,9 @@ exports.store = async (req, res) => {
         floors: req.body.floors,
         category: category,
         category_id: req.body.category_id,
-        // location: {
-        //     lat: req.body.latitude,   // vĩ độ
-        //     lng: req.body.longitude   // kinh độ
-        // }
+        facilities: facilities, 
+        facility_id: req.body.facility_id,
+
     })
     await room.save()
     return res.status(200).json({ data: room, status : 200 });
@@ -80,6 +83,7 @@ exports.update = async (req, res) => {
     try {
         const room = await Room.findOne({ _id: req.params.id })
         const category = await Category.findById(req.body.category_id);
+        const facilities = await Facility.find({ '_id': { $in: req.body.facilities} });  // Cập nhật tiện nghi cho phòng.
         if (req.body.name) {
             room.name = req.body.name;
         }
@@ -104,6 +108,11 @@ exports.update = async (req, res) => {
             room.category_id = req.body.category_id;
             room.category = category;
         }
+        // Cập nhật tiện nghi
+        if (req.body.facilities) {
+            room.facilities = facilities;  // Cập nhật tiện nghi cho phòng.
+        }
+
 
         if (req.body.size) {
             room.size = req.body.size;

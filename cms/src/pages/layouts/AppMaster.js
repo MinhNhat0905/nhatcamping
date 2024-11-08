@@ -41,6 +41,7 @@ function AppMaster ()
 									<Nav className="me-auto">
 										<Link to="/booking" className={ 'nav-link' }>Quản lý đặt phòng</Link>
 										<Link to="/category" className={ 'nav-link' }>Loại phòng</Link>
+										<Link to="/facility" className={ 'nav-link' }>Tiện nghi</Link>
 										<Link to="/room" className={ 'nav-link' }>Danh sách phòng</Link>
 										{/* <Link to="/discount" className={ 'nav-link' }>Mã giảm giá</Link> */}
 										<Link to="/service" className={ 'nav-link' }>Dịch Vụ</Link>
@@ -48,7 +49,7 @@ function AppMaster ()
 										<Link to="/article" className={ 'nav-link' }>Tin tức</Link>
 										<Link to="/user" className={ 'nav-link' }>Người dùng</Link>
 										<NavDropdown title="Phân quyền" id="basic-nav-dropdown">
-											{/* <Link to="/permission" className={ 'dropdown-item' }>Danh sách quyền</Link> */}
+											<Link to="/permission" className={ 'dropdown-item' }>Danh sách quyền</Link>
 											<Link to="/role" className={ 'dropdown-item' }>Vai trò</Link>
 											<Link to="/admin" className={ 'dropdown-item' }>Admin</Link>
 										</NavDropdown>

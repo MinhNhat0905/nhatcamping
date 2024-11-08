@@ -57,7 +57,7 @@ export default function CreateCategory ()
 						<Form noValidate validated={ validated } onSubmit={ handleSubmit }>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 								<Form.Label>Loại phòng</Form.Label>
-								<Form.Control required type="text" name={ 'name' } placeholder="Kinh"
+								<Form.Control required type="text" name={ 'name' } placeholder="Loại"
 									onChange={ event => setName( event.target.value ) }
 									value={ name } />
 								<Form.Control.Feedback type="invalid">

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Breadcrumb, Button, Col, Container, Form, Row } from "react-bootstrap";
-
-import { Link, useNavigate, useParams } from "react-router-dom";
-import categoryApi from "../../services/categoryService";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import facilityApi from '../../services/facilityService';
+import { useNavigate } from 'react-router-dom';
 
-export default function UpdateCategory ()
+export default function CreateFacility ()
 {
+
 	const [ validated, setValidated ] = useState( false );
 	const [ name, setName ] = useState( '' );
 
 	const navigate = useNavigate();
-	const params = useParams();
 	const handleSubmit = async ( event ) =>
 	{
 		event.preventDefault();
@@ -21,15 +21,16 @@ export default function UpdateCategory ()
 			event.stopPropagation();
 		} else
 		{
+
 			let data = {
-				name: name
+				name: name,
 			}
 
-			const response = await categoryApi.update( params.id, data );
-			if ( response.status === 'success' || response.status === 200 )
+			const response = await facilityApi.create( data );
+			if ( response?.status === 'success' || response?.status === 200 )
 			{
-				toast( "Cập nhật thành công" );
-				navigate( '/category' )
+				toast( "Thêm mới tiện nghi thành công" );
+				navigate( '/facility' )
 			} else
 			{
 				toast( response?.message || response?.error || 'error' );
@@ -39,48 +40,28 @@ export default function UpdateCategory ()
 		setValidated( true );
 	};
 
-	const findById = async ( id ) =>
-	{
-		const response = await categoryApi.findById( id );
-		if ( response.status === 'success' || response.status === 200 )
-		{
-			setName( response.data.name );
-		} else
-		{
-			toast( response?.message || response?.error || 'error' );
-		}
-	}
-
-	useEffect( () =>
-	{
-		if ( params.id )
-		{
-			findById( params.id );
-		}
-	}, [ params.id ] );
-
 	return (
 		<div>
 			<Container>
 				<Row>
 					<Col>
 						<Breadcrumb>
-							<Breadcrumb.Item href="/category" >
-								Loại phòng
+							<Breadcrumb.Item href="/facility" >
+								Tiện nghi
 							</Breadcrumb.Item>
-							<Breadcrumb.Item active>Cập nhật</Breadcrumb.Item>
+							<Breadcrumb.Item active>Thêm mới</Breadcrumb.Item>
 						</Breadcrumb>
 						<div className={ 'd-flex justify-content-end' }>
 							<Link className={ 'btn btn-sm btn-primary' } to={ '/menu' } >Trở về</Link>
 						</div>
 						<Form noValidate validated={ validated } onSubmit={ handleSubmit }>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-								<Form.Label>Tên menu</Form.Label>
-								<Form.Control required type="text" name={ 'name' } placeholder="Menu"
-											  onChange={ event => setName( event.target.value ) }
-											  value={ name } />
+								<Form.Label>Tiện nghi</Form.Label>
+								<Form.Control required type="text" name={ 'name' } placeholder="Tiện nghi"
+									onChange={ event => setName( event.target.value ) }
+									value={ name } />
 								<Form.Control.Feedback type="invalid">
-									Loại phòng không được để trống
+									Tiện nghi không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

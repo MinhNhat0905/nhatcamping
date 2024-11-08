@@ -170,7 +170,7 @@ exports.add = async (req, res) => {
         if (data.payment_type === 2) {
             
             // try {
-                var secretKey = 'YVVVDXXUGTGPFEVRUBWEXKIIYNNFUUTZ';
+                var secretKey = 'NNKCMMREAOLFEUVCNLJMGVMFSSBPYPCQ';
                 var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
                 var returnUrl = 'http://localhost:3053/api/v1/booking/callback';
 

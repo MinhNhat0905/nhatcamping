@@ -36,6 +36,9 @@ import UpdateMenu from "../pages/menu/UpdateMenu";
 import PageCategory from "../pages/category/PageCategory";
 import CreateCategory from "../pages/category/CreateCategory";
 import UpdateCategory from "../pages/category/UpdateCategory";
+import PageFacility from "../pages/facility/PageFacility";
+import CreateFacility from "../pages/facility/CreateFacility";
+import UpdateFacility from "../pages/facility/UpdateFacility";
 
 export const routes = () =>
 {
@@ -127,6 +130,27 @@ export const routes = () =>
 				{
 					path: "*",
 					element: <PageCategory />,
+				},
+			]
+		},
+		{
+			path: "/facility/",
+			children: [
+				{
+					path: "",
+					element: <PageFacility />,
+				},
+				{
+					path: "create",
+					element: <CreateFacility />,
+				},
+				{
+					path: "update/:id",
+					element: <UpdateFacility />,
+				},
+				{
+					path: "*",
+					element: <PageFacility />,
 				},
 			]
 		},

@@ -12,6 +12,7 @@ const menuRouter = require("./menu");
 const discountRouter = require("./discount");
 const voteRouter = require("./vote");
 const CategoryRouter = require("./category");
+const FacilityRouter = require("./facility");
 
 router.use(roomRouter);
 router.use(articleRouter);
@@ -23,5 +24,6 @@ router.use(menuRouter);
 router.use(discountRouter);
 router.use(voteRouter);
 router.use(CategoryRouter);
+router.use(FacilityRouter);
 
 module.exports = router;

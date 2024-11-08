@@ -23,6 +23,7 @@ const paymentType = [//
 ];
 export const FormBooking = () =>
 {
+	
 	document.title = 'Đặt phòng';
 
 	const [ rooms, setRooms ] = useState( [] );// State để lưu danh sách phòng
@@ -101,7 +102,6 @@ export const FormBooking = () =>
 	}, [ form.discount_id ] ) // Chạy lại khi discount_id thay đổi
 
 
-
 	const handleSubmit = async ( e ) =>// Hàm xử lý khi gửi form
 	{
 		e.preventDefault();
@@ -163,7 +163,7 @@ export const FormBooking = () =>
 			discount_id: null,
 			discount: 0,
 			status: 'Đang xử lý',
-			status_payment: 'Chưa thanh toán',// Chưa thanh toán => Đã thanh toán
+			status_payment: 'Đã thanh toán',// Chưa thanh toán => Đã thanh toán
 			price: 0,
 			total_money: 0,
 			customer_name: null,
@@ -285,17 +285,11 @@ export const FormBooking = () =>
 									<SelectBase form={ form } setForm={ setForm } name={ 'payment_type' }
 										data={ paymentType }
 										label={ 'Phương thức thanh toán: ' }
-										key_name={ 'payment_type' } required={ true } placeholder={ 'Thanh toán trực tiếp' }
+										key_name={ 'payment_type' } required={ true } placeholder={ 'Chọn phương thức thanh toán' }
 										type={ 'text' } error={ 'Vui lòng chọn phương thức thanh toán.' }
 									/>
 								</Form.Group>
-								{/*<Form.Group className="mb-3 col-xl-6">*/}
-								{/*	<InputBase form={ form } setForm={ setForm } name={ 'payment_type' }*/}
-								{/*			   label={ 'Phương thức thanh toán: ' }*/}
-								{/*			   key_name={ 'customer_phone' } required={ true } placeholder={ '2' }*/}
-								{/*			   type={ 'text' } error={ 'Vui lòng chọn phương thức thanh toán.' }*/}
-								{/*	/>*/}
-								{/*</Form.Group>*/}
+
 
 								<Col xl={ 12 } className="w-100 row">
 									<Form.Group className="mb-3 col-xl-4">

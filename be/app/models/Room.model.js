@@ -58,6 +58,12 @@ const roomSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category"
         },
+        facilities: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Facility'
+            }
+        ],
         albums: {
             type: Array
         },

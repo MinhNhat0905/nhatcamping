@@ -16,6 +16,7 @@ exports.index = async ( req, res ) =>
 		if(req.query.price) condition.price = req.query.price;// Lọc theo giá phòng nếu có
 		if(req.query.floors) condition.floors = req.query.floors;// Lọc theo số tầng nếu có
 		if(req.query.category_id) condition.category_id = req.query.category_id;// Lọc theo ID danh mục nếu có
+		
 		// if(req.query.size) condition.size = req.query.size;
 		const paging = buildParamPaging( req.query );// Xây dựng tham số phân trang từ query
 		const rooms = await Room.find()// Tìm kiếm các phòng với điều kiện đã xác định

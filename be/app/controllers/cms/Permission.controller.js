@@ -145,6 +145,26 @@ exports.seed = async (req, res) => {
                 path: '/category/update/:id'
             },
             {
+                name : 'List facility',
+                description: 'Danh sách facility',
+                path: '/facility/'
+            },
+            {
+                name : 'show facility',
+                description: 'show facility',
+                path: '/facility/:id'
+            },
+            {
+                name : 'add facility',
+                description: 'Thêm mới facility',
+                path: '/facility/store'
+            },
+            {
+                name : 'Update facility',
+                description: 'Update facility',
+                path: '/facility/update/:id'
+            },
+            {
                 name : 'List discount',
                 description: 'Danh sách mã giảm giá',
                 path: '/discount/'

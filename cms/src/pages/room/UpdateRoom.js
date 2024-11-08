@@ -9,6 +9,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import ImageForm from '../../common/form/imageForm';
 import categoryApi from "../../services/categoryService";
+import facilityApi from '../../services/facilityService';
 
 export default function UpdateRoom ()
 {
@@ -24,6 +25,8 @@ export default function UpdateRoom ()
 	const [floors, setFloors] = useState('');
 	const [ category_id, setCategoryId ] = useState( null );
 	const [ categories, setCategories ] = useState( [] );
+	const [facilities, setFacilities] = useState([]); // State để lưu tiện nghi
+    const [selectedFacilities, setSelectedFacilities] = useState([]); // State cho tiện nghi được chọn
 
 	const navigate = useNavigate();
 	const params = useParams();
@@ -59,6 +62,7 @@ export default function UpdateRoom ()
 				floors: floors,
 				room_code: room_code,
 				category_id: category_id,
+				facilities: selectedFacilities,
 			}
 
 			let activeAlbums = fileAlbums.filter(item => !item.file && item.imgBase64) || [];
@@ -82,7 +86,7 @@ export default function UpdateRoom ()
 			} else
 			{
 				toast( response?.message || response?.error || 'error' );
-			}
+			}console.log("Data before submit: ", data);
 		}
 
 		setValidated( true );
@@ -91,8 +95,7 @@ export default function UpdateRoom ()
 	const handleChangeMenu = ( event ) =>
 	{
 		setCategoryId( event.target.value );
-	}
-
+	};
 
 	const findById = async ( id ) =>
 	{
@@ -109,6 +112,7 @@ export default function UpdateRoom ()
 			setFloors( response.data?.floors );
 			setCategoryId( response.data?.category_id );
 			setRoomContent( response.data?.room_content );
+			setSelectedFacilities(response.data?.facilities || []); // Lấy danh sách tiện nghi từ dữ liệu phòng
 			if ( response?.data?.albums )
 			{
 				let files = response?.data?.albums.reduce( ( newValue, e ) =>
@@ -149,7 +153,21 @@ export default function UpdateRoom ()
 			setCategories( response.data.categories );
 		}
 	}
-
+	const getFacilitiesList = async () => {
+        const response = await facilityApi.getLists({ page_size: 1000 }); 
+		console.log(response); // Xem dữ liệu trả về
+        if (response?.status === 'success' || response?.status === 200) {
+            setFacilities(response.data.facilities);
+        }
+    };
+	const handleFacilityChange = (facilityId) => {
+        setSelectedFacilities((prevSelected) =>
+            prevSelected.includes(facilityId)
+                ? prevSelected.filter((id) => id !== facilityId)
+                : [...prevSelected, facilityId]
+        );
+		
+    };
 	useEffect( () =>
 	{
 		// getDetailData();
@@ -158,8 +176,9 @@ export default function UpdateRoom ()
 			findById( params.id );
 		}
 		getListsMenu().then(r => {});
+		getFacilitiesList();
 	}, [ params.id ] );
-
+	console.log("Selected Facilities: ", selectedFacilities);
 	return (
 		<div>
 			<Container>
@@ -256,6 +275,21 @@ export default function UpdateRoom ()
 									Category không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
+							<Form.Group className="mb-3" controlId="facilitySelect">
+                                <Form.Label>Chọn tiện nghi</Form.Label>
+                                <div>
+                                    {facilities.map((facility) => (
+                                        <Form.Check
+                                            key={facility._id}
+                                            type="checkbox"
+                                            label={facility.name}
+                                            value={facility._id}
+                                            checked={selectedFacilities.includes(facility._id)}
+                                            onChange={() => handleFacilityChange(facility._id)}
+                                        />
+                                    ))}
+                                </div>
+                            </Form.Group>
 							<Form.Group controlId="formFile" className="mb-3">
 								<Form.Label>Avatar</Form.Label>
 								{ avatar && (

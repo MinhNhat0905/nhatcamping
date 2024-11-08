@@ -34,4 +34,5 @@ export const BookingService = {
 	{
 		return await postMethod( 'booking/cancel/' + id );
 	},
+	
 }

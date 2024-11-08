@@ -12,6 +12,7 @@ const permissionRouter = require("./permission");
 const adminRouter = require("./admin");
 const menuRouter = require("./menu");
 const cateRouter = require("./category");
+const faciRouter = require("./facility");
 
 router.use(articleRouter);
 router.use(serviceRouter);
@@ -25,5 +26,6 @@ router.use(permissionRouter);
 router.use(adminRouter);
 router.use(menuRouter);
 router.use(cateRouter);
+router.use(faciRouter);
 
 module.exports = router;

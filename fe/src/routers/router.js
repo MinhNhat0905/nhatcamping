@@ -15,6 +15,7 @@ import { BookingPage } from "../page/others/BookingPage";
 import { PaymentStatus } from "../components/booking/paymentStatus";
 import { ServiceDetail } from "../components/room-service/serviceDetail";
 
+
 export const Routers = [
 	//profile Section(User Profile)
 
@@ -74,12 +75,12 @@ export const Routers = [
 		title: "Lịch sử đặt phòng",
 		component: <BookingPage />
 	},
-
 	{
-		path: "/payment/:type",
+		path: "/payment/:type", // Thêm route thanh toán
 		title: "Thanh toán",
-		component: <PaymentStatus />
+		component: <PaymentStatus /> // Đây là nơi hiển thị trạng thái thanh toán
 	},
+
 
 	{
 		path: "/service",

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Button, Col, Container, Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
-import cateApi from '../../services/categoryService';
+import faciApi from '../../services/facilityService';
 import moment from "moment/moment";
 import { toast } from "react-toastify";
 import { Pagination } from '../../common/form/pagination';
 
-export default function PageCategory ()
+export default function PageFacility ()
 {
 
 	const [ paging, setPaging ] = useState( {
@@ -19,7 +19,7 @@ export default function PageCategory ()
 
 	const [ params, setParams ] = useState( {} );
 
-	const [ categories, setCategories ] = useState( [] );
+	const [ facilities, setFacilities ] = useState( [] );
 
 	useEffect( () =>
 	{
@@ -28,17 +28,17 @@ export default function PageCategory ()
 
 	const getLists = async ( filters ) =>
 	{
-		const response = await cateApi.getLists( filters )
+		const response = await faciApi.getLists( filters )
 		if ( response?.status === 'success' || response?.status === 200 )
 		{
-			setCategories( response.data.categories );
+			setFacilities( response.data.facilities );
 			setPaging(response.meta)
 		}
 	}
 
 	const handleDelete = async ( id ) =>
 	{
-		const response = await cateApi.delete( id );
+		const response = await faciApi.delete( id );
 		if ( response?.status === 'success' || response?.status === 200 )
 		{
 			toast( "Xóa thành công!" );
@@ -55,13 +55,13 @@ export default function PageCategory ()
 				<Row>
 					<Col>
 						<Breadcrumb>
-							<Breadcrumb.Item href="/category" >
-								Loại phòng
+							<Breadcrumb.Item href="/facility" >
+								Tiện nghi
 							</Breadcrumb.Item>
 							<Breadcrumb.Item active>Danh sách</Breadcrumb.Item>
 						</Breadcrumb>
 						<div className={ 'd-flex justify-content-end' }>
-							<Link className={ 'btn btn-sm btn-primary' } to={ '/category/create' } >Thêm mới</Link>
+							<Link className={ 'btn btn-sm btn-primary' } to={ '/facility/create' } >Thêm mới</Link>
 						</div>
 						<Table responsive striped>
 							<thead>
@@ -73,13 +73,13 @@ export default function PageCategory ()
 								</tr>
 							</thead>
 							<tbody>
-								{ categories.length > 0 ? categories.map( ( item, key ) =>
+								{ facilities.length > 0 ? facilities.map( ( item, key ) =>
 								{
 									return (
 										<tr key={ item._id }>
 											<td>{ key + 1 }</td>
 											<td>
-												<Link to={ `/category/update/${ item._id }` }>{ item.name }</Link>
+												<Link to={ `/facility/update/${ item._id }` }>{ item.name }</Link>
 												<p className='text-truncate' style={ { maxWidth: '300px' } }>{ item.description }</p>
 											</td>
 											<td>{ moment( item.created_at ).format( "MM-DD-YYYY H:mm:ss" ) }</td>
@@ -93,7 +93,7 @@ export default function PageCategory ()
 								} )
 									:
 									<tr>
-										<td className='text-center' colSpan={ 4 }>Không có dữ liệu</td>
+										<td className='text-center' colSpan={ 4 }>Đang tải</td>
 									</tr>
 								}
 							</tbody>

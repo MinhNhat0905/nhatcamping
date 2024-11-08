@@ -11,7 +11,8 @@ import { DEFAULT_IMG, onErrorImg, readFile } from '../../common/common';
 import { CloseOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons'
 import ImageForm from '../../common/form/imageForm';
 import categoryApi from "../../services/categoryService";
-// import MapSelector from '../../common/MapSelector'; // Import MapSelector
+import facilityApi from '../../services/facilityService';
+
 export default function CreateRoom ()
 {
 	const [ validated, setValidated ] = useState( false );
@@ -24,11 +25,11 @@ export default function CreateRoom ()
 	const [ file, setFile ] = useState();
 	const [floors, setFloors] = useState('');
     const [room_code, setRoomCode] = useState('');
-	// const [latitude, setLatitude] = useState(null); // Thêm trạng thái latitude
-    // const [longitude, setLongitude] = useState(null); // Thêm trạng thái longitude
-	// const [location, setLocation] = useState(null); // Lưu tọa độ đã chọn
+
 	const [ category_id, setCategoryId ] = useState( null );
 	const [ categories, setCategories ] = useState( [] );
+	const [facilities, setFacilities] = useState([]); // Danh sách tiện nghi từ API
+    const [selectedFacilities, setSelectedFacilities] = useState([]); // Danh sách các tiện nghi được chọn
 
 	const [ fileAlbums, setFileAlbums ] = useState( [
 		{
@@ -45,11 +46,7 @@ export default function CreateRoom ()
 		const value = event.target.value;
 		setter(value >= 0 ? value : Math.abs(value)); // Loại bỏ dấu âm nếu có
 	};
-	//  // Xử lý khi chọn vị trí trên bản đồ
-	//  const handleLocationSelect = (latlng) => {
-    //     setLocation(latlng); // Cập nhật tọa độ
-    //     console.log('Selected location:', latlng); // Xem tọa độ trong console
-    // }
+
 	const handleSubmit = async ( event ) =>
 	{
 		event.preventDefault();
@@ -69,8 +66,7 @@ export default function CreateRoom ()
 				floors: floors,
                 room_code: room_code,
 				category_id: category_id,
-				//  latitude: latitude, // Gửi tọa độ đã chọn
-                // longitude: longitude // Gửi tọa độ đã chọn
+				facilities: selectedFacilities,
 			}
 
 			const avatarUpload = await uploadApi.uploadFile( file );
@@ -89,10 +85,11 @@ export default function CreateRoom ()
 			} else
 			{
 				toast( response?.message || response?.error || 'error' );
-			}
+			}console.log("Data before submit: ", data);
 		}
-
+		console.log(selectedFacilities);
 		setValidated( true );
+		
 	};
 
 	const handleUpload = ( event ) =>
@@ -109,15 +106,29 @@ export default function CreateRoom ()
 			setCategories( response.data.categories );
 		}
 	}
-
+	const getFacilitiesList = async () => {
+        const response = await facilityApi.getLists({ page_size: 1000 }); 
+		console.log(response); // Xem dữ liệu trả về
+        if (response?.status === 'success' || response?.status === 200) {
+            setFacilities(response.data.facilities);
+        }
+    };
 	const handleChangeMenu = ( event ) =>
 	{
 		setCategoryId( event.target.value );
 	}
-
+	const handleFacilityChange = (facilityId) => {
+		setSelectedFacilities((prevSelected) =>
+			prevSelected.includes(facilityId)
+				? prevSelected.filter((id) => id !== facilityId) // Xóa tiện nghi nếu đã chọn
+				: [...prevSelected, facilityId] // Thêm tiện nghi nếu chưa chọn
+		);
+		console.log("Selected Facilities: ", selectedFacilities);
+	};
 	useEffect( () =>
 	{
 		getListsMenu( { ...params } ).then( r => { } );
+		getFacilitiesList();
 	}, [ ] );
 
 
@@ -218,6 +229,19 @@ export default function CreateRoom ()
 									Category không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
+							<Form.Group className="mb-3" controlId="facilitySelect">
+                                <Form.Label>Chọn tiện nghi</Form.Label>
+								{facilities.map((facility) => (
+									<Form.Check
+										key={facility._id}
+										type="checkbox"
+										label={facility.name}
+										value={facility._id}
+										checked={selectedFacilities.includes(facility._id)} // Kiểm tra xem tiện nghi có được chọn không
+										onChange={() => handleFacilityChange(facility._id)} // Cập nhật khi chọn
+									/>
+								))}
+                            </Form.Group>
 							<Form.Group controlId="formFile" className="mb-3">
 								<Form.Label>Avatar</Form.Label>
 								<Form.Control type="file" accept="image/*" onChange={ ( event ) => handleUpload( event ) } />

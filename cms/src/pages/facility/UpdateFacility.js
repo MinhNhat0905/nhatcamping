@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
-import categoryApi from "../../services/categoryService";
+import facilityApi from "../../services/facilityService";
 import { toast } from "react-toastify";
 
-export default function UpdateCategory ()
+export default function UpdateFacility ()
 {
 	const [ validated, setValidated ] = useState( false );
 	const [ name, setName ] = useState( '' );
@@ -25,11 +25,11 @@ export default function UpdateCategory ()
 				name: name
 			}
 
-			const response = await categoryApi.update( params.id, data );
+			const response = await facilityApi.update( params.id, data );
 			if ( response.status === 'success' || response.status === 200 )
 			{
 				toast( "Cập nhật thành công" );
-				navigate( '/category' )
+				navigate( '/facility' )
 			} else
 			{
 				toast( response?.message || response?.error || 'error' );
@@ -41,7 +41,7 @@ export default function UpdateCategory ()
 
 	const findById = async ( id ) =>
 	{
-		const response = await categoryApi.findById( id );
+		const response = await facilityApi.findById( id );
 		if ( response.status === 'success' || response.status === 200 )
 		{
 			setName( response.data.name );
@@ -65,7 +65,7 @@ export default function UpdateCategory ()
 				<Row>
 					<Col>
 						<Breadcrumb>
-							<Breadcrumb.Item href="/category" >
+							<Breadcrumb.Item href="/facility" >
 								Loại phòng
 							</Breadcrumb.Item>
 							<Breadcrumb.Item active>Cập nhật</Breadcrumb.Item>
@@ -76,7 +76,7 @@ export default function UpdateCategory ()
 						<Form noValidate validated={ validated } onSubmit={ handleSubmit }>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 								<Form.Label>Tên menu</Form.Label>
-								<Form.Control required type="text" name={ 'name' } placeholder="Menu"
+								<Form.Control required type="text" name={ 'name' } placeholder="Tiện nghi"
 											  onChange={ event => setName( event.target.value ) }
 											  value={ name } />
 								<Form.Control.Feedback type="invalid">
