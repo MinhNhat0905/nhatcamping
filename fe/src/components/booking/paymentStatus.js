@@ -20,22 +20,22 @@ export const PaymentStatus = () =>
 	const [ content, setContent ] = useState( '' );
 
 	const params = useParams();
-
+// Hook useEffect sẽ chạy khi `params.type` thay đổi
 	useEffect( () =>
 	{
-		if ( params.type === 'error' )
+		if ( params.type === 'error' )// Kiểm tra loại trạng thái từ tham số `type`
 		{
-			setImg( ERROR_IMG );
+			setImg( ERROR_IMG );// Nếu `type` là 'error', hiển thị ảnh thất bại
 			setTitle( 'thất bại' );
 		} else if(params.type === 'success')
 		{
-			setImg( SUCCESS_IMG );
+			setImg( SUCCESS_IMG );// Nếu `type` là 'success', hiển thị ảnh thành công
 			setTitle( 'thành công' );
 		}else {
-			setImg( SUCCESS_IMG );
+			setImg( SUCCESS_IMG );// Nếu không có `type` hợp lệ, mặc định là thành công
 			setContent( 'Booking thành công' );
 		}
-	}, [ params.type ] )
+	}, [ params.type ] )// Tham số phụ thuộc là `params.type`
 
 	return (
 		<React.Fragment>

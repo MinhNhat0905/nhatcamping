@@ -51,7 +51,7 @@ const Home = () =>
 
 	const getRooms = async () =>
 	{
-		const rs = await RoomService.getDataList( { page: 1, page_size: 6, status: 1 } );
+		const rs = await RoomService.getDataList( { page: 1, page_size: 8, status: 1 } );
 		if ( rs?.status === 200 )
 		{
 			setRooms( rs?.data?.rooms || [] )

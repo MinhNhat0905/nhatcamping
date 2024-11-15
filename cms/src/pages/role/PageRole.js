@@ -101,7 +101,7 @@ export default function PageRole ()
 									} )
 									:
 									<tr>
-										<td className='text-center' colSpan={ 5 }>Không có dữ liệu</td>
+										<td className='text-center' colSpan={ 5 }>Đang tải</td>
 									</tr>
 								}
 							</tbody>

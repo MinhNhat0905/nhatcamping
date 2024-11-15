@@ -98,7 +98,7 @@ export default function PageUser() {
                                     })
                                     :
                                     <tr>
-                                        <td className='text-center' colSpan={4}>Không có dữ liệu</td>
+                                        <td className='text-center' colSpan={4}>Đang tải</td>
                                     </tr>
                                 }
 

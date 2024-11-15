@@ -47,7 +47,7 @@ export const FormBooking = () =>
 		payment_type: 1,// Mặc định là thanh toán bằng tiền mặt
 	} );
 
-	const [ validated, setValidated ] = useState( false );
+	const [ validated, setValidated ] = useState( false );// Tạo state validated để kiểm tra tính hợp lệ của form
 
 
 
@@ -154,7 +154,7 @@ export const FormBooking = () =>
 
 	const resetForm = () =>
 	{
-		setForm( {
+		setForm( {// Đặt lại các giá trị trong form
 			check_in: null,
 			check_out: null,
 			amount_of_people: null,
@@ -171,22 +171,22 @@ export const FormBooking = () =>
 			customer_phone: null,
 			payment_type: 2,
 		} );
-		setValidated( false );
+		setValidated( false );// Đặt lại trạng thái kiểm tra form thành chưa kiểm tra
 	}
 	const getDataList = async () =>
 	{
 
-		dispatch( toggleShowLoading( true ) );
+		dispatch( toggleShowLoading( true ) );// Bật loading spinner
 		const rs = await RoomService.getDataList( { page: 1, page_size: 1000, status: 1 } );
 		if ( rs?.status === 200 )
 		{
 
-			setRooms( rs?.data?.rooms || [] );
+			setRooms( rs?.data?.rooms || [] );// Cập nhật danh sách phòng vào state rooms
 		} else
 		{
-			setRooms( [] );
+			setRooms( [] );// Nếu lỗi, đặt danh sách phòng thành mảng rỗng
 		}
-		dispatch( toggleShowLoading( false ) );
+		dispatch( toggleShowLoading( false ) );// Tắt loading spinner
 	};
 
 	const getListDiscount = async () =>
@@ -195,10 +195,10 @@ export const FormBooking = () =>
 		if ( rs?.status === 200 )
 		{
 
-			setDiscounts( rs?.data?.discounts || [] );
+			setDiscounts( rs?.data?.discounts || [] );// Cập nhật danh sách giảm giá vào state discounts
 		} else
 		{
-			setDiscounts( [] );
+			setDiscounts( [] );// Nếu lỗi, đặt danh sách giảm giá thành mảng rỗng
 		}
 	}
 
@@ -273,13 +273,6 @@ export const FormBooking = () =>
 										key_name={ 'room_id' } required={ true } placeholder={ 'Chọn phòng' }
 										type={ 'text' } error={ 'Vui lòng chọn phòng.' } />
 								</Form.Group>
-
-								{/* <Form.Group className="mb-3 col-xl-6">
-									<SelectBase form={ form } setForm={ setForm } name={ 'discount_id' }
-										label={ 'Mã giảm giá: ' } data={ discounts }
-										key_name={ 'discount_id' } required={ false } placeholder={ 'Chọn mã giảm giá' }
-										type={ 'text' } />
-								</Form.Group> */}
 
 								<Form.Group className="mb-3 col-xl-6">
 									<SelectBase form={ form } setForm={ setForm } name={ 'payment_type' }

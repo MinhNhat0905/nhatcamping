@@ -137,7 +137,7 @@ export default function PageBooking() {
                                     })
                                     :
                                     <tr>
-                                        <td className='text-center' colSpan={7}>Không có dữ liệu</td>
+                                        <td className='text-center' colSpan={7}>Đang tải</td>
                                     </tr>
                                 }
                             </tbody>

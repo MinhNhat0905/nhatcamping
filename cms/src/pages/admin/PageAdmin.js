@@ -105,7 +105,7 @@ export default function PageAdmin() {
                                     })
                                     :
                                     <tr>
-                                        <td className='text-center' colSpan={9}>Không có dữ liệu</td>
+                                        <td className='text-center' colSpan={9}>Đang tải</td>
                                     </tr>
                                 }
 
