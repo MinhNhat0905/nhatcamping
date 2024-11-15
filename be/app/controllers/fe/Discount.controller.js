@@ -20,7 +20,7 @@ exports.index = async ( req, res ) =>
 			.exec();
 
 		  // Đếm tổng số tài liệu trong bộ sưu tập giảm gia
-		const count = await Discount.count().where(condition);
+		const count = await Discount.count().where(conditions);
 
 		 // Trả về phản hồi với danh sách giảm giá, tổng số trang và trang hiện tại
 		const meta = buildResponsePaging(paging.page, paging.page_size, count);
