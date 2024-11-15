@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { InputBase } from "../base-form/controlInputForm";
 import { categoryService } from "../../services/feService/categoryService";
+import { facilityService } from "../../services/feService/facilityService";
 import { useParams } from "react-router-dom";
-import { SelectBase } from "../base-form/selectForm";
-
+import { SelectBase } from "../base-form/selectForm";//
+import { CheckboxBase } from "../base-form/checkboxForm";//
 export const FormRoomSearch = ( props ) =>
 {
 
@@ -15,11 +16,13 @@ export const FormRoomSearch = ( props ) =>
 		name: null,
 		price: null,
 		floors: null,
-		category_id: null
+		category_id: null,
+    	facilities: [],
 	} );
 
 	const [ category_id, setCategoryId ] = useState( null );
 	const [ categories, setCategories ] = useState( [] );
+	const [facilities, setFacilities] = useState([]);
 	const params = useParams();
 	const handleSubmit = async ( e ) =>
 	{
@@ -38,7 +41,8 @@ export const FormRoomSearch = ( props ) =>
 			price: null,
 			name: null,
 			floors: null,
-			category_id: null
+			category_id: null,
+			facilities: [],
 		} )
 		props.setParams( {
 			size: null,
@@ -47,7 +51,8 @@ export const FormRoomSearch = ( props ) =>
 			name: null,
 			floors: null,
 			price: null,
-			category_id: null
+			category_id: null,
+			facilities: [],
 		} );
 		props.getDataList( { page: 1, page_size: props.paging.page_size } );
 	}
@@ -62,11 +67,21 @@ export const FormRoomSearch = ( props ) =>
 		{
 			setCategories( response.data.categories );
 		}
-	}
-
+	};
+	
+	const getFacilities = async () => {
+		const response = await facilityService.getDataList({
+		  page_size: 1000,
+		});
+		if (response?.status === "success" || response?.status === 200) {
+		  setFacilities(response.data.facilities); // Giả sử bạn nhận danh sách tiện nghi từ API
+		}
+	  };
+	  
 	useEffect( () =>
 	{
 		getListsMenu().then( r => { } );
+		getFacilities();
 	}, [] );
 
 	return (
@@ -109,7 +124,20 @@ export const FormRoomSearch = ( props ) =>
 						type={ 'text' }
 					/>
 				</Form.Group>
-
+ {/* Checkbox for selecting facilities */}
+ <Form.Group className="mb-3 col-md-12">
+  <label>Tiện nghi: </label>
+  {facilities.map((facility) => (
+    <CheckboxBase
+      key={facility.id}
+      label={facility.name}
+      value={facility.id}
+      form={form}
+      key_name="facilities"
+      setForm={setForm}
+    />
+  ))}
+</Form.Group>
 				{/* <Form.Group className="mb-3 col-md-12">
 					<InputBase form={ form } setForm={ setForm } name={ 'floors' }
 						label={ 'Tầng: ' }

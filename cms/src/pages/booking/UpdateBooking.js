@@ -10,7 +10,7 @@ export default function UpdateBooking() {
     const [validated, setValidated] = useState(false);// State để theo dõi trạng thái hợp lệ của form
     const [name, setName] = useState(''); // State để lưu tên khách hàng
     const [status, setStatus] = useState('');// State để lưu trạng thái đặt phòng
-    
+    const [status_payment, setPaymentStatus] = useState('');
     const navigate = useNavigate();// Khởi tạo hook điều hướng
     const params = useParams();// Lấy các tham số từ URL
     const handleSubmit = async (event) => { // Hàm xử lý khi form được gửi
@@ -21,7 +21,7 @@ export default function UpdateBooking() {
         } else {
             let data = {// Tạo đối tượng dữ liệu để gửi đi
                 status: status,// Trạng thái từ state
-                
+                payment_status: status_payment, 
             }
             // Gửi yêu cầu cập nhật đến API
             const response = await bookingApi.update(params.id,data);
@@ -52,7 +52,9 @@ export default function UpdateBooking() {
     const handleChangeStatus = (event) => {// Hàm xử lý thay đổi trạng thái
         setStatus(event.target.value);// Cập nhật trạng thái từ lựa chọn
     }
-
+    const handleChangePaymentStatus = (event) => {
+        setPaymentStatus(event.target.value); // Cập nhật trạng thái thanh toán từ lựa chọn
+    };
 
     useEffect( () => // Sử dụng hook effect để lấy dữ liệu khi component mount
     {
@@ -91,7 +93,18 @@ export default function UpdateBooking() {
                                             Số phòng ngủ không được để trống
                                         </Form.Control.Feedback>
                                     </Form.Group>
-                                </Col>
+                                    {/* <Form.Group className="mb-3" controlId="paymentStatus">
+                                        <Form.Label>Trạng thái thanh toán</Form.Label>
+                                        <Form.Select onChange={handleChangePaymentStatus}>
+                                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                            <option value="Đã thanh toán">Đã thanh toán</option>
+                                        </Form.Select>
+                                        <Form.Control.Feedback type="invalid">
+                                            Trạng thái thanh toán không được để trống
+                                        </Form.Control.Feedback>
+                                    </Form.Group> */}
+                                    
+                                </Col>                             
                             </Row>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Button  type="submit">Lưu dữ liệu</Button>
