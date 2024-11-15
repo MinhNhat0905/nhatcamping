@@ -20,6 +20,7 @@ export const BookingPage = () =>
 	const [paging, setPaging] = useState(INIT_PAGING); // State để lưu thông tin phân trang
 	const [params, setParams] = useState({ // State để lưu các tham số tìm kiếm
 		status: null,
+		status_payment: null,
 		room_id: null,
 		check_in: null,
 		check_out: null
@@ -32,9 +33,9 @@ export const BookingPage = () =>
 	const [id, setId] = useState(null); // State để lưu ID của đặt phòng khi cần thiết
 
 	const dispatch = useDispatch(); // Khởi tạo hook dispatch
-	useEffect(() => { // Sử dụng hook effect để lấy danh sách đặt phòng khi component mount
-		getDataList({ page: 1, page_size: INIT_PAGING.page_size }); // Lấy dữ liệu danh sách với trang đầu tiên
-	}, []); // Chạy effect chỉ một lần khi component được mount
+	useEffect(() => {
+		getDataList({ page: 1, page_size: INIT_PAGING.page_size }); // Gọi lại hàm lấy dữ liệu sau khi cập nhật
+	}, [params]); // Theo dõi sự thay đổi của params // Chạy effect chỉ một lần khi component được mount
 
 	const getDataList = async ( params ) =>// Hàm lấy danh sách đặt phòng
 	{

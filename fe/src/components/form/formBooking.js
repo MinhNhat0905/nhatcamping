@@ -10,14 +10,14 @@ import { InputBase } from "../base-form/controlInputForm";
 import { SelectBase } from "../base-form/selectForm";
 import { RoomService } from "../../services/feService/roomService";
 import { BookingService } from "../../services/feService/bookingService";
-
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 const paymentType = [//
 	{
 		_id: 1,
 		name: 'Tiền mặt'//chỗ này
 	},
 	{
-		_id: 2,	
+		_id: 3,	
 		name: 'Online'
 	}
 ];
@@ -89,7 +89,13 @@ export const FormBooking = () =>
 
 		}
 	}, [ form.room_id, form.check_in, form.check_out ] );// Chạy lại khi room_id, check_in, hoặc check_out thay đổi
-
+	console.log(discounts); // Kiểm tra dữ liệu discounts
+	if (discounts && discounts.length > 0) {
+		// Xử lý mã giảm giá nếu có dữ liệu
+	} else {
+		console.log("No discounts available");
+	}
+	
 	useEffect( () => // Khi discount_id thay đổi
 	{
 		if ( form.discount_id && discounts?.length > 0 )
@@ -113,6 +119,10 @@ export const FormBooking = () =>
 			form.total_money = form.price - form.discount; // Tính tổng tiền
 			form.payment_type = Number(form.payment_type); // Chuyển payment_type sang kiểu số
 			form.discount_id = Number(form.discount_id); // Chuyển discount_id sang kiểu số
+			if (form.payment_type === 3) {  // Giả sử 3 là mã của PayPal
+				// Tiến hành logic thanh toán PayPal
+				handlePaypalPayment();
+			}else {
 			dispatch(toggleShowLoading(true)); // Hiển thị trạng thái loading
 
 			const response = await BookingService.createData(form); // Gửi yêu cầu đặt phòng
@@ -147,10 +157,55 @@ export const FormBooking = () =>
 				dispatch( toggleShowLoading( false ) );
 			}
 		}
-
+	}
 		setValidated( true );
 
-	}
+	};
+	const handlePaypalSuccess = async (details) => {
+		const updatedForm = {
+			...form,
+			status_payment: 'Đã thanh toán',
+		};
+	
+		try {
+			const response = await BookingService.createData(updatedForm);
+	
+			if (response?.status === 200 && response?.data) {
+				toast('Thanh toán PayPal thành công!', { type: 'success', autoClose: 900 });
+				resetForm();
+				navigate('/payment/booking-success');
+			} else {
+				toast(response?.message || response?.error || 'Có lỗi xảy ra', { type: 'error', autoClose: 900 });
+			}
+		} catch (error) {
+			toast('Có lỗi xảy ra khi cập nhật thanh toán.', { type: 'error', autoClose: 900 });
+		}
+	};
+	const handlePaypalPayment = async () => {
+		try {
+			// Thực hiện logic thanh toán qua PayPal (có thể dùng PayPal SDK hoặc API PayPal)
+			// Giả sử bạn đã tích hợp PayPal và xử lý thanh toán ở đây.
+	
+			// Sau khi thanh toán thành công, cập nhật trạng thái thanh toán.
+			const updatedForm = {
+				...form,
+				status_payment: 'PAID', // Đánh dấu đã thanh toán
+			};
+	
+			// Gọi API để cập nhật trạng thái thanh toán sau khi PayPal thành công
+			const response = await BookingService.createData(updatedForm);
+	
+			if (response?.status === 200 && response?.data) {
+				toast('Thanh toán PayPal thành công!', { type: 'success', autoClose: 900 });
+				resetForm();
+				navigate('/payment/booking-success');
+			} else {
+				toast(response?.message || response?.error || 'Có lỗi xảy ra', { type: 'error', autoClose: 900 });
+			}
+		} catch (error) {
+			toast('Có lỗi xảy ra khi thanh toán PayPal.', { type: 'error', autoClose: 900 });
+		}
+	};
 
 	const resetForm = () =>
 	{
@@ -273,15 +328,21 @@ export const FormBooking = () =>
 										key_name={ 'room_id' } required={ true } placeholder={ 'Chọn phòng' }
 										type={ 'text' } error={ 'Vui lòng chọn phòng.' } />
 								</Form.Group>
-
 								<Form.Group className="mb-3 col-xl-6">
+									<InputBase form={ form } setForm={ setForm } name={ 'discount_id' }
+										label={ 'Mã giảm giá: ' } data={ discounts }
+										key_name={ 'discount_id' } required={ false } placeholder={ 'Chọn mã giảm giá' }
+										type={ 'text' } />
+								</Form.Group>
+
+								{/* <Form.Group className="mb-3 col-xl-6">
 									<SelectBase form={ form } setForm={ setForm } name={ 'payment_type' }
 										data={ paymentType }
 										label={ 'Phương thức thanh toán: ' }
 										key_name={ 'payment_type' } required={ true } placeholder={ 'Chọn phương thức thanh toán' }
 										type={ 'text' } error={ 'Vui lòng chọn phương thức thanh toán.' }
 									/>
-								</Form.Group>
+								</Form.Group> */}
 
 
 								<Col xl={ 12 } className="w-100 row">
@@ -289,20 +350,56 @@ export const FormBooking = () =>
 										<Form.Label className="fs-19">Số tiền: </Form.Label>
 										<p className="text-dark fs-19">{ customNumber( form.price, '.', 'đ' ) }</p>
 									</Form.Group>
-{/* 
+
 									<Form.Group className="mb-3 col-xl-4">
 										<Form.Label className="fs-19">Discount: </Form.Label>
 										<p className="text-dark fs-19">{ customNumber( form.discount, '.', 'đ' ) }</p>
-									</Form.Group> */}
+									</Form.Group>
 
 									<Form.Group className="mb-3 col-xl-4">
 										<Form.Label className="fs-19">Tổng tiền: </Form.Label>
 										<p className="text-dark fs-19">{ customNumber( form.price - form.discount, '.', 'đ' ) }</p>
 									</Form.Group>
 
-									<Form.Group className="mb-3 col-12 d-flex justify-content-center">
-										<Button type="submit" className='btn btn-primary py-3 px-5'>Đặt phòng</Button>
-									</Form.Group>
+									{/* Chọn phương thức thanh toán bằng Radio Buttons */}
+									<Form.Group className="mb-3 col-xl-6">
+                                    <Form.Label>Phương thức thanh toán:</Form.Label>
+                                    <div>
+                                        {paymentType.map(type => (
+                                            <Form.Check
+                                                key={type._id}
+                                                type="radio"
+                                                label={type.name}
+                                                name="payment_type"
+                                                value={type._id}
+                                                checked={form.payment_type === type._id}
+                                                onChange={(e) => setForm(prevForm => ({
+													...prevForm,
+													payment_type: parseInt(e.target.value) // Cập nhật giá trị payment_type
+												}))}
+                                            />
+                                        ))}
+                                    </div>
+                                </Form.Group>
+
+                                {/* Hiển thị PayPalButton khi chọn phương thức thanh toán Online */}
+                                {form.payment_type === 3 ? (
+                                    <Col className="mb-3 col-xl-6 d-flex justify-content-center">
+                                        <PayPalScriptProvider options={{ "client-id": "ASaNaVA06R1H7x32xWvd0EPKQ1rgBFXLAFjpW6v5yvsh113f5veUEcJS_iD1wlEA16klZ_1AGqVEeYdL" }}>
+                                            <PayPalButtons
+                                                style={{ layout: 'vertical' }}
+                                                createOrder={(data, actions) => actions.order.create({
+                                                    purchase_units: [{
+                                                        amount: { value: (form.price - form.discount).toString() }
+                                                    }]
+                                                })}
+                                                onApprove={(data, actions) => actions.order.capture().then(details => handlePaypalSuccess(details))}
+                                            />
+                                        </PayPalScriptProvider>
+                                    </Col>
+                                ) : (
+                                    <Button type="submit" className="btn-primary w-100">Đặt phòng</Button>
+                                )}
 								</Col>
 							</Form>
 						</Col>
