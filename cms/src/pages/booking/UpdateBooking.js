@@ -21,7 +21,7 @@ export default function UpdateBooking() {
         } else {
             let data = {// Tạo đối tượng dữ liệu để gửi đi
                 status: status,// Trạng thái từ state
-                payment_status: status_payment, 
+                status_payment: status_payment, 
             }
             // Gửi yêu cầu cập nhật đến API
             const response = await bookingApi.update(params.id,data);
@@ -83,27 +83,24 @@ export default function UpdateBooking() {
                             <Row>
                                 <Col className={'col-3'}>
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                        <Form.Label>Trạng thái</Form.Label>
+                                        <Form.Label>Trạng thái đặt phòng</Form.Label>
                                         <Form.Select aria-label="Default select example" onChange={handleChangeStatus}>
                                             <option value="Đang xử lý">Đang xử lý</option>
                                             <option value="Chấp nhận">Chấp nhận</option>
                                             <option value="Từ chối">Từ chối</option>
                                         </Form.Select>
-                                        <Form.Control.Feedback type="invalid">
+                                        {/* <Form.Control.Feedback type="invalid">
                                             Số phòng ngủ không được để trống
-                                        </Form.Control.Feedback>
+                                        </Form.Control.Feedback> */}
                                     </Form.Group>
-                                    {/* <Form.Group className="mb-3" controlId="paymentStatus">
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                         <Form.Label>Trạng thái thanh toán</Form.Label>
-                                        <Form.Select onChange={handleChangePaymentStatus}>
+                                        <Form.Select aria-label="Default select example" onChange={handleChangePaymentStatus}>
                                             <option value="Chưa thanh toán">Chưa thanh toán</option>
-                                            <option value="Đã thanh toán">Đã thanh toán</option>
+                                            <option value="Đã thanh toán">Đã thanh toán</option>                                           
                                         </Form.Select>
-                                        <Form.Control.Feedback type="invalid">
-                                            Trạng thái thanh toán không được để trống
-                                        </Form.Control.Feedback>
-                                    </Form.Group> */}
-                                    
+
+                                    </Form.Group>                           
                                 </Col>                             
                             </Row>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

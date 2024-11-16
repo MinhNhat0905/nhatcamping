@@ -116,12 +116,13 @@ exports.add = async (req, res) => {
 
 
         // Kiểm tra mã giảm giá
-        if (data.discount_id) {
-            let codeDiscount = await Discount.findById({ _id: data.discount_id });
-            if (codeDiscount) {// Nếu tìm thấy mã giảm giá
-                data.discount = codeDiscount.price;// Gán giá trị giảm giá vào data
-                data.total_money -= codeDiscount.price;// Giảm tổng tiền theo giá trị mã giảm giá
-                if (data.total_money < 0) data.total_money = 0; // Nếu tổng tiền nhỏ hơn 0 thì gán lại bằng 0
+        if (data.discount_name) {
+            let codeDiscount = await Discount.findOne({ name: data.discount_name });
+            if (codeDiscount) {
+                data.discount_id = codeDiscount._id; // Lưu discount_id từ tên mã giảm giá
+                data.discount = codeDiscount.price; // Gán giá trị giảm giá vào data
+                data.total_money -= codeDiscount.price;
+                if (data.total_money < 0) data.total_money = 0;
             }
         }
 

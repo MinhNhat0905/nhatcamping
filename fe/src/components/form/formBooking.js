@@ -89,23 +89,25 @@ export const FormBooking = () =>
 
 		}
 	}, [ form.room_id, form.check_in, form.check_out ] );// Chạy lại khi room_id, check_in, hoặc check_out thay đổi
-	console.log(discounts); // Kiểm tra dữ liệu discounts
-	if (discounts && discounts.length > 0) {
-		// Xử lý mã giảm giá nếu có dữ liệu
-	} else {
-		console.log("No discounts available");
-	}
-	
-	useEffect( () => // Khi discount_id thay đổi
-	{
-		if ( form.discount_id && discounts?.length > 0 )
-		{
-			let data = discounts.find( item => item._id === form.discount_id );// Tìm giảm giá tương ứng
-			let discount = data?.price || 0; // Lấy giá trị giảm giá
-			setForm({ ...form, discount: discount }); // Cập nhật giảm giá vào form
 
+	
+	useEffect(() => {
+		if (form.discount_name && discounts?.length > 0) {
+			// Tìm giảm giá dựa trên tên
+			let data = discounts.find(item => item.name.toLowerCase() === form.discount_name.toLowerCase());
+			if (data) {
+				console.log("Mã giảm giá đã nhập:", form.discount_name);
+            console.log("ID của mã giảm giá:", data._id);
+            console.log("Giá trị giảm giá:", data.price);
+				// Cập nhật discount_id và giá trị giảm giá vào form
+				setForm({ ...form, discount_id: data._id, discount: data.price });
+			} else {
+				// Xóa discount_id và giá trị giảm giá nếu không tìm thấy
+				setForm({ ...form, discount_id: null, discount: 0 });
+			}
 		}
-	}, [ form.discount_id ] ) // Chạy lại khi discount_id thay đổi
+	}, [form.discount_name, discounts]); // Theo dõi thay đổi của discount_name và danh sách discounts
+	
 
 
 	const handleSubmit = async ( e ) =>// Hàm xử lý khi gửi form
@@ -126,7 +128,7 @@ export const FormBooking = () =>
 			dispatch(toggleShowLoading(true)); // Hiển thị trạng thái loading
 
 			const response = await BookingService.createData(form); // Gửi yêu cầu đặt phòng
-			console.log('----------------- response booking: ', response); // Ghi log phản hồi
+			console.log('data sau khi đặt phòng: ', response); // Ghi log phản hồi
 			if ( response?.status === 200 && response?.data )
 			{
 				toast( 'đặt phòng thành công!', { type: 'success', autoClose: 900 } );
@@ -256,7 +258,7 @@ export const FormBooking = () =>
 			setDiscounts( [] );// Nếu lỗi, đặt danh sách giảm giá thành mảng rỗng
 		}
 	}
-
+console.log('data sau khi nhập: ',form);
 
 	return (
 		<React.Fragment>
@@ -329,10 +331,16 @@ export const FormBooking = () =>
 										type={ 'text' } error={ 'Vui lòng chọn phòng.' } />
 								</Form.Group>
 								<Form.Group className="mb-3 col-xl-6">
-									<InputBase form={ form } setForm={ setForm } name={ 'discount_id' }
-										label={ 'Mã giảm giá: ' } data={ discounts }
-										key_name={ 'discount_id' } required={ false } placeholder={ 'Chọn mã giảm giá' }
-										type={ 'text' } />
+								<InputBase
+									form={form}
+									setForm={setForm}
+									name={'discount_name'}
+									label={'Mã giảm giá: '}
+									key_name={'discount_name'}
+									required={false}
+									placeholder={'Nhập tên mã giảm giá'}
+									type={'text'}
+								/>
 								</Form.Group>
 
 								{/* <Form.Group className="mb-3 col-xl-6">

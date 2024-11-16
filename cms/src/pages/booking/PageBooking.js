@@ -67,19 +67,19 @@ export default function PageBooking() {
                         <Table responsive>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Customer</th>
-                                    <th>Room</th>
-                                    <th>Price</th>
-                                    <th>Discount</th>
-                                    <th>Total</th>
-                                    <th>Check In</th>
-                                    <th>Check Out</th>
-                                    <th>Status</th>
-                                    <th>Payment Type</th>
-                                    <th>Payment</th>
-                                    <th>Created</th>
-                                    <th>Action</th>
+                                    <th></th>
+                                    <th>Khách hàng</th>
+                                    <th>Phòng</th>
+                                    <th>Giá</th>
+                                    <th>Giảm giá</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ngày nhận</th>
+                                    <th>Ngày trả</th>
+                                    <th>Trạng thái phòng</th>
+                                    <th>Loại TT</th>
+                                    <th>Trạng thái thanh toán</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,20 +116,35 @@ export default function PageBooking() {
                                                     {moment(item.check_out).format("MM-DD-YYYY")}
                                                 </td>
                                                 <td>
-                                                    <Badge bg="primary">{ item.status}</Badge>
+                                                    <Badge 
+                                                        bg={
+                                                            item.status === 'Đang xử lý' ? 'secondary' :
+                                                            item.status === 'Chấp nhận' ? 'success' :
+                                                            item.status === 'Hủy' ? 'danger' : 'primary'
+                                                        }
+                                                    >
+                                                        {item.status}
+                                                    </Badge>
                                                 </td>
                                                 <td>
-                                                    { item.payment_type == 1 ? (
+                                                    { item.payment_type === 1 ? (
                                                         <Badge bg="primary">Tiền mặt</Badge>//chỗ này
                                                     ) : (
                                                         <Badge bg="info">TT Online</Badge>
                                                     )}
                                                 </td>
-                                                <td><Badge bg="secondary">{item.status_payment}</Badge></td>
+                                                <td>
+                                                    { item.status_payment === 'Chưa thanh toán' ? (
+                                                        <Badge bg="secondary">Chưa thanh toán</Badge>//chỗ này
+                                                    ) : (
+                                                        <Badge bg="success">Đã thanh toán</Badge>
+                                                    )}
+                                                </td>
+                                                {/* <td><Badge bg="secondary">{item.status_payment}</Badge></td> */}
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY H:mm:ss")}</td>
                                                 <td>
                                                     <Button variant="danger" size="sm" onClick={() => handleDelete(item._id)}>
-                                                        Delete
+                                                        Xóa
                                                     </Button>{' '}
                                                 </td>
                                             </tr>
