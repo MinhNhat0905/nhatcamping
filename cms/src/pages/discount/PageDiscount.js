@@ -72,12 +72,12 @@ export default function PageDiscount ()
 						<Table responsive>
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Name</th>
-									<th>Price</th>
-									<th>Status</th>
-									<th>Created</th>
-									<th>Action</th>
+									<th>STT</th>
+									<th>Tên</th>
+									<th>Giá</th>
+									<th>Trạng thái</th>
+									<th>Ngày tạo</th>
+									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -97,7 +97,7 @@ export default function PageDiscount ()
 												<td>{ moment( item.created_at ).format( "MM-DD-YYYY H:mm:ss" ) }</td>
 												<td>
 													<Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
-														Delete
+														Xóa
 													</Button>{ ' ' }
 												</td>
 											</tr>

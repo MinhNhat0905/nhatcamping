@@ -63,10 +63,11 @@ export default function PageArticle() {
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Avatar</th>
-                                    <th>Info</th>
-                                    <th>Time</th>
-                                    <th>Action</th>
+                                    <th>Ảnh</th>
+                                    <th>Tên</th>
+                                    <th>Thông tin</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,12 +80,16 @@ export default function PageArticle() {
                                                 </td>
                                                 <td>
                                                     <Link to={`/article/update/${item._id}`}>{item.name}</Link>
+                                                   
+                                                </td>
+                                                <td>
+                                                   
                                                     <p className='text-truncate' style={{maxWidth: '300px'}}>{item.description}</p>
                                                 </td>
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY H:mm:ss")}</td>
                                                 <td>
                                                     <Button variant="danger" size="sm" onClick={() => handleDelete(item._id)}>
-                                                        Delete
+                                                        Xóa
                                                     </Button>{' '}
                                                 </td>
                                             </tr>

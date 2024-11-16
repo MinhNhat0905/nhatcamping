@@ -65,14 +65,14 @@ export default function PageUser() {
                         <Table responsive>
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
+                                <th>STT</th>
+                                <th>Tên</th>
                                 <th>Email</th>
-                                <th>Sex</th>
-                                <th>Birthday</th>
-                                <th>Type</th>
-                                <th>Created</th>
-                                <th>Action</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Loại</th>
+                                <th>Ngày tạo</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -90,7 +90,7 @@ export default function PageUser() {
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY")}</td>
                                                 <td>
                                                 <Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
-														Delete
+														Xóa
 													</Button>{ ' ' }
                                                 </td>
                                             </tr>

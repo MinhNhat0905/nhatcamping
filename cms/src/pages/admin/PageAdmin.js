@@ -64,15 +64,15 @@ export default function PageAdmin() {
                         <Table responsive>
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
+                                <th>STT</th>
+                                <th>Tên</th>
                                 <th>Email</th>
-                                <th>Sex</th>
-                                <th>Birthday</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
                                 <th>Type</th>
-                                <th>Role</th>
-                                <th>Created</th>
-                                <th>Action</th>
+                                <th>Vai trò</th>
+                                <th>Ngày tạo</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -97,7 +97,7 @@ export default function PageAdmin() {
                                                 <td>{moment(item.created_at).format("MM-DD-YYYY")}</td>
                                                 <td>
                                                 <Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
-														Delete
+														Xóa
 													</Button>{ ' ' }
                                                 </td>
                                             </tr>

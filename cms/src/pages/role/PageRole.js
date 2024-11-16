@@ -70,11 +70,11 @@ export default function PageRole ()
 						<Table responsive>
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Name</th>
-									<th>Description</th>
-									<th>Created</th>
-									<th>Action</th>
+									<th>STT</th>
+									<th>Tên</th>
+									<th>Mô tải</th>
+									<th>Ngày tạo</th>
+									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -93,7 +93,7 @@ export default function PageRole ()
 												<td>{ moment( item.created_at ).format( "MM-DD-YYYY H:mm:ss" ) }</td>
 												<td>
 													<Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
-														Delete
+														Xóa
 													</Button>{ ' ' }
 												</td>
 											</tr>

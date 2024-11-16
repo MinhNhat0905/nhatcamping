@@ -67,9 +67,9 @@ export default function PageCategory ()
 							<thead>
 								<tr>
 									<th>STT</th>
-									<th>Name</th>
-									<th>Time</th>
-									<th>Action</th>
+									<th>Tên</th>
+									<th>Ngày tạo</th>
+									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -85,7 +85,7 @@ export default function PageCategory ()
 											<td>{ moment( item.created_at ).format( "MM-DD-YYYY H:mm:ss" ) }</td>
 											<td>
 												<Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
-													Delete
+													Xóa
 												</Button>{ ' ' }
 											</td>
 										</tr>

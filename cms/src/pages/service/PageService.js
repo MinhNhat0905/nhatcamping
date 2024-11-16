@@ -64,11 +64,11 @@ export default function PageService() {
                         <Table responsive striped>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Avatar</th>
-                                    <th>Name</th>
+                                    <th>STT</th>
+                                    <th>Ảnh</th>
+                                    <th>Tên</th>
                                     <th>Description</th>
-                                    <th>Action</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,8 +87,13 @@ export default function PageService() {
                                                 </td>
                                                 <td>{item.description}</td>
                                                 <td>
+                                                    {/* <Button variant="info" size="sm">
+                                                        <Link to={`/service/update/${item._id}`}>
+                                                     Sửa
+                                                    </Link>
+                                                    </Button>{' '} */}
                                                     <Button variant="danger" size="sm" onClick={() => handleDelete(item._id)}>
-                                                        Delete
+                                                        Xóa
                                                     </Button>{' '}
                                                 </td>
                                             </tr>

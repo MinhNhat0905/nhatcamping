@@ -85,15 +85,15 @@ export default function PageRoom ()
 						<Table responsive>
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Avatar</th>
-									<th>Name</th>
-									<th>Category</th>
-									<th>Price</th>
-									<th>Info</th>
-									<th>Status</th>
-									<th>Created</th>
-									<th>Action</th>
+									<th>STT</th>
+									<th>Ảnh</th>
+									<th>Tên</th>
+									<th>Loại</th>
+									<th>Giá</th>
+									<th>Thông tin</th>
+									<th>Trạng thái</th>
+									<th>Ngày tạo</th>
+									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -127,7 +127,7 @@ export default function PageRoom ()
 												<td>{ moment( item.created_at ).format( "MM-DD-YYYY H:mm:ss" ) }</td>
 												<td>
 													<Button variant="danger" size="sm" onClick={ () => handleDelete( item._id ) }>
-														Delete
+														Xóa
 													</Button>{ ' ' }
 												</td>
 											</tr>
