@@ -6,9 +6,15 @@ import { AuthService } from "../../services/feService/authService";
 import { useDispatch } from "react-redux";
 import { toggleShowLoading } from "../../redux/actions/common";
 import { toast } from "react-toastify";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { firebaseApp } from "../../firebase"; // Cấu hình Firebase
+
+const auth = getAuth(firebaseApp);
+const googleProvider = new GoogleAuthProvider();
 
 const SignUpPage = () =>
 {
+	
 	const [sex, setSex] = useState('Nam');
 	const [ form, setForm ] = useState( {
 		email: null,
@@ -57,7 +63,39 @@ const SignUpPage = () =>
 
 	const handleChangeSex = (event) => {
 		setSex(event.target.value);
-	}
+	};
+	const handleGoogleSignUp = async () => {
+		try {
+			dispatch(toggleShowLoading(true)); // Hiển thị loading
+			const result = await signInWithPopup(auth, googleProvider);
+			const user = result.user;
+	
+			// Lưu thông tin người dùng vào localStorage hoặc thực hiện xử lý thêm với server backend của bạn
+			const formData = {
+				email: user?.email,
+				name: user?.displayName,
+				avatar: user?.photoURL,
+				type: "USER",
+				status: 1,
+			};
+	
+			// Gửi thông tin này đến backend nếu cần
+			const response = await AuthService.register(formData);
+	
+			if (response?.status === 200) {
+				toast('Đăng ký Google thành công!', { type: 'success', autoClose: 900 });
+				await timeDelay(1000);
+				navigate('/sign-in');
+			} else {
+				toast(response?.message || 'Đăng ký thất bại', { type: 'error' });
+			}
+		} catch (error) {
+			console.error('Google Sign-Up Error:', error);
+			toast('Đăng ký Google thất bại.', { type: 'error' });
+		} finally {
+			dispatch(toggleShowLoading(false)); // Tắt loading
+		}
+	};
 
 
 	return (
@@ -176,6 +214,11 @@ const SignUpPage = () =>
 									<Form.Group className="mb-3 d-flex justify-content-center">
 										<Button type="submit" className='btn btn-primary'>Đăng ký</Button>
 									</Form.Group>
+									<Form.Group className="mb-3 d-flex justify-content-center">
+                                        <Button type="button" className="btn btn-danger" onClick={handleGoogleSignUp}>
+                                            <i className="fab fa-google"></i> Đăng ký bằng Google
+                                        </Button>
+                                    </Form.Group>
 								</Form>
 								<div className="mt-4 text-center">
 									<p className="mb-0 text-white">
