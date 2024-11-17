@@ -13,7 +13,9 @@ const discountRouter = require("./discount");
 const voteRouter = require("./vote");
 const CategoryRouter = require("./category");
 const FacilityRouter = require("./facility");
+const userRouter = require("./user");
 
+router.use(userRouter);
 router.use(roomRouter);
 router.use(articleRouter);
 router.use(serviceRouter);

@@ -44,13 +44,6 @@ const roomSchema = new Schema(
         room_content: {
             type: String,
         },
-        location: {
-            type: {
-                lat: Number, // vĩ độ
-                lng: Number  // kinh độ
-            },
-            required: false,
-        },
         category_id: {// ID danh mục phòng
             type: String, 
             required: 'category_id cannot be blank'},// Bắt buộc phải có ID danh mục

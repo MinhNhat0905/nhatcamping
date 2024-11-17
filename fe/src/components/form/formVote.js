@@ -21,7 +21,7 @@ export const FormVoteModal = ( props ) =>
 	} );
 
 	const [ review, setReview ] = useState( null );// State `review` dùng để lưu trữ thông tin của đánh giá hiện tại nếu đã tồn tại
-
+  const [userName, setUserName] = useState(getUser()?.name || "");
 	useEffect( () =>
 	{
 		if ( props.id )
@@ -79,6 +79,7 @@ export const FormVoteModal = ( props ) =>
 		setError( '' );// Xóa thông báo lỗi nếu có
 		setValidated( false );// Reset trạng thái validate
 		setReview( null ); // Xóa thông tin review
+    setUserName("");
 	}
 
 	const getDetail = async ( id ) =>
@@ -122,6 +123,13 @@ export const FormVoteModal = ( props ) =>
 			<Modal.Body>
 				<Form noValidate validated={ validated } onSubmit={ handleSubmit }>
 					<Row>
+            {/* Hiển thị tên người dùng */}
+            <Form.Group className="mb-3 col-xl-12">
+                            <Form.Label>Tài khoản:</Form.Label>
+                            <p className="fs-18 font-weight-bold">
+                                {userName || "Không xác định"}
+                            </p>
+                        </Form.Group>
 						<Form.Group className="mb-3 col-xl-12 ">
 							<Form.Label>Chọn số điểm Review: </Form.Label>
 							<div className="d-flex justify-content-center review">

@@ -50,33 +50,33 @@ export const NavBarPage = () =>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav" >
 						<Nav className="ml-auto justify-content-end">
-							<Link className="nav-link" to="/">
+							<Link className="nav-link" to="/" style={{ color: "rgba(255, 255, 255, 1)" }}>
 								Trang chủ
 							</Link>
-							<Link className="nav-link" to="/room">
+							<Link className="nav-link" to="/room" style={{ color: "rgba(255, 255, 255, 1)" }}>
 								Phòng
 							</Link>
 							{ menus && menus.length > 0 && menus.map( ( item, index ) =>
 							{
 								return (
-									<Link to={ '/menu/' + item._id } key={ item._id } className="nav-link">
+									<Link to={ '/menu/' + item._id } key={ item._id } className="nav-link" style={{ color: "rgba(255, 255, 255, 1)" }}>
 										{ item.name }
 									</Link>
 								)
 							} ) }
 
-							<Link className="nav-link" to="/contact">
+							<Link className="nav-link" to="/contact" style={{ color: "rgba(255, 255, 255, 1)" }}>
 								Liên hệ
 							</Link>
 
-							<Link className="nav-link" to="/service">
+							<Link className="nav-link" to="/service" style={{ color: "rgba(255, 255, 255, 1)" }}>
 								Dịch vụ
 							</Link>
 						</Nav>
-						<Nav className="navbar-light">
+						<Nav className="navbar-light" >
 							{ !checkLogin() ?
-								<NavDropdown title="Đăng nhập" id="basic-nav-dropdown">
-									<Link to="/sign-up" className={ 'dropdown-item' }>
+								<NavDropdown title="Đăng nhập" id="basic-nav-dropdown"  >
+									<Link to="/sign-up" className={ 'dropdown-item' } >
 										Đăng ký
 									</Link>
 									<Link to="/sign-in" className={ 'dropdown-item' }>

@@ -270,16 +270,6 @@ export default function CreateRoom ()
 									} }
 								/>
 							</Form.Group>
-							{/* <Form.Group className="mb-3" controlId="formLocation">
-                            <Form.Label>Chọn vị trí trên bản đồ</Form.Label>
-                            <MapSelector onSelectLocation={handleLocationSelect} />
-                            {location && (
-                                <div>
-                                    <p>Tọa độ đã chọn:</p>
-                                    <p>Lat: {location.lat}, Lng: {location.lng}</p>
-                                </div>
-                            )}
-                        </Form.Group> */}
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 								<Button type="submit">Lưu dữ liệu</Button>
 							</Form.Group>

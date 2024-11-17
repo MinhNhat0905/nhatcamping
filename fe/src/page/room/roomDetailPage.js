@@ -10,7 +10,9 @@ import { URL_IMG, URL_IMG_V2, buildImage, buildImageV2, customNumber, onErrorImg
 import { useNavigate, useParams } from "react-router";
 import { StarIcons } from "../../components/common/star";
 import { CarouselImg } from "../../components/common/carosel";
-
+import { ReviewService } from "../../services/feService/reviewService";
+import { Star, StarFill } from 'react-bootstrap-icons';
+import { UserService } from '../../services/feService/UserService'; // Import UserService
 const RoomDetailPage = () =>
 {
 	document.title = 'Chi tiết';
@@ -21,7 +23,7 @@ const RoomDetailPage = () =>
 
 	const [ albums, setAlbums ] = useState( [] );
 	const [ images, setImages ] = useState();
-
+  	const [reviews, setReviews] = useState([]);
 
 
 	const dispatch = useDispatch();
@@ -36,7 +38,8 @@ const RoomDetailPage = () =>
 	{
 		if ( params.id )
 		{
-			getDetailData( params.id )
+			getDetailData( params.id );
+			getReviews(params.id);
 		} else
 		{
 			setDetailData( null );
@@ -54,7 +57,23 @@ const RoomDetailPage = () =>
 			setRooms( [] );
 		}
 	};
-
+	const getReviews = async (roomId) => {
+		try {
+		  const response = await ReviewService.getDataList({ room_id: roomId, page: 1, page_size: 5 });
+		  if (response?.status === 200) {
+			const reviewsData = response?.data?.votes || [];
+			setReviews(reviewsData); // Gán trực tiếp dữ liệu trả về vào state reviews
+		  } else {
+			setReviews([]); // Không có đánh giá
+		  }
+		} catch (error) {
+		  console.error("Lỗi khi lấy danh sách đánh giá:", error);
+		  setReviews([]); // Cập nhật state reviews nếu có lỗi
+		}
+	  };
+	  
+	  
+	  
 	const getDetailData = async ( id ) =>
 	{
 		dispatch( toggleShowLoading( true ) );
@@ -100,7 +119,8 @@ const RoomDetailPage = () =>
 			setDetailData( null );
 		}
 		dispatch( toggleShowLoading( false ) );
-	}
+	}//
+	//
 	return (
 		<React.Fragment>
 			<section className="ftco-section">
@@ -178,6 +198,29 @@ const RoomDetailPage = () =>
 										<p className="mb-0" dangerouslySetInnerHTML={ { __html: detailData.room_content } }>
 										</p>
 									</Col>
+									<Col md={12} className="room-single mb-5 mt-5">
+  <h4 className="mb-4">Đánh giá của mọi người</h4>
+  {reviews.length > 0 ? (
+    <div>
+      {reviews.map((review, index) => (
+        <div key={index} className="review-item">
+          <h5>{review.user_name}</h5> {/* Hiển thị tên người dùng */}
+          <div className="review-stars">
+            {[...Array(review.vote_number)].map((_, idx) => (
+              <StarFill key={idx} style={{ color: 'gold' }} className="star active" />
+            ))}
+            {[...Array(5 - review.vote_number)].map((_, idx) => (
+              <Star key={idx} className="star" />
+            ))}
+          </div>
+          <p>{review.vote_content}</p>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p>Chưa có đánh giá nào.</p>
+  )}
+</Col>
 									<Col md={ 12 } className="room-single  mb-5 mt-5">
 										<h4 className="mb-4">Các phòng khác</h4>
 										<RoomList data={ rooms } notShowTitle={ true } lg={ 6 } />
