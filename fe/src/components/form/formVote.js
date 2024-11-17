@@ -15,18 +15,19 @@ export const FormVoteModal = ( props ) =>
 
 	const [ form, setForm ] = useState( {// Khởi tạo state `form` để lưu trữ thông tin đánh giá với các trường
 		user_id: getUser()?._id || 0,// `user_id`: ID của người dùng, lấy từ `getUser()` nếu có, nếu không thì mặc định là 0
+    user_name: getUser()?.name || "",
 		room_id: null,// `room_id`: ID của phòng (mặc định là null).
 		vote_content: null,// `vote_content`: Nội dung của đánh giá (mặc định là null)
 		vote_number: 0// `vote_number`: Số điểm đánh giá (mặc định là 0)
 	} );
 
 	const [ review, setReview ] = useState( null );// State `review` dùng để lưu trữ thông tin của đánh giá hiện tại nếu đã tồn tại
-  const [userName, setUserName] = useState(getUser()?.name || "");
+  const [userName, setUserName] = useState(getUser()?.name || "");// Lấy tên người dùng đăng nhập
 	useEffect( () =>
 	{
 		if ( props.id )
 		{
-			getDetail( props.id );
+			getDetail( props.id );// Lấy chi tiết đánh giá nếu có id
 		}
 	}, [ props.id ] );
 
@@ -81,7 +82,7 @@ export const FormVoteModal = ( props ) =>
 		setReview( null ); // Xóa thông tin review
     setUserName("");
 	}
-
+ // Lấy chi tiết đánh giá
 	const getDetail = async ( id ) =>
 	{
 		dispatch( toggleShowLoading( true ) );
