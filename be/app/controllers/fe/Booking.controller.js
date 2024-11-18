@@ -126,10 +126,6 @@ exports.add = async (req, res) => {
             }
         }
 
-        const booking = new Booking(data);// Tạo mới booking với dữ liệu đã xử lý
-        await booking.save();// Lưu booking vào database
-
-        console.log('--------------- booking: ', booking);
        
         
         if (data.payment_type === 2) { // Nếu phương thức thanh toán là VNPAY
@@ -195,6 +191,11 @@ exports.add = async (req, res) => {
             //     res.status(500).json({ message: err });
             // }
         }
+        const booking = new Booking(data);// Tạo mới booking với dữ liệu đã xử lý
+        await booking.save();// Lưu booking vào database
+
+        console.log('--------------- booking: ', booking);
+       
         return res.status(200).json({ data: data, status : 200 });
     } catch (e){
         res.status(501)

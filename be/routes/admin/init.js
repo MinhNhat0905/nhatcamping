@@ -14,6 +14,7 @@ const menuRouter = require("./menu");
 const cateRouter = require("./category");
 const faciRouter = require("./facility");
 
+
 router.use(articleRouter);
 router.use(serviceRouter);
 router.use(roomRouter);

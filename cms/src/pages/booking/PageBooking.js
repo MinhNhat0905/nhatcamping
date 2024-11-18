@@ -76,7 +76,7 @@ export default function PageBooking() {
                                     <th>Ngày nhận</th>
                                     <th>Ngày trả</th>
                                     <th>Trạng thái phòng</th>
-                                    <th>Loại TT</th>
+                                    <th>Thanh toán</th>
                                     <th>Trạng thái thanh toán</th>
                                     <th>Ngày đặt</th>
                                     <th>Hành động</th>

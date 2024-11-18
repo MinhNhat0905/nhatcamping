@@ -79,10 +79,18 @@ export const BookingList = ( props ) =>
 													{ customDate( item.check_out, "DD-MM-YYYY" ) }
 												</td>
 												<td>
-													<Badge bg="success" text="white" className="p-2">{ item.status }</Badge>
+												<Badge text="white" className="p-2"
+                                                        bg={
+                                                            item.status === 'Đang xử lý' ? 'secondary' :
+                                                            item.status === 'Chấp nhận' ? 'success' :
+                                                            item.status === 'Hủy' ? 'danger' : 'primary'
+                                                        }
+                                                    >
+                                                        {item.status}
+                                                    </Badge>
 												</td>
 												<td>
-													<Badge bg="warning" text="dark" className="p-2">{ item.status_payment }</Badge>
+													<Badge bg="success" text="white" className="p-2">{ item.status_payment }</Badge>
 												</td>
 												<td className="text-nowrap"	>
 													{ customDate( item.created_at, "DD-MM-YYYY H:mm:ss" ) }

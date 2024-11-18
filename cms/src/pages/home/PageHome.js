@@ -46,7 +46,10 @@ export default function PageHome () {
 	const [dataCharStatus, setDataChartStatus] = useState({});
 	const [dataChartListDayInMonth, setDataChartListDayInMonth] = useState({});
 	const [loadingChartStatus, setLoadingChartStatus] = useState(true);
-
+	const [totalUser, setTotalUser] = useState(0);
+	const [totalProduct, setTotalProduct] = useState(0);
+	const [totalOrder, setTotalOrder] = useState(0);
+	
 	const getDashboard = async (filters) => {
 		const response = await dashboardApi.getStatistics(filters);
 		if (response?.status === 'success' || response?.status === 200) {
@@ -86,7 +89,11 @@ export default function PageHome () {
 					}
 				],
 			});
-			setLoadingChartStatus(false);
+			 // Cập nhật số lượng người dùng, phòng và booking
+			 setTotalUser(response.data.totalUser);
+			 setTotalProduct(response.data.totalProduct);
+			 setTotalOrder(response.data.totalOrder);
+			 setLoadingChartStatus(false);
 		}
 	};
 
@@ -139,25 +146,20 @@ export default function PageHome () {
 			<div className="row">
 				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-primary text-white">
-						<h6>Người dùng <b id="totalUser">6</b></h6>
+						<h6>Người dùng <b id="totalUser">{totalUser}</b></h6>
 					</div>
 				</div>
 				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-danger text-white">
-						<h6>Số phòng <b id="totalProduct">6</b></h6>
+						<h6>Số phòng <b id="totalProduct">{totalProduct}</b></h6>
 					</div>
 				</div>
 				<div className="col-sm-4">
 					<div className="box p-3 mb-2 bg-info text-white">
-						<h6>Đã booking <b id="totalOrder">9</b></h6>
+						<h6>Đã booking <b id="totalOrder">{totalOrder}</b></h6>
 					</div>
 				</div>
-				{/* <div className="col-sm-3">
-					<div className="box p-3 mb-2 bg-secondary text-white">
-						<h6>User mới <b id="totalUserNew">0</b></h6>
-					</div>
-				</div> */}
-			</div>
+		</div>
 			<Row>
 				<Col className="col-8">
 					{!loadingChartStatus && (

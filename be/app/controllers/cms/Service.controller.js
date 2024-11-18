@@ -1,6 +1,7 @@
 const Service = require("./../../models/Service.model")
 const Article = require("../../models/Article.model"); // new
 
+
 exports.index = async (req, res) => {
     const page = req.query.page || 1; const page_size = req.query.page_size  || 10;
     const services = await Service.find()

@@ -1,4 +1,7 @@
-const Booking = require("./../../models/Booking.model") 
+const Booking = require("./../../models/Booking.model")
+const User = require("./../../models/User.model")
+const Room = require("./../../models/Room.model")
+
 const moment = require("moment");
 
 // Hàm để lấy số ngày trong tháng
@@ -11,6 +14,14 @@ exports.monthlyStatistics = async (req, res) => {
     // Thêm lấy tham số tháng và năm từ yêu cầu // sửa
     const year = req.query.year || moment().year();
     const month = req.query.month || moment().format('MM');
+    // Tính tổng số người dùng
+    const totalUser = await User.countDocuments();
+
+    // Tính tổng số phòng
+    const totalProduct = await Room.countDocuments();
+
+    // Tính tổng số booking
+    const totalOrder = await Booking.countDocuments();
 
     try {
         const responseGroupStatus = await Booking.aggregate([
@@ -91,7 +102,10 @@ exports.monthlyStatistics = async (req, res) => {
             group_status: chartStatus,
             group_day: arrListDayMapping,
             list_money_by_day: resultTotalPrice,
-            list_day: arrListDay
+            list_day: arrListDay,
+            totalUser,         // Thêm giá trị tổng người dùng
+            totalProduct,      // Thêm giá trị tổng phòng
+            totalOrder,        // Thêm giá trị tổng booking
         }
         res.json({ data, status });
     } catch (err) {
