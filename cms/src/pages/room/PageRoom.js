@@ -117,8 +117,9 @@ export default function PageRoom ()
 
 														<li>Diện tích: { item.size }</li>
 														{/* <li>Số tầng: { item.floors }</li> */}
+														{/* <li>Số lượng: { item.quantity}</li> */}
 														<li>Phòng ngủ: { item.bed}</li>
-														<li>Số phòng: { item.room_code }</li>
+														{/* <li>Số phòng: { item.room_code }</li> */}
 													</ul>
 												</td>
 												<td>

@@ -13,8 +13,10 @@ exports.index = async (req, res) => {
 		if(req.query.name) condition.name = {$regex : '.*'+ req.query.name + '.*'};
 		if(req.query.price) condition.price = req.query.price;
 		if(req.query.floors) condition.floors = req.query.floors;
+        if(req.query.address) condition.address = req.query.address;
+        if(req.query.quantity) condition.quantity = req.query.quantity;
 		if(req.query.category_id) condition.category_id = req.query.category_id;
-        if (req.query.category_id) condition.category_id = req.query.category_id;
+        if(req.query.facility_id) condition.facility_id = req.query.facility_id;
 
 		const paging = buildParamPaging( req.query );
 		const rooms = await Room.find()// Truy vấn phòng với các điều kiện và phân trang
@@ -58,6 +60,11 @@ exports.show = async (req, res) => {
 exports.store = async (req, res) => {
     const category = await Category.findById(req.body.category_id);
     const facilities = await Facility.find({ '_id': { $in: req.body.facilities} }); // Lấy tiện nghi liên quan đến phòng từ mảng ID.
+    const location = req.body.location;
+    
+    if (!location || !location.lat || !location.lng) {
+        return res.status(400).json({ error: "Location with lat and lng is required" });
+    }
     const room = new Room({
         name: req.body.name,
         avatar: req.body.avatar || null,
@@ -69,11 +76,16 @@ exports.store = async (req, res) => {
 		albums: req.body.albums,
         room_code: req.body.room_code,
         floors: req.body.floors,
+        address: req.body.address,
+        quantity: req.body.quantity,
         category: category,
         category_id: req.body.category_id,
         facilities: facilities, 
         facility_id: req.body.facility_id,
-
+        location: {
+            type: 'Point', // GeoJSON type
+            coordinates: [location.lng, location.lat] // Tọa độ theo dạng [longitude, latitude]
+        }
     })
     await room.save()
     return res.status(200).json({ data: room, status : 200 });
@@ -128,6 +140,20 @@ exports.update = async (req, res) => {
 
         if (req.body.floors) {
             room.floors = req.body.floors;
+        }
+        if (req.body.address) {
+            room.address = req.body.address;
+        }
+        if (req.body.quantity) {
+            room.quantity = req.body.quantity;
+        }
+         // Cập nhật thông tin vị trí (nếu có)
+         if (req.body.location && req.body.location.coordinates) {
+            // Đảm bảo bạn truyền vào là mảng [longitude, latitude]
+            room.location = {
+                type: 'Point',
+                coordinates: req.body.location.coordinates
+            };
         }
 
         await room.save();

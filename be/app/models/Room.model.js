@@ -23,6 +23,13 @@ const roomSchema = new Schema(
         floors: {
             type: Number,
         },
+        quantity: {//
+            type: Number,//
+        },//
+        address: {// Địa chỉ
+            type: String,
+           
+        },
         price: {
             type: Number,
         },
@@ -60,9 +67,21 @@ const roomSchema = new Schema(
         albums: {
             type: Array
         },
+        location: { // Sửa lại để lưu trữ tọa độ theo GeoJSON format
+            type: {
+                type: String,
+                enum: ['Point'], // Đảm bảo rằng kiểu là 'Point'
+                required: true
+            },
+            coordinates: {
+                type: [Number], // Array of numbers: [longitude, latitude]
+                required: true
+            }
+        },
         created_at : { type: Date, default: Date.now }
     },
     { collection: 'rooms' }
 );
-
+// Tạo chỉ mục geospatial để MongoDB có thể xử lý các truy vấn về vị trí
+roomSchema.index({ location: '2dsphere' }); // Chỉ mục 2dsphere cho geospatial queries
 module.exports = mongoose.models.Room || mongoose.model('Room', roomSchema);

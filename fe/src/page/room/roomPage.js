@@ -17,6 +17,7 @@ const RoomPage = () =>
 	const [ params, setParams ] = useState( {
 		size: null,
 		bed: null,
+		address: null,
 		vote_number: null,
 		name: null,
 		price: null,

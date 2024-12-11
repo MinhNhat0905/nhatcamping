@@ -58,6 +58,9 @@ export const RoomList = ( props ) =>
 															<Link to={ '/room/' + item._id }>{ item.name }</Link>
 															<StarIcons vote_number={ avgStar } />
 														</h3>
+														{/* <p>
+														<span className >{ ( item.address ) }</span>
+														</p> */}
 														<p>
 															<span className="price mr-2">{ customNumber( item.price, '.', 'đ' ) }</span>
 															<span className="per">mỗi đêm</span>

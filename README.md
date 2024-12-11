@@ -26,3 +26,7 @@ npm start
 mở terminal
 cd fe
 npm start
+
+admin
+tk: admin@gmail.com
+mk: 12345678

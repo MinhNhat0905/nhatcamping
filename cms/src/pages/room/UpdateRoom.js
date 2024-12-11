@@ -10,7 +10,9 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import ImageForm from '../../common/form/imageForm';
 import categoryApi from "../../services/categoryService";
 import facilityApi from '../../services/facilityService';
-
+import { MapContainer, TileLayer, Marker, Popup,useMapEvents  } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 export default function UpdateRoom ()
 {
 	const [ validated, setValidated ] = useState( false );
@@ -23,11 +25,13 @@ export default function UpdateRoom ()
 	const [ file, setFile ] = useState();
 	const [room_code, setRoomCode] = useState('');
 	const [floors, setFloors] = useState('');
+	const [quantity, setQuantity] = useState('');
+	const [address, setAddress] = useState('');
 	const [ category_id, setCategoryId ] = useState( null );
 	const [ categories, setCategories ] = useState( [] );
 	const [facilities, setFacilities] = useState([]); // State để lưu tiện nghi
     const [selectedFacilities, setSelectedFacilities] = useState([]); // State cho tiện nghi được chọn
-
+	const [location, setLocation] = useState(null);
 	const navigate = useNavigate();
 	const params = useParams();
 	// Hàm để tự động xóa dấu âm
@@ -43,6 +47,17 @@ export default function UpdateRoom ()
 	] );
 
 	const [ changes, setChanges ] = useState( false );
+	// Component để xử lý sự kiện click
+const ClickableMap = ({ location, setLocation }) => {
+    useMapEvents({
+        click: (e) => {
+            const { lat, lng } = e.latlng;
+            setLocation([lng, lat]); // Cập nhật tọa độ mới
+        },
+    });
+
+    return null;
+};
 	const handleSubmit = async ( event ) =>
 	{
 		event.preventDefault();
@@ -60,9 +75,12 @@ export default function UpdateRoom ()
 				size: size,
 				room_content: room_content,
 				floors: floors,
+				address: address,
+				quantity: quantity,
 				room_code: room_code,
 				category_id: category_id,
 				facilities: selectedFacilities,
+				location: location ? { type: "Point", coordinates: location } : null,
 			}
 
 			let activeAlbums = fileAlbums.filter(item => !item.file && item.imgBase64) || [];
@@ -104,15 +122,25 @@ export default function UpdateRoom ()
 		if ( response.status === 'success' || response.status === 200 )
 		{
 			console.log( '---------- OK' );
+			
 			setName( response.data?.name );
 			setAvatar( response.data?.avatar );
 			setBed( response.data?.bed );
-			setPrice( response.data?.price );
-			setSize( response.data?.size );
+			setPrice(response.data?.price );
+			setSize(response.data?.size );
 			setFloors( response.data?.floors );
+			setAddress(response.data?.address );
+			setQuantity( response.data?.quantity );
 			setCategoryId( response.data?.category_id );
 			setRoomContent( response.data?.room_content );
 			setSelectedFacilities(response.data?.facilities || []); // Lấy danh sách tiện nghi từ dữ liệu phòng
+			 // Kiểm tra nếu location tồn tại và có coordinates
+			 const roomLocation = response.data?.location;
+			 if (roomLocation && roomLocation.coordinates) {
+				 setLocation(roomLocation.coordinates);
+			 } else {
+				 setLocation(null); // Nếu không có tọa độ, đặt location là null
+			 }
 			if ( response?.data?.albums )
 			{
 				let files = response?.data?.albums.reduce( ( newValue, e ) =>
@@ -138,6 +166,8 @@ export default function UpdateRoom ()
 		}
 	}
 
+// Tọa độ mặc định cho Hồ Chí Minh (latitude, longitude)
+const defaultLocation = [10.8231, 106.6297]; // Hồ Chí Minh
 	const handleUpload = ( event ) =>
 	{
 		if ( event && event.target.files[ 0 ] ) setFile( event.target.files[ 0 ] );
@@ -203,6 +233,15 @@ export default function UpdateRoom ()
 									Tên phòng không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+								<Form.Label>Địa chỉ</Form.Label>
+								<Form.Control required type="text" name={ 'address' } placeholder="Da lat"
+									onChange={ event => setAddress( event.target.value ) }
+									value={ address } />
+								<Form.Control.Feedback type="invalid">
+									Địa chỉ không được để trống
+								</Form.Control.Feedback>
+							</Form.Group>
 							<Row>
 								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -239,6 +278,18 @@ export default function UpdateRoom ()
 								</Col>
 								{/* <Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+										<Form.Label>Số lượng</Form.Label>
+										<Form.Control required type="number" min="0" name={'quantity'} placeholder="8"
+											onChange={handlePositiveInput(setQuantity)}
+											value={quantity} />
+										<Form.Control.Feedback type="invalid">
+											Số lượng không được để trống
+										</Form.Control.Feedback>
+									</Form.Group>
+								</Col> */}
+							
+								{/* <Col className={'col-2'}>
+									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Tầng</Form.Label>
 										<Form.Control required type="number" min="0" name={'floors'} placeholder="8"
 											onChange={handlePositiveInput(setFloors)}
@@ -267,7 +318,7 @@ export default function UpdateRoom ()
 									{ categories.map( ( item, index ) =>
 									{
 										return (
-											<option value={ item._id } selected={ item._id == category_id ? true : false }>{ item.name }</option>
+											<option value={ item._id } selected={ item._id === category_id ? true : false }>{ item.name }</option>
 										)
 									} ) }
 								</Form.Select>
@@ -322,6 +373,24 @@ export default function UpdateRoom ()
 									} }
 								/>
 							</Form.Group>
+							  {/* Hiển thị bản đồ */}
+							  <MapContainer
+									center={location ? [location[1], location[0]] : defaultLocation} // Trung tâm mặc định
+									zoom={13}
+									style={{ height: "400px", width: "100%" }}
+								>
+									<TileLayer
+										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+									/>
+									{/* Hiển thị marker tại vị trí đã chọn */}
+									{location && (
+										<Marker position={[location[1], location[0]]}>
+											<Popup>Vị trí hiện tại</Popup>
+										</Marker>
+									)}
+									{/* Component để xử lý sự kiện click */}
+									<ClickableMap location={location} setLocation={setLocation} />
+								</MapContainer>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 								<Button type="submit">Lưu dữ liệu</Button>
 							</Form.Group>

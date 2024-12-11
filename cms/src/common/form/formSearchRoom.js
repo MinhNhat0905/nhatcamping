@@ -15,6 +15,8 @@ export const FormRoomSearch = ( props ) =>
 		name: null,
 		price: null,
 		floors: null,
+	//	address: null,
+		quantity: null,
 		category_id: null
 	} );
 
@@ -37,6 +39,8 @@ export const FormRoomSearch = ( props ) =>
 			price: null,
 			name: null,
 			floors: null,
+			//address:null,
+			quantity: null,
 			category_id: null
 		} )
 		props.setParams( {
@@ -45,6 +49,8 @@ export const FormRoomSearch = ( props ) =>
 			vote_number: null,
 			name: null,
 			floors: null,
+			//address:null,
+			quantity:null,
 			price: null,
 			category_id: null
 		} );
@@ -92,6 +98,20 @@ export const FormRoomSearch = ( props ) =>
 						type={ 'text' }
 					/>
 				</Form.Group>
+				{/* <Form.Group className="mb-3 col-md-4">
+					<InputBase form={ form } setForm={ setForm } name={ 'quantity' }
+						label={ 'Số lượng: ' }
+						key_name={ 'quantity' } required={ false } placeholder={ 'Nhập số lượng phòng' }
+						type={ 'number' }
+					/>
+				</Form.Group> */}
+				{/* <Form.Group className="mb-3 col-md-4">
+					<InputBase form={ form } setForm={ setForm } name={ 'address' }
+						label={ 'Địa chỉ: ' }
+						key_name={ 'address' } required={ false } placeholder={ 'Nhập địa chỉ' }
+						type={ 'number' }
+					/>
+				</Form.Group> */}
 
 				{/* <Form.Group className="mb-3 col-md-12">
 					<InputBase form={ form } setForm={ setForm } name={ 'price' }

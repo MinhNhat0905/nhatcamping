@@ -31,41 +31,33 @@ export const RoomSideBar = ( props ) =>
 			{
 				data.length > 0 &&
 				<div className="sidebar-box p-3">
-					<h3>Recent Blog</h3>
+					<h3>Tin tức</h3>
 					{
 						data.map( ( item, key ) =>
 						{
-							return <div key={ key }>
-								<Link to={ '/menu/show/' + item._id } className="block-21 mb-4 d-flex">
-									<img src={ item.avatar && buildImage( item.avatar ) || DEFAULT_IMG }
-										className="blog-img mr-2"
-										onError={ onErrorImg } />
-									<div className="text">
-
-										<h3 className="heading h-75">
-
-											<Link to={ '/menu/show/' + item._id } 
-											className="d-flex flex-column justify-content-between h-100">
-												<span>{ item.name }</span>
-												<div className="fs-13">
-													<span>
-														<CalendarWeek />
-														{ customDate( item.created_at, 'DD-MMM-yyyy HH:mm' ) }
-													</span>
-													<span className="ml-2">
-														<Person />
-														{ item.created_by || 'Admin' }
-													</span>
-												</div>
-											</Link>
-
-										</h3>
-
-									</div>
-								</Link>
-
-
-							</div>
+							return <div key={key}>
+							<Link to={'/menu/show/' + item._id} className="block-21 mb-4 d-flex">
+							  <img 
+								src={item.avatar && buildImage(item.avatar) || DEFAULT_IMG}
+								className="blog-img mr-2"
+								onError={onErrorImg} />
+							  <div className="text">
+								<h3 className="heading h-75">
+								  <span>{item.name}</span>
+								  <div className="fs-13">
+									<span>
+									  <CalendarWeek />
+									  {customDate(item.created_at, 'DD-MMM-yyyy HH:mm')}
+									</span>
+									<span className="ml-2">
+									  <Person />
+									  {item.created_by || 'Admin'}
+									</span>
+								  </div>
+								</h3>
+							  </div>
+							</Link>
+						  </div>
 						} )
 					}
 				</div>

@@ -8,7 +8,7 @@ import { toggleShowLoading } from "../../redux/actions/common";
 import { toast } from "react-toastify";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseApp } from "../../firebase"; // Cấu hình Firebase
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
@@ -24,16 +24,28 @@ const SignUpPage = () =>
 		birthday: null,
 		type: 'USER',
 		status: 1,
+		confirmPassword: null,
 		phone: null
 	} );
-
+	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [ validated, setValidated ] = useState( false );
-
+	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const togglePasswordVisibility = () => {
+		setPasswordVisible(!passwordVisible); // Chuyển đổi giữa hiện và ẩn mật khẩu
+	  };
+	
+	  const toggleConfirmPasswordVisibility = () => {
+		setConfirmPasswordVisible(!confirmPasswordVisible); // Chuyển đổi giữa hiện và ẩn mật khẩu xác nhận
+	  };
 	const handleSubmit = async ( e ) =>
 	{
+		// Kiểm tra mật khẩu và mật khẩu xác nhận có trùng khớp không
+		if (form.password !== form.confirmPassword) {
+			toast('Mật khẩu và mật khẩu xác nhận không khớp.', { type: 'error' });
+			return;
+		  }
 		e.preventDefault();
 		if ( e?.currentTarget?.checkValidity() === false )
 		{
@@ -146,19 +158,52 @@ const SignUpPage = () =>
 
 
 										<Form.Group className="mb-3 col-12">
-											<Form.Label className="text-white fs-19">Mật khẩu: </Form.Label>
-											<Form.Control required type="password" name={ 'password' } placeholder="Nhập mật khẩu"
-												onChange={ event =>
-												{
-													let value = event && event.target.value.trim() || null;
-													setField( form, 'password', value, setForm )
-												} }
-												value={ form.password || '' } />
-											<Form.Control.Feedback type="invalid">
-												Mật khẩu không được để trống.
-											</Form.Control.Feedback>
-										</Form.Group>
+                      <Form.Label className="text-white fs-19">Mật khẩu: </Form.Label>
+                      <div className="input-group">
+                        <Form.Control required
+                          type={passwordVisible ? "text" : "password"} // Toggle between text and password
+                          name={'password'}
+                          placeholder="Nhập mật khẩu"
+                          onChange={event => {
+                            let value = event && event.target.value.trim() || null;
+                            setField(form, 'password', value, setForm)
+                          }}
+                          value={form.password || ''} />
+                        <Button
+                          variant="outline-secondary"
+                          onClick={togglePasswordVisibility}
+                          style={{ cursor: 'pointer', border: 'none', background: 'transparent', width: '40px' }}>
+                          {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Toggle Eye icon */}
+                        </Button>
+                      </div>
+                      <Form.Control.Feedback type="invalid">
+                        Mật khẩu không được để trống.
+                      </Form.Control.Feedback>
+                    </Form.Group>
 
+                    <Form.Group className="mb-3 col-12">
+                      <Form.Label className="text-white fs-19">Nhập lại mật khẩu: </Form.Label>
+                      <div className="input-group">
+                        <Form.Control required
+                          type={confirmPasswordVisible ? "text" : "password"} // Toggle between text and password
+                          name={'confirmPassword'}
+                          placeholder="Nhập lại mật khẩu"
+                          onChange={event => {
+                            let value = event && event.target.value.trim() || null;
+                            setField(form, 'confirmPassword', value, setForm)
+                          }}
+                          value={form.confirmPassword || ''} />
+                        <Button
+                          variant="outline-secondary"
+                          onClick={toggleConfirmPasswordVisibility}
+                          style={{ cursor: 'pointer', border: 'none', background: 'transparent', width: '40px' }}>
+                          {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />} {/* Toggle Eye icon */}
+                        </Button>
+                      </div>
+                      <Form.Control.Feedback type="invalid">
+                        Mật khẩu xác nhận không được để trống.
+                      </Form.Control.Feedback>
+                    </Form.Group>
 
 										<Form.Group className="mb-3 col-12">
 											<Form.Label className="text-white fs-19">Số điện thoại: </Form.Label>
@@ -214,11 +259,11 @@ const SignUpPage = () =>
 									<Form.Group className="mb-3 d-flex justify-content-center">
 										<Button type="submit" className='btn btn-primary'>Đăng ký</Button>
 									</Form.Group>
-									<Form.Group className="mb-3 d-flex justify-content-center">
+									{/* <Form.Group className="mb-3 d-flex justify-content-center">
                                         <Button type="button" className="btn btn-danger" onClick={handleGoogleSignUp}>
                                             <i className="fab fa-google"></i> Đăng ký bằng Google
                                         </Button>
-                                    </Form.Group>
+                                    </Form.Group> */}
 								</Form>
 								<div className="mt-4 text-center">
 									<p className="mb-0 text-white">

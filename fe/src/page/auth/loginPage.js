@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { firebaseApp } from "../../firebase";
 import GoogleImg from "../../assets/images/googleImg.png";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 // Khởi tạo auth và provider Google
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
@@ -19,11 +19,13 @@ export const SignInPage = () => {
         email: null,
         password: null,
     });
-
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [validated, setValidated] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible); // Toggle visibility
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (e?.currentTarget?.checkValidity() === false) {
@@ -111,12 +113,23 @@ export const SignInPage = () => {
 
                                     <Form.Group className="mb-3">
                                         <Form.Label className="text-white fs-19">Mật khẩu: </Form.Label>
-                                        <Form.Control required type="password" name={'password'} placeholder="Nhập mật khẩu"
-                                            onChange={event => {
-                                                let value = event.target.value.trim() || null;
-                                                setField(form, 'password', value, setForm);
-                                            }}
-                                            value={form.password || ''} />
+                                        <div className="input-group">
+                                            <Form.Control required 
+                                                type={passwordVisible ? "text" : "password"} // Toggle between text and password
+                                                name={'password'} 
+                                                placeholder="Nhập mật khẩu"
+                                                onChange={event => {
+                                                    let value = event.target.value.trim() || null;
+                                                    setField(form, 'password', value, setForm);
+                                                }}
+                                                value={form.password || ''} />
+                                            <Button 
+                                                variant="outline-secondary" 
+                                                onClick={togglePasswordVisibility} 
+                                                style={{ cursor: 'pointer', border: 'none', background: 'transparent', width: '40px' }}>
+                                                {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Toggle Eye icon */}
+                                            </Button>
+                                        </div>
                                         <Form.Control.Feedback type="invalid">
                                             Mật khẩu không được để trống.
                                         </Form.Control.Feedback>

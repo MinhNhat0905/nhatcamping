@@ -15,7 +15,7 @@ export const default1 = imgdefault1;
 export const default2 = imgdefault2;
 export const default3 = imgdefault3;
 export const default4 = imgdefault4;
-export const defa = img1;
+export const defa = imgdefault2;
 export const defaultD = blog;
 
 export const DEFAULT_USER = defaultUser;
@@ -41,7 +41,7 @@ export const Gender = [
 
 export const INIT_PAGING = {
 	current_page: 1,
-	page_size: 8,
+	page_size: 9,
 	total_page: 1,
 	total: 0
 };

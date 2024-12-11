@@ -1,3 +1,4 @@
+
 import React, {useEffect, useRef, useState} from 'react';
 import { Breadcrumb, Button, Col, Container, Form, Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
@@ -12,9 +13,41 @@ import { CloseOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons'
 import ImageForm from '../../common/form/imageForm';
 import categoryApi from "../../services/categoryService";
 import facilityApi from '../../services/facilityService';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
+// Đặt cấu hình icon Leaflet để tránh lỗi
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+function LocationSelector({ location, setLocation }) {
+	const MapEvents = () => {
+	  useMapEvents({
+		click(e) {
+		  setLocation(e.latlng); // Cập nhật tọa độ khi người dùng click
+		},
+	  });
+	  return null;
+	};
+  
+	return (
+	  <MapContainer center={[10.7769, 106.7009]} zoom={13} style={{ height: '400px', width: '100%' }}>
+		<TileLayer
+		  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+		  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		/>
+		<MapEvents />
+		{location && <Marker position={[location.lat, location.lng]} />}
+	  </MapContainer>
+	);
+  }
 export default function CreateRoom ()
 {
+	const [location, setLocation] = useState(null);
 	const [ validated, setValidated ] = useState( false );
 	const [ name, setName ] = useState( '' );
 	const [ avatar, setAvatar ] = useState( '' );
@@ -24,6 +57,8 @@ export default function CreateRoom ()
 	const [ room_content, setRoomContent ] = useState( '' );
 	const [ file, setFile ] = useState();
 	const [floors, setFloors] = useState('');
+	const [address, setAddress] = useState('');
+	const [quantity, setQuantity] = useState('');
     const [room_code, setRoomCode] = useState('');
 
 	const [ category_id, setCategoryId ] = useState( null );
@@ -64,9 +99,12 @@ export default function CreateRoom ()
 				size: size,
 				room_content: room_content,
 				floors: floors,
+				quantity: quantity,
+				address: address,
                 room_code: room_code,
 				category_id: category_id,
 				facilities: selectedFacilities,
+				location: location,
 			}
 
 			const avatarUpload = await uploadApi.uploadFile( file );
@@ -157,11 +195,20 @@ export default function CreateRoom ()
 									Tên phòng không được để trống
 								</Form.Control.Feedback>
 							</Form.Group>
+							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+								<Form.Label>Địa chỉ</Form.Label>
+								<Form.Control required type="text" name={ 'address' } placeholder="Da lat"
+									onChange={ event => setAddress( event.target.value ) }
+									value={ address } />
+								<Form.Control.Feedback type="invalid">
+									Địa chỉ không được để trống
+								</Form.Control.Feedback>
+							</Form.Group>
 							<Row>
 								<Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Giá phòng</Form.Label>
-										<Form.Control required type="number" min="0" name={'price'} placeholder="20000"
+										<Form.Control required type="number" min="0" name={'price'} placeholder="200000"
 											onChange={handlePositiveInput(setPrice)}
 											value={price} />
 										<Form.Control.Feedback type="invalid">
@@ -193,6 +240,18 @@ export default function CreateRoom ()
 								</Col>
 								{/* <Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+										<Form.Label>Số lượng</Form.Label>
+										<Form.Control required type="number" min="0" name={'quantity'} placeholder="8"
+											onChange={handlePositiveInput(setQuantity)}
+											value={quantity} />
+										<Form.Control.Feedback type="invalid">
+											Số lượng không được để trống
+										</Form.Control.Feedback>
+									</Form.Group>
+								</Col> */}
+								
+								{/* <Col className={'col-2'}>
+									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Tầng</Form.Label>
 										<Form.Control required type="number" min="0" name={'floors'} placeholder="8"
 											onChange={handlePositiveInput(setFloors)}
@@ -202,7 +261,7 @@ export default function CreateRoom ()
 										</Form.Control.Feedback>
 									</Form.Group>
 								</Col> */}
-								<Col className={'col-2'}>
+								{/* <Col className={'col-2'}>
 									<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 										<Form.Label>Số Phòng</Form.Label>
 										<Form.Control required type="number" min="0" name={'room_code'} placeholder="801"
@@ -212,7 +271,7 @@ export default function CreateRoom ()
 											Số phòng không được để trống
 										</Form.Control.Feedback>
 									</Form.Group>
-								</Col>
+								</Col> */}
 							</Row>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 								<Form.Label>Category</Form.Label>
@@ -270,6 +329,15 @@ export default function CreateRoom ()
 									} }
 								/>
 							</Form.Group>
+							<Form.Group className="mb-3" controlId="locationSelector">
+                <Form.Label>Chọn vị trí trên bản đồ</Form.Label>
+                <LocationSelector location={location} setLocation={setLocation} />
+                {location && (
+                  <div className="mt-2">
+                    <strong>Tọa độ:</strong> {location.lat}, {location.lng}
+                  </div>
+                )}
+              </Form.Group>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
 								<Button type="submit">Lưu dữ liệu</Button>
 							</Form.Group>

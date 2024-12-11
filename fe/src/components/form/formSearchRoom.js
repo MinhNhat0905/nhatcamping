@@ -16,6 +16,8 @@ export const FormRoomSearch = ( props ) =>
 		name: null,
 		price: null,
 		floors: null,
+		address:null,
+		quantity: null,
 		category_id: null,
     	facilities: [],
 	} );
@@ -24,37 +26,51 @@ export const FormRoomSearch = ( props ) =>
 	const [ categories, setCategories ] = useState( [] );
 	const [facilities, setFacilities] = useState([]);
 	const params = useParams();
-	const handleSubmit = async ( e ) =>
-	{
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		props.setParams( form );
-		props.getDataList( { page: 1, page_size: props.paging.page_size, ...form } );
+		console.log("Form submitted with data:", form); // Log form
+	
+		const filters = { ...form };
+	
+		if (form.facilities && form.facilities.length > 0) {
+			filters.facilities = form.facilities.join(","); // Chuyển mảng thành chuỗi
+		}
+	
+		console.log("Filters:", filters);  // Log các tham số filter
+	
+		props.setParams(filters);
+		props.getDataList({ page: 1, page_size: props.paging.page_size, ...filters });
+	};
+	
+	  
 
-	}
-
-	const resetForm = () =>
-	{
-		setForm( {
+	  const resetForm = () => {
+		setForm({
 			size: null,
 			bed: null,
 			vote_number: null,
 			price: null,
 			name: null,
 			floors: null,
+			address: null,
+			quantity: null,
 			category_id: null,
 			facilities: [],
-		} )
-		props.setParams( {
+		});
+		props.setParams({
 			size: null,
 			bed: null,
 			vote_number: null,
 			name: null,
 			floors: null,
+			address: null,
+			quantity: null,
 			price: null,
 			category_id: null,
 			facilities: [],
-		} );
-		props.getDataList( { page: 1, page_size: props.paging.page_size } );
+		});
+		props.getDataList({ page: 1, page_size: props.paging.page_size });
+	 
 	}
 
 
@@ -74,6 +90,7 @@ export const FormRoomSearch = ( props ) =>
 		  page_size: 1000,
 		});
 		if (response?.status === "success" || response?.status === 200) {
+			console.log("Dữ liệu từ API:", response.data.facilities);
 		  setFacilities(response.data.facilities); // Giả sử bạn nhận danh sách tiện nghi từ API
 		}
 	  };
@@ -94,6 +111,24 @@ export const FormRoomSearch = ( props ) =>
 						type={ 'text' } />
 				</Form.Group>
 				<Form.Group className="mb-3 col-md-12">
+          <SelectBase
+            form={form}
+            setForm={setForm}
+            name={"price"}
+            label={"Khoảng giá: "}
+            data={[
+              { _id: "under300000", name: "Dưới 300,000" },
+              { _id: "300000-500000", name: "300,000 - 500,000" },
+              { _id: "500000-700000", name: "500,000 - 700,000" },
+              { _id: "above700000", name: "Trên 700,000" },
+            ]}
+            key_name={"price"}
+            required={false}
+            placeholder={"Chọn khoảng giá"}
+            type={"text"}
+          />
+        </Form.Group>
+				<Form.Group className="mb-3 col-md-12">
 					<InputBase form={ form } setForm={ setForm } name={ 'name' }
 						label={ 'Tên phòng: ' }
 						key_name={ 'name' } required={ false } placeholder={ 'Nhập tên phòng' }
@@ -101,18 +136,10 @@ export const FormRoomSearch = ( props ) =>
 					/>
 				</Form.Group>
 
-				{/* <Form.Group className="mb-3 col-md-12">
-					<InputBase form={ form } setForm={ setForm } name={ 'price' }
-						label={ 'Giá phòng: ' }
-						key_name={ 'price' } required={ false } placeholder={ 'Nhập giá phòng' }
-						type={ 'text' }
-					/>
-				</Form.Group> */}
-
 				<Form.Group className="mb-3 col-md-12">
-					<InputBase form={ form } setForm={ setForm } name={ 'size' }
-						label={ 'Kích thước: ' }
-						key_name={ 'size' } required={ false } placeholder={ 'Nhập kích thước' }
+					<InputBase form={ form } setForm={ setForm } name={ 'address' }
+						label={ 'Địa chỉ: ' }
+						key_name={ 'address' } required={ false } placeholder={ 'Nhập Địa chỉ' }
 						type={ 'text' }
 					/>
 				</Form.Group>
@@ -124,29 +151,20 @@ export const FormRoomSearch = ( props ) =>
 						type={ 'text' }
 					/>
 				</Form.Group>
- {/* Checkbox for selecting facilities */}
- <Form.Group className="mb-3 col-md-12">
-  <label>Tiện nghi: </label>
-  {facilities.map((facility) => (
-    <CheckboxBase
-      key={facility.id}
-      label={facility.name}
-      value={facility.id}
-      form={form}
-      key_name="facilities"
-      setForm={setForm}
-    />
-  ))}
-</Form.Group>
-				{/* <Form.Group className="mb-3 col-md-12">
-					<InputBase form={ form } setForm={ setForm } name={ 'floors' }
-						label={ 'Tầng: ' }
-						key_name={ 'floors' } required={ false } placeholder={ 'Nhập số tầng' }
-						type={ 'number' }
-					/>
-				</Form.Group> */}
-
-
+					{/* Checkbox for selecting facilities */}
+					<Form.Group className="mb-3 col-md-12">
+						<label>Tiện nghi: </label>
+						{facilities.map((facility) => (
+						<CheckboxBase
+							key={facility._id}
+							label={facility.name}
+							value={facility._id}
+							form={form}
+							key_name="facilities"
+							setForm={setForm}
+						/>
+						))}
+					</Form.Group>
 
 			</Row>
 
